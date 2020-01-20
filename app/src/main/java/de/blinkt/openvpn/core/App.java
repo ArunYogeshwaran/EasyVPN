@@ -47,7 +47,7 @@ public class App extends /*com.orm.SugarApp*/ Application {
             SharedPreferences.Editor Editor = sp_settings.edit();
             Editor.putString("device_id", device_id);
             Editor.putString("device_created", String.valueOf(System.currentTimeMillis()));
-            Editor.apply();
+            Editor.commit();
 
         }
 

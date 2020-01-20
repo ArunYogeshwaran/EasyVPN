@@ -195,7 +195,7 @@ public class ServerActivity extends Activity {
                         SharedPreferences.Editor Editor = SharedAppDetails.edit();
                         Editor.putString("app_details", En.encrypt(AppDetails));
                         Editor.putString("file_details", En.encrypt(FileDetails));
-                        Editor.apply();
+                        Editor.commit();
                     } catch (Exception e){
                         Bundle params = new Bundle();
                         params.putString("device_id", App.device_id);
@@ -415,7 +415,7 @@ public class ServerActivity extends Activity {
                             Editor.putString("ip", Server.GetIP());
                             Editor.putString("active", Server.GetActive());
                             Editor.putString("signal", Server.GetSignal());
-                            Editor.apply();
+                            Editor.commit();
                             App.hasFile = true;
                             App.abortConnection = true;
                         } catch (Exception e){

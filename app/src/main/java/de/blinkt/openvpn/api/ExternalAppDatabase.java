@@ -39,7 +39,7 @@ public class ExternalAppDatabase {
         prefedit.putStringSet(PREFERENCES_KEY, allowedapps);
         int counter = prefs.getInt("counter", 0);
         prefedit.putInt("counter", counter + 1);
-        prefedit.apply();
+        prefedit.commit();
     }
     public void clearAllApiApps() {
         saveExtAppList(new HashSet<String>());

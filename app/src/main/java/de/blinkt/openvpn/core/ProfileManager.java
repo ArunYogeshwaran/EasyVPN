@@ -54,7 +54,7 @@ public class ProfileManager {
         SharedPreferences prefs = Preferences.getDefaultSharedPreferences(c);
         Editor prefsedit = prefs.edit();
         prefsedit.putString(LAST_CONNECTED_PROFILE, null);
-        prefsedit.apply();
+        prefsedit.commit();
     }
 
     /**
@@ -64,7 +64,7 @@ public class ProfileManager {
         SharedPreferences prefs = Preferences.getDefaultSharedPreferences(c);
         Editor prefsedit = prefs.edit();
         prefsedit.putString(LAST_CONNECTED_PROFILE, connectedProfile.getUUIDString());
-        prefsedit.apply();
+        prefsedit.commit();
         mLastConnectedVpn = connectedProfile;
     }
 
@@ -166,7 +166,7 @@ public class ProfileManager {
         // if I remove the debug code below :(
         int counter = sharedprefs.getInt("counter", 0);
         editor.putInt("counter", counter + 1);
-        editor.apply();
+        editor.commit();
     }
 
     public void addProfile(VpnProfile profile) {

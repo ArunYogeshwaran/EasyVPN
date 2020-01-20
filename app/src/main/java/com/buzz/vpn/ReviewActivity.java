@@ -90,7 +90,7 @@ public class ReviewActivity extends Activity {
                 SharedPreferences SharedAppDetails = getSharedPreferences("settings_data", 0);
                 SharedPreferences.Editor Editor = SharedAppDetails.edit();
                 Editor.putString("rate", "true");
-                Editor.apply();
+                Editor.commit();
 
                 Bundle params = new Bundle();
                 params.putString("device_id", App.device_id);
@@ -129,7 +129,7 @@ public class ReviewActivity extends Activity {
                 SharedPreferences SharedAppDetails = getSharedPreferences("settings_data", 0);
                 SharedPreferences.Editor Editor = SharedAppDetails.edit();
                 Editor.putString("rate", "true");
-                Editor.apply();
+                Editor.commit();
 
                 Bundle params = new Bundle();
                 params.putString("device_id", App.device_id);

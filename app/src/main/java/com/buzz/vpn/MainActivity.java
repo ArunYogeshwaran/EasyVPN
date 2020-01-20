@@ -350,7 +350,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                                         SharedPreferences SharedAppDetails = getSharedPreferences("settings_data", 0);
                                                         SharedPreferences.Editor Editor = SharedAppDetails.edit();
                                                         Editor.putString("connection_time", String.valueOf(App.CountDown));
-                                                        Editor.apply();
+                                                        Editor.commit();
                                                         if(App.CountDown >= 20) {
                                                             SharedPreferences settings = getSharedPreferences("settings_data", 0);
                                                             String Rate = settings.getString("rate", "false");
@@ -488,7 +488,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                     if(Long.valueOf(ConnectionTime) >= 20) {
                                         SharedPreferences.Editor Editor = settings.edit();
                                         Editor.putString("connection_time", "0");
-                                        Editor.apply();
+                                        Editor.commit();
                                         String Rate = settings.getString("rate", "false");
                                         if (Rate.equals("false")) {
                                             Handler handler = new Handler();
@@ -850,7 +850,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
         SharedPreferences.Editor editor = sp_settings.edit();
         editor.putLong(TODAY + "_connections", connection_today + 1);
         editor.putLong("total_connections", connection_total + 1);
-        editor.apply();
+        editor.commit();
 
         Bundle params = new Bundle();
         params.putString("device_id", App.device_id);

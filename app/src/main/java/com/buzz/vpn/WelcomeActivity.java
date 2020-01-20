@@ -299,7 +299,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     Editor.putString("up_size", upSize);
                     Editor.putString("up_version", upVersion);
                     Editor.putString("cu_version", cuVersion);
-                    Editor.apply();
+                    Editor.commit();
                 } catch (Exception e) {
                     Bundle params = new Bundle();
                     params.putString("device_id", App.device_id);
@@ -319,7 +319,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     Editor.putString("ip", IP);
                     Editor.putString("active", Active);
                     Editor.putString("signal", Signal);
-                    Editor.apply();
+                    Editor.commit();
                 } catch (Exception e) {
                     Bundle params = new Bundle();
                     params.putString("device_id", App.device_id);
@@ -332,7 +332,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     SharedPreferences.Editor Editor = SharedAppDetails.edit();
                     Editor.putString("app_details", En.encrypt(AppDetails));
                     Editor.putString("file_details", En.encrypt(FileDetails));
-                    Editor.apply();
+                    Editor.commit();
                 } catch (Exception e) {
                     Bundle params = new Bundle();
                     params.putString("device_id", App.device_id);

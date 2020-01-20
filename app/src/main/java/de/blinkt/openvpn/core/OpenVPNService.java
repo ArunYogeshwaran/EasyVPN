@@ -332,7 +332,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                         editor.putLong(MONTH+YEAR, long_usage_month + long_usage_now);
                         editor.putLong(TODAY + "_time", long_usage_time_today + long_milli_seconds);
                         editor.putLong("total_time", long_usage_time_total + long_milli_seconds);
-                        editor.apply();
+                        editor.commit();
                         Log.e("random", Random + " " + Random*1000);
 
                     }

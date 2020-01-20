@@ -771,7 +771,7 @@ public class UsageActivity extends Activity {
                     } else {
                         Editor.putString("dark_mode", "false");
                     }
-                    Editor.apply();
+                    Editor.commit();
                 } catch (Exception e) {
                     Bundle params = new Bundle();
                     params.putString("device_id", App.device_id);

@@ -239,7 +239,7 @@ public class ContactActivity extends Activity {
             if (!sharedPref.contains(MyKEY)) {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString(MyKEY, en.encrypt(getUniqueKey()));
-                editor.apply();
+                editor.commit();
                 str_ipv4 = getUniqueKey();
             } else {
                 str_ipv4 = en.decrypt(sharedPref.getString(MyKEY, "NA"));
