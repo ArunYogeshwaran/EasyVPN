@@ -101,6 +101,7 @@ public class ServerActivity extends Activity {
             }
         });
 
+
         LinearLayout ll_server_retry = findViewById (R.id.ll_server_refresh);
         ll_server_retry.setOnClickListener(new View.OnClickListener() {
             @Override
