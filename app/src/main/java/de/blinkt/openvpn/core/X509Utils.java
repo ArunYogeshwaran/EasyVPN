@@ -59,6 +59,7 @@ public class X509Utils {
             return new Certificate[]{certFact.generateCertificate(inStream)};
         }
     }
+
     public static PemObject readPemObjectFromFile(String keyfilename) throws IOException {
         Reader inStream;
         if (VpnProfile.isEmbedded(keyfilename))
@@ -70,6 +71,7 @@ public class X509Utils {
         pr.close();
         return r;
     }
+
     public static String getCertificateFriendlyName(Context c, String filename) {
         if (!TextUtils.isEmpty(filename)) {
             try {
@@ -83,6 +85,7 @@ public class X509Utils {
         }
         return c.getString(R.string.cannotparsecert);
     }
+
     public static String getCertificateValidityString(X509Certificate cert, Resources res) {
         try {
             cert.checkValidity();
@@ -107,11 +110,13 @@ public class X509Utils {
             return res.getQuantityString(R.plurals.hours_left, (int) hours, hours);
         }
     }
+
     public static int getMonthsDifference(Date date1, Date date2) {
         int m1 = date1.getYear() * 12 + date1.getMonth();
         int m2 = date2.getYear() * 12 + date2.getMonth();
         return m2 - m1 + 1;
     }
+
     public static String getCertificateFriendlyName(X509Certificate cert) {
         X500Principal principal = cert.getSubjectX500Principal();
         byte[] encodedSubject = principal.getEncoded();
@@ -155,12 +160,14 @@ public class X509Utils {
         friendlyName = TextUtils.join(",", parts);
         return friendlyName;
     }
+
     public static boolean isPrintableChar(char c) {
         Character.UnicodeBlock block = Character.UnicodeBlock.of(c);
         return (!Character.isISOControl(c)) &&
                 block != null &&
                 block != Character.UnicodeBlock.SPECIALS;
     }
+
     private static String ia5decode(String ia5string) {
         String d = "";
         for (int i = 1; i < ia5string.length(); i = i + 2) {

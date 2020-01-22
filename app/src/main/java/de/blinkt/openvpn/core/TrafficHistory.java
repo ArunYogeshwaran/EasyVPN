@@ -25,6 +25,7 @@ public class TrafficHistory implements Parcelable {
         public TrafficHistory createFromParcel(Parcel in) {
             return new TrafficHistory(in);
         }
+
         @Override
         public TrafficHistory[] newArray(int size) {
             return new TrafficHistory[size];
@@ -35,8 +36,10 @@ public class TrafficHistory implements Parcelable {
     private LinkedList<TrafficDatapoint> trafficHistoryHours = new LinkedList<>();
     private TrafficDatapoint lastSecondUsedForMinute;
     private TrafficDatapoint lastMinuteUsedForHours;
+
     public TrafficHistory() {
     }
+
     protected TrafficHistory(Parcel in) {
         in.readList(trafficHistorySeconds, getClass().getClassLoader());
         in.readList(trafficHistoryMinutes, getClass().getClassLoader());
@@ -44,11 +47,13 @@ public class TrafficHistory implements Parcelable {
         lastSecondUsedForMinute = in.readParcelable(getClass().getClassLoader());
         lastMinuteUsedForHours = in.readParcelable(getClass().getClassLoader());
     }
+
     public static LinkedList<TrafficDatapoint> getDummyList() {
         LinkedList<TrafficDatapoint> list = new LinkedList<>();
         list.add(new TrafficDatapoint(0, 0, System.currentTimeMillis()));
         return list;
     }
+
     public LastDiff getLastDiff(TrafficDatapoint tdp) {
         TrafficDatapoint lasttdp;
         if (trafficHistorySeconds.size() == 0)
@@ -66,10 +71,12 @@ public class TrafficHistory implements Parcelable {
         }
         return new LastDiff(lasttdp, tdp);
     }
+
     @Override
     public int describeContents() {
         return 0;
     }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeList(trafficHistorySeconds);
@@ -78,21 +85,26 @@ public class TrafficHistory implements Parcelable {
         dest.writeParcelable(lastSecondUsedForMinute, 0);
         dest.writeParcelable(lastMinuteUsedForHours, 0);
     }
+
     public LinkedList<TrafficDatapoint> getHours() {
         return trafficHistoryHours;
     }
+
     public LinkedList<TrafficDatapoint> getMinutes() {
         return trafficHistoryMinutes;
     }
+
     public LinkedList<TrafficDatapoint> getSeconds() {
         return trafficHistorySeconds;
     }
+
     LastDiff add(long in, long out) {
         TrafficDatapoint tdp = new TrafficDatapoint(in, out, System.currentTimeMillis());
         LastDiff diff = getLastDiff(tdp);
         addDataPoint(tdp);
         return diff;
     }
+
     private void addDataPoint(TrafficDatapoint tdp) {
         trafficHistorySeconds.add(tdp);
         if (lastSecondUsedForMinute == null) {
@@ -101,6 +113,7 @@ public class TrafficHistory implements Parcelable {
         }
         removeAndAverage(tdp, true);
     }
+
     private void removeAndAverage(TrafficDatapoint newTdp, boolean seconds) {
         HashSet<TrafficDatapoint> toRemove = new HashSet<>();
         Vector<TrafficDatapoint> toAverage = new Vector<>();
@@ -133,12 +146,14 @@ public class TrafficHistory implements Parcelable {
             tpList.removeAll(toRemove);
         }
     }
+
     public static class TrafficDatapoint implements Parcelable {
         public static final Creator<TrafficDatapoint> CREATOR = new Creator<TrafficDatapoint>() {
             @Override
             public TrafficDatapoint createFromParcel(Parcel in) {
                 return new TrafficDatapoint(in);
             }
+
             @Override
             public TrafficDatapoint[] newArray(int size) {
                 return new TrafficDatapoint[size];
@@ -147,20 +162,24 @@ public class TrafficHistory implements Parcelable {
         public final long timestamp;
         public final long in;
         public final long out;
+
         private TrafficDatapoint(long inBytes, long outBytes, long timestamp) {
             this.in = inBytes;
             this.out = outBytes;
             this.timestamp = timestamp;
         }
+
         private TrafficDatapoint(Parcel in) {
             timestamp = in.readLong();
             this.in = in.readLong();
             out = in.readLong();
         }
+
         @Override
         public int describeContents() {
             return 0;
         }
+
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeLong(timestamp);
@@ -168,22 +187,28 @@ public class TrafficHistory implements Parcelable {
             dest.writeLong(out);
         }
     }
+
     static class LastDiff {
         final private TrafficDatapoint tdp;
         final private TrafficDatapoint lasttdp;
+
         private LastDiff(TrafficDatapoint lasttdp, TrafficDatapoint tdp) {
             this.lasttdp = lasttdp;
             this.tdp = tdp;
         }
+
         public long getDiffOut() {
             return max(0, tdp.out - lasttdp.out);
         }
+
         public long getDiffIn() {
             return max(0, tdp.in - lasttdp.in);
         }
+
         public long getIn() {
             return tdp.in;
         }
+
         public long getOut() {
             return tdp.out;
         }

@@ -84,8 +84,10 @@ public class LaunchVPN extends Activity {
         public void onServiceConnected(ComponentName componentName, IBinder binder) {
             IServiceStatus service = IServiceStatus.Stub.asInterface(binder);
             try {
-                if (mTransientAuthPW != null) service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.AUTHPASSWORD, mTransientAuthPW);
-                if (mTransientCertOrPCKS12PW != null) service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.PCKS12ORCERTPASSWORD, mTransientCertOrPCKS12PW);
+                if (mTransientAuthPW != null)
+                    service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.AUTHPASSWORD, mTransientAuthPW);
+                if (mTransientCertOrPCKS12PW != null)
+                    service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.PCKS12ORCERTPASSWORD, mTransientCertOrPCKS12PW);
                 onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -113,13 +115,15 @@ public class LaunchVPN extends Activity {
         // If the intent is a request to create a shortcut, we'll do that and exit
         if (Intent.ACTION_MAIN.equals(action)) {
             // Check if we need to clear the log
-            if (Preferences.getDefaultSharedPreferences(this).getBoolean(CLEARLOG, true)) VpnStatus.clearLog();
+            if (Preferences.getDefaultSharedPreferences(this).getBoolean(CLEARLOG, true))
+                VpnStatus.clearLog();
             // we got called to be the starting point, most likely a shortcut
             String shortcutUUID = intent.getStringExtra(EXTRA_KEY);
             String shortcutName = intent.getStringExtra(EXTRA_NAME);
             mhideLog = intent.getBooleanExtra(EXTRA_HIDELOG, false);
             VpnProfile profileToConnect = ProfileManager.get(this, shortcutUUID);
-            if (shortcutName != null && profileToConnect == null) profileToConnect = ProfileManager.getInstance(this).getProfileByName(shortcutName);
+            if (shortcutName != null && profileToConnect == null)
+                profileToConnect = ProfileManager.getInstance(this).getProfileByName(shortcutName);
             if (profileToConnect == null) {
                 VpnStatus.logError(R.string.shortcut_profile_notfound);
                 // show Log window to display error
@@ -148,8 +152,10 @@ public class LaunchVPN extends Activity {
             ((CheckBox) userpwlayout.findViewById(R.id.show_password)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) ((EditText) userpwlayout.findViewById(R.id.password)).setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    else ((EditText) userpwlayout.findViewById(R.id.password)).setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    if (isChecked)
+                        ((EditText) userpwlayout.findViewById(R.id.password)).setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    else
+                        ((EditText) userpwlayout.findViewById(R.id.password)).setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 }
             });
             dialog.setView(userpwlayout);
@@ -206,7 +212,8 @@ public class LaunchVPN extends Activity {
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 // User does not want us to start, so we just vanish
                 VpnStatus.updateStateString("USER_VPN_PERMISSION_CANCELLED", "", R.string.state_user_vpn_permission_cancelled, ConnectionStatus.LEVEL_NOTCONNECTED);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) VpnStatus.logError(R.string.nought_alwayson_warning);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    VpnStatus.logError(R.string.nought_alwayson_warning);
                 App.abortConnection = true;
                 finish();
             }

@@ -13,8 +13,9 @@ import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
-import androidx.annotation.Nullable;
 import android.util.Pair;
+
+import androidx.annotation.Nullable;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -77,32 +78,39 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
                 return null;
             }
         }
+
         @Override
         public void unregisterStatusCallback(IStatusCallbacks cb) throws RemoteException {
             mCallbacks.unregister(cb);
         }
+
         @Override
         public String getLastConnectedVPN() throws RemoteException {
             return VpnStatus.getLastConnectedVPNProfile();
         }
+
         @Override
         public void setCachedPassword(String uuid, int type, String password) {
             PasswordCache.setCachedPassword(uuid, type, password);
         }
+
         @Override
         public TrafficHistory getTrafficHistory() throws RemoteException {
             return VpnStatus.trafficHistory;
         }
     };
+
     private static void sendUpdate(IStatusCallbacks broadcastItem,
                                    UpdateMessage um) throws RemoteException {
         broadcastItem.updateStateString(um.state, um.logmessage, um.resId, um.level);
     }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -111,6 +119,7 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
         VpnStatus.addStateListener(this);
         mHandler.setService(this);
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -119,32 +128,38 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
         VpnStatus.removeStateListener(this);
         mCallbacks.kill();
     }
+
     @Override
     public void newLog(LogItem logItem) {
         Message msg = mHandler.obtainMessage(SEND_NEW_LOGITEM, logItem);
         msg.sendToTarget();
     }
+
     @Override
     public void updateByteCount(long in, long out, long diffIn, long diffOut) {
         Message msg = mHandler.obtainMessage(SEND_NEW_BYTECOUNT, Pair.create(in, out));
         msg.sendToTarget();
     }
+
     @Override
     public void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level) {
         mLastUpdateMessage = new UpdateMessage(state, logmessage, localizedResId, level);
         Message msg = mHandler.obtainMessage(SEND_NEW_STATE, mLastUpdateMessage);
         msg.sendToTarget();
     }
+
     @Override
     public void setConnectedVPN(String uuid) {
         Message msg = mHandler.obtainMessage(SEND_NEW_CONNECTED_VPN, uuid);
         msg.sendToTarget();
     }
+
     static class UpdateMessage {
         public String state;
         public String logmessage;
         public ConnectionStatus level;
         int resId;
+
         UpdateMessage(String state, String logmessage, int resId, ConnectionStatus level) {
             this.state = state;
             this.resId = resId;
@@ -152,11 +167,14 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
             this.level = level;
         }
     }
+
     private static class OpenVPNStatusHandler extends Handler {
         WeakReference<OpenVPNStatusService> service = null;
+
         private void setService(OpenVPNStatusService statusService) {
             service = new WeakReference<>(statusService);
         }
+
         @Override
         public void handleMessage(Message msg) {
             RemoteCallbackList<IStatusCallbacks> callbacks;

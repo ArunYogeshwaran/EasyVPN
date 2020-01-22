@@ -3,6 +3,7 @@
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
+
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -10,7 +11,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-
 import android.util.Log;
 
 import com.buzz.vpn.R;
@@ -38,11 +38,10 @@ public class App extends /*com.orm.SugarApp*/ Application {
         createNotificationChannel();
 
 
-
         SharedPreferences sp_settings = getSharedPreferences("settings_data", 0);
         device_id = sp_settings.getString("device_id", "NULL");
 
-        if(device_id.equals("NULL")){
+        if (device_id.equals("NULL")) {
             device_id = getUniqueKey();
             SharedPreferences.Editor Editor = sp_settings.edit();
             Editor.putString("device_id", device_id);
@@ -70,7 +69,7 @@ public class App extends /*com.orm.SugarApp*/ Application {
                 manager = getSystemService(NotificationManager.class);
                 manager.createNotificationChannel(serviceChannel);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             //Log.e("error", e.getStackTrace()[0].getMethodName());
         }
     }
@@ -87,7 +86,7 @@ public class App extends /*com.orm.SugarApp*/ Application {
         String Time = getResources().getString(R.string.get_time, year, month, day, hour, minute, second, millis);
 
         String str_api = String.valueOf(android.os.Build.VERSION.SDK_INT); // API
-        String str_model=  String.valueOf(Build.MODEL); // Model
+        String str_model = String.valueOf(Build.MODEL); // Model
         String str_manufacturer = String.valueOf(Build.MANUFACTURER); // Manufacturer
         String version;
         try {
@@ -97,10 +96,9 @@ public class App extends /*com.orm.SugarApp*/ Application {
             version = "00";
         }
 
-        Log.e("key", Time + str_manufacturer+str_api+str_model+version);
-        return Time + str_manufacturer+str_api+str_model+version;
+        Log.e("key", Time + str_manufacturer + str_api + str_model + version);
+        return Time + str_manufacturer + str_api + str_model + version;
     }
-
 
 
 }

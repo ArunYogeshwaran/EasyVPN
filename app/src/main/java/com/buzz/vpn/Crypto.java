@@ -2,6 +2,8 @@ package com.buzz.vpn;
 
 import android.util.Base64;
 
+import java.nio.charset.StandardCharsets;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -9,14 +11,14 @@ import javax.crypto.spec.SecretKeySpec;
 public class Crypto {
     public static String Encrypt(String key, String initVector, String value) {
         try {
-            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
-            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));
+            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
 
             byte[] encrypted = cipher.doFinal(value.getBytes());
-            System.out.println("encrypted string: "+ Base64.encodeToString(encrypted, android.util.Base64.DEFAULT));
+            System.out.println("encrypted string: " + Base64.encodeToString(encrypted, android.util.Base64.DEFAULT));
 
             return Base64.encodeToString(encrypted, Base64.DEFAULT);
         } catch (Exception e) {
@@ -26,8 +28,8 @@ public class Crypto {
 
     public static String Decrypt(String key, String initVector, String encrypted) {
         try {
-            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
-            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));
+            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);

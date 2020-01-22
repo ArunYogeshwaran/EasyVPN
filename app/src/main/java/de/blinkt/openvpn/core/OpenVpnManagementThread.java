@@ -10,11 +10,10 @@ import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.os.Handler;
 import android.os.ParcelFileDescriptor;
+
 import androidx.annotation.NonNull;
 
 import com.buzz.vpn.R;
-
-//import junit.framework.Assert;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -23,6 +22,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -30,6 +30,8 @@ import java.util.Locale;
 import java.util.Vector;
 
 import de.blinkt.openvpn.VpnProfile;
+
+//import junit.framework.Assert;
 
 public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     private static final String TAG = "openvpn";
@@ -151,12 +153,13 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 if (fds != null) {
                     Collections.addAll(mFDList, fds);
                 }
-                String input = new String(buffer, 0, numbytesread, "UTF-8");
+                String input = new String(buffer, 0, numbytesread, StandardCharsets.UTF_8);
                 pendingInput += input;
                 pendingInput = processInput(pendingInput);
             }
         } catch (IOException e) {
-            if (!e.getMessage().equals("socket closed") && !e.getMessage().equals("Connection reset by peer")) VpnStatus.logException(e);
+            if (!e.getMessage().equals("socket closed") && !e.getMessage().equals("Connection reset by peer"))
+                VpnStatus.logException(e);
         }
         synchronized (active) {
             active.remove(this);
@@ -201,7 +204,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             String argument = parts[1];
             switch (cmd) {
                 case "INFO":
-                /* Ignore greeting from management */
+                    /* Ignore greeting from management */
                     return;
                 case "PASSWORD":
                     processPWCommand(argument);
@@ -291,9 +294,11 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         mWaitingForRelease = true;
         int waittime = Integer.parseInt(argument.split(":")[1]);
         if (shouldBeRunning()) {
-            if (waittime > 1) VpnStatus.updateStateString("CONNECTRETRY", String.valueOf(waittime), R.string.state_waitconnectretry, ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
+            if (waittime > 1)
+                VpnStatus.updateStateString("CONNECTRETRY", String.valueOf(waittime), R.string.state_waitconnectretry, ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
             mResumeHandler.postDelayed(mResumeHoldRunnable, waittime * 1000);
-            if (waittime > 5) VpnStatus.logInfo(R.string.state_waitconnectretry, String.valueOf(waittime));
+            if (waittime > 5)
+                VpnStatus.logInfo(R.string.state_waitconnectretry, String.valueOf(waittime));
             else VpnStatus.logDebug(R.string.state_waitconnectretry, String.valueOf(waittime));
         } else {
             VpnStatus.updateStatePause(lastPauseReason);

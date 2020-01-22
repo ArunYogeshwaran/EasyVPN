@@ -199,7 +199,8 @@ public class ProfileManager {
                     profiles.put(vp.getUUID().toString(), vp);
                 }
             } catch (IOException | ClassNotFoundException e) {
-                if (!vpnentry.equals(TEMPORARY_PROFILE_FILENAME)) VpnStatus.logException("LoadingDialog VPN List", e);
+                if (!vpnentry.equals(TEMPORARY_PROFILE_FILENAME))
+                    VpnStatus.logException("LoadingDialog VPN List", e);
             }
         }
     }

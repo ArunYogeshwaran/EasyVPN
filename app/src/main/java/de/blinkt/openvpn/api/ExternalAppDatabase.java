@@ -16,22 +16,27 @@ import de.blinkt.openvpn.core.Preferences;
 public class ExternalAppDatabase {
     private final String PREFERENCES_KEY = "allowed_apps";
     Context mContext;
+
     public ExternalAppDatabase(Context c) {
         mContext = c;
     }
+
     boolean isAllowed(String packagename) {
         Set<String> allowedapps = getExtAppList();
         return allowedapps.contains(packagename);
     }
+
     public Set<String> getExtAppList() {
         SharedPreferences prefs = Preferences.getDefaultSharedPreferences(mContext);
         return prefs.getStringSet(PREFERENCES_KEY, new HashSet<String>());
     }
+
     public void addApp(String packagename) {
         Set<String> allowedapps = getExtAppList();
         allowedapps.add(packagename);
         saveExtAppList(allowedapps);
     }
+
     private void saveExtAppList(Set<String> allowedapps) {
         SharedPreferences prefs = Preferences.getDefaultSharedPreferences(mContext);
         Editor prefedit = prefs.edit();
@@ -41,9 +46,11 @@ public class ExternalAppDatabase {
         prefedit.putInt("counter", counter + 1);
         prefedit.commit();
     }
+
     public void clearAllApiApps() {
         saveExtAppList(new HashSet<String>());
     }
+
     public void removeApp(String packagename) {
         Set<String> allowedapps = getExtAppList();
         allowedapps.remove(packagename);

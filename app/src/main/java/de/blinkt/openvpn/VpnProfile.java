@@ -14,9 +14,10 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.security.KeyChain;
 import android.security.KeyChainException;
-import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Base64;
+
+import androidx.annotation.NonNull;
 
 import com.buzz.vpn.R;
 
@@ -182,7 +183,8 @@ public class VpnProfile implements Serializable, Cloneable {
         String escapedString = unescaped.replace("\\", "\\\\");
         escapedString = escapedString.replace("\"", "\\\"");
         escapedString = escapedString.replace("\n", "\\n");
-        if (escapedString.equals(unescaped) && !escapedString.contains(" ") && !escapedString.contains("#") && !escapedString.contains(";") && !escapedString.equals("")) return unescaped;
+        if (escapedString.equals(unescaped) && !escapedString.contains(" ") && !escapedString.contains("#") && !escapedString.contains(";") && !escapedString.equals(""))
+            return unescaped;
         else return '"' + escapedString + '"';
     }
 
@@ -295,7 +297,7 @@ public class VpnProfile implements Serializable, Cloneable {
                         NativeUtils.getNativeAPI(), Build.BRAND, Build.BOARD, Build.MODEL);
                 cfg += String.format("setenv IV_PLAT_VER %s\n", openVpnEscape(versionString));
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             //SendLog Send;
             //Send = new SendLog(context);
             //Send.Exception("200 VpnProfile getConfigFile()", e.toString());
@@ -316,7 +318,8 @@ public class VpnProfile implements Serializable, Cloneable {
         if (!mConnectRetryMax.equals("-1")) cfg += "connect-retry-max " + mConnectRetryMax + "\n";
         if (TextUtils.isEmpty(mConnectRetry)) mConnectRetry = "2";
         if (TextUtils.isEmpty(mConnectRetryMaxTime)) mConnectRetryMaxTime = "300";
-        if (!mIsOpenVPN22) cfg += "connect-retry " + mConnectRetry + " " + mConnectRetryMaxTime + "\n";
+        if (!mIsOpenVPN22)
+            cfg += "connect-retry " + mConnectRetry + " " + mConnectRetryMaxTime + "\n";
         else if (mIsOpenVPN22 && mUseUdp) cfg += "connect-retry " + mConnectRetry + "\n";
         cfg += "resolv-retry 60\n";
         // We cannot use anything else than tun
@@ -365,7 +368,9 @@ public class VpnProfile implements Serializable, Cloneable {
                         cfg += "management-external-key\n";
                     } else {
                         cfg += context.getString(R.string.keychain_access) + "\n";
-                        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN) if (!mAlias.matches("^[a-zA-Z0-9]$")) cfg += context.getString(R.string.jelly_keystore_alphanumeric_bug) + "\n";
+                        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN)
+                            if (!mAlias.matches("^[a-zA-Z0-9]$"))
+                                cfg += context.getString(R.string.jelly_keystore_alphanumeric_bug) + "\n";
                     }
                 }
                 break;
@@ -382,7 +387,8 @@ public class VpnProfile implements Serializable, Cloneable {
         }
         if (mUseTLSAuth) {
             boolean useTlsCrypt = mTLSAuthDirection.equals("tls-crypt");
-            if (mAuthenticationType == TYPE_STATICKEYS) cfg += insertFileData("secret", mTLSAuthFilename);
+            if (mAuthenticationType == TYPE_STATICKEYS)
+                cfg += insertFileData("secret", mTLSAuthFilename);
             else if (useTlsCrypt) cfg += insertFileData("tls-crypt", mTLSAuthFilename);
             else cfg += insertFileData("tls-auth", mTLSAuthFilename);
             if (!TextUtils.isEmpty(mTLSAuthDirection) && !useTlsCrypt) {
@@ -392,7 +398,8 @@ public class VpnProfile implements Serializable, Cloneable {
             }
         }
         if (!mUsePull) {
-            if (!TextUtils.isEmpty(mIPv4Address)) cfg += "ifconfig " + cidrToIPAndNetmask(mIPv4Address) + "\n";
+            if (!TextUtils.isEmpty(mIPv4Address))
+                cfg += "ifconfig " + cidrToIPAndNetmask(mIPv4Address) + "\n";
             if (!TextUtils.isEmpty(mIPv6Address)) cfg += "ifconfig-ipv6 " + mIPv6Address + "\n";
         }
         if (mUsePull && mRoutenopull) cfg += "route-nopull\n";
@@ -420,7 +427,8 @@ public class VpnProfile implements Serializable, Cloneable {
                 if (mDNS2.contains(":")) cfg += "dhcp-option DNS6 " + mDNS2 + "\n";
                 else cfg += "dhcp-option DNS " + mDNS2 + "\n";
             }
-            if (!TextUtils.isEmpty(mSearchDomain)) cfg += "dhcp-option DOMAIN " + mSearchDomain + "\n";
+            if (!TextUtils.isEmpty(mSearchDomain))
+                cfg += "dhcp-option DOMAIN " + mSearchDomain + "\n";
         }
         if (mMssFix != 0) {
             if (mMssFix != 1450) {
@@ -434,7 +442,8 @@ public class VpnProfile implements Serializable, Cloneable {
         // Authentication
         if (mAuthenticationType != TYPE_STATICKEYS) {
             if (mCheckRemoteCN) {
-                if (mRemoteCN == null || mRemoteCN.equals("")) cfg += "verify-x509-name " + openVpnEscape(mConnections[0].mServerName) + " name\n";
+                if (mRemoteCN == null || mRemoteCN.equals(""))
+                    cfg += "verify-x509-name " + openVpnEscape(mConnections[0].mServerName) + " name\n";
                 else switch (mX509AuthType) {
                     // 2.2 style x509 checks
                     case X509_VERIFY_TLSREMOTE_COMPAT_NOREMAPPING:
@@ -452,7 +461,8 @@ public class VpnProfile implements Serializable, Cloneable {
                         cfg += "verify-x509-name " + openVpnEscape(mRemoteCN) + "\n";
                         break;
                 }
-                if (!TextUtils.isEmpty(mx509UsernameField)) cfg += "x509-username-field " + openVpnEscape(mx509UsernameField) + "\n";
+                if (!TextUtils.isEmpty(mx509UsernameField))
+                    cfg += "x509-username-field " + openVpnEscape(mx509UsernameField) + "\n";
             }
             if (mExpectTLSCert) cfg += "remote-cert-tls server\n";
         }
@@ -633,7 +643,8 @@ public class VpnProfile implements Serializable, Cloneable {
             mPrivateKey = privateKey;
             String keystoreChain = null;
             X509Certificate[] caChain = KeyChain.getCertificateChain(context, mAlias);
-            if (caChain == null) throw new NoCertReturnedException("No certificate returned from Keystore");
+            if (caChain == null)
+                throw new NoCertReturnedException("No certificate returned from Keystore");
             if (caChain.length <= 1 && TextUtils.isEmpty(mCaFilename)) {
                 VpnStatus.logMessage(VpnStatus.LogLevel.ERROR, "", context.getString(R.string.keychain_nocacert));
             } else {
@@ -706,18 +717,23 @@ public class VpnProfile implements Serializable, Cloneable {
         } else if (mAuthenticationType == TYPE_CERTIFICATES || mAuthenticationType == TYPE_USERPASS_CERTIFICATES) {
             if (TextUtils.isEmpty(mCaFilename)) return R.string.no_ca_cert_selected;
         }
-        if (mCheckRemoteCN && mX509AuthType == X509_VERIFY_TLSREMOTE) return R.string.deprecated_tls_remote;
+        if (mCheckRemoteCN && mX509AuthType == X509_VERIFY_TLSREMOTE)
+            return R.string.deprecated_tls_remote;
         if (!mUsePull || mAuthenticationType == TYPE_STATICKEYS) {
-            if (mIPv4Address == null || cidrToIPAndNetmask(mIPv4Address) == null) return R.string.ipv4_format_error;
+            if (mIPv4Address == null || cidrToIPAndNetmask(mIPv4Address) == null)
+                return R.string.ipv4_format_error;
         }
         if (!mUseDefaultRoute) {
-            if (!TextUtils.isEmpty(mCustomRoutes) && getCustomRoutes(mCustomRoutes).size() == 0) return R.string.custom_route_format_error;
-            if (!TextUtils.isEmpty(mExcludedRoutes) && getCustomRoutes(mExcludedRoutes).size() == 0) return R.string.custom_route_format_error;
+            if (!TextUtils.isEmpty(mCustomRoutes) && getCustomRoutes(mCustomRoutes).size() == 0)
+                return R.string.custom_route_format_error;
+            if (!TextUtils.isEmpty(mExcludedRoutes) && getCustomRoutes(mExcludedRoutes).size() == 0)
+                return R.string.custom_route_format_error;
         }
         if (mUseTLSAuth && TextUtils.isEmpty(mTLSAuthFilename)) return R.string.missing_tlsauth;
         if ((mAuthenticationType == TYPE_USERPASS_CERTIFICATES || mAuthenticationType == TYPE_CERTIFICATES) && (TextUtils.isEmpty(mClientCertFilename) || TextUtils.isEmpty(mClientKeyFilename)))
             return R.string.missing_certificates;
-        if ((mAuthenticationType == TYPE_CERTIFICATES || mAuthenticationType == TYPE_USERPASS_CERTIFICATES) && TextUtils.isEmpty(mCaFilename)) return R.string.missing_ca_certificate;
+        if ((mAuthenticationType == TYPE_CERTIFICATES || mAuthenticationType == TYPE_USERPASS_CERTIFICATES) && TextUtils.isEmpty(mCaFilename))
+            return R.string.missing_ca_certificate;
         boolean noRemoteEnabled = true;
         for (Connection c : mConnections)
             if (c.mEnabled) noRemoteEnabled = false;
@@ -789,9 +805,10 @@ public class VpnProfile implements Serializable, Cloneable {
             if (transientCertOrPkcs12PW == null) return R.string.pkcs12_file_encryption_key;
         }
         if (mAuthenticationType == TYPE_CERTIFICATES || mAuthenticationType == TYPE_USERPASS_CERTIFICATES) {
-            if (requireTLSKeyPassword() && TextUtils.isEmpty(mKeyPassword)) if (transientCertOrPkcs12PW == null) {
-                return R.string.private_key_password;
-            }
+            if (requireTLSKeyPassword() && TextUtils.isEmpty(mKeyPassword))
+                if (transientCertOrPkcs12PW == null) {
+                    return R.string.private_key_password;
+                }
         }
         if (isUserPWAuth() && (TextUtils.isEmpty(mUsername) || (TextUtils.isEmpty(mPassword) && mTransientAuthPW == null))) {
             return R.string.password;

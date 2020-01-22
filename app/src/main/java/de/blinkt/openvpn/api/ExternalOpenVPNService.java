@@ -107,7 +107,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
             ProfileManager pm = ProfileManager.getInstance(getBaseContext());
             List<APIVpnProfile> profiles = new LinkedList<>();
             for (VpnProfile vp : pm.getProfiles()) {
-                if (!vp.profileDeleted) profiles.add(new APIVpnProfile(vp.getUUIDString(), vp.mName, vp.mUserEditable, vp.mProfileCreator));
+                if (!vp.profileDeleted)
+                    profiles.add(new APIVpnProfile(vp.getUUIDString(), vp.mName, vp.mUserEditable, vp.mProfileCreator));
             }
             return profiles;
         }
@@ -133,7 +134,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
         public void startProfile(String profileUUID) throws RemoteException {
             checkOpenVPNPermission();
             VpnProfile vp = ProfileManager.get(getBaseContext(), profileUUID);
-            if (vp.checkProfile(getApplicationContext()) != R.string.no_error_found) throw new RemoteException(getString(vp.checkProfile(getApplicationContext())));
+            if (vp.checkProfile(getApplicationContext()) != R.string.no_error_found)
+                throw new RemoteException(getString(vp.checkProfile(getApplicationContext())));
             startProfile(vp);
         }
 
@@ -144,7 +146,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
                 cp.parseConfig(new StringReader(inlineConfig));
                 VpnProfile vp = cp.convertProfile();
                 vp.mName = "Remote APP VPN";
-                if (vp.checkProfile(getApplicationContext()) != R.string.no_error_found) throw new RemoteException(getString(vp.checkProfile(getApplicationContext())));
+                if (vp.checkProfile(getApplicationContext()) != R.string.no_error_found)
+                    throw new RemoteException(getString(vp.checkProfile(getApplicationContext())));
                 vp.mProfileCreator = callingApp;
                 /*int needpw = vp.needUserPWInput(false);
                 if(needpw !=0)
@@ -208,7 +211,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
         @Override
         public Intent prepare(String packageName) {
-            if (new ExternalAppDatabase(ExternalOpenVPNService.this).isAllowed(packageName)) return null;
+            if (new ExternalAppDatabase(ExternalOpenVPNService.this).isAllowed(packageName))
+                return null;
             Intent intent = new Intent();
             intent.setClass(ExternalOpenVPNService.this, ConfirmDialog.class);
             return intent;
@@ -285,7 +289,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
     @Override
     public void updateState(String state, String logmessage, int resid, ConnectionStatus level) {
         mMostRecentState = new UpdateMessage(state, logmessage, level);
-        if (ProfileManager.getLastConnectedVpn() != null) mMostRecentState.vpnUUID = ProfileManager.getLastConnectedVpn().getUUIDString();
+        if (ProfileManager.getLastConnectedVpn() != null)
+            mMostRecentState.vpnUUID = ProfileManager.getLastConnectedVpn().getUUIDString();
         Message msg = mHandler.obtainMessage(SEND_TOALL, mMostRecentState);
         msg.sendToTarget();
     }

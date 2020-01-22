@@ -2,26 +2,18 @@ package com.buzz.vpn;
 
 import android.content.ComponentName;
 import android.content.Context;
-
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -30,6 +22,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -40,7 +36,6 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -48,10 +43,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-
 import de.blinkt.openvpn.LaunchVPN;
 import de.blinkt.openvpn.VpnProfile;
-
 import de.blinkt.openvpn.core.App;
 import de.blinkt.openvpn.core.ConfigParser;
 import de.blinkt.openvpn.core.ConnectionStatus;
@@ -168,11 +161,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
         City = ConnectionDetails.getString("city", "NA");
         Image = ConnectionDetails.getString("image", "NA");
 
-        if (!FileID.isEmpty()) {
-            hasFile = true;
-        } else {
-            hasFile = false;
-        }
+        hasFile = !FileID.isEmpty();
 
         //Log.e("connection_file", Data.FileString);
 

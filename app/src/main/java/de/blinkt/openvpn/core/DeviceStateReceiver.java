@@ -102,10 +102,12 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
         } else if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
             boolean screenOffPause = prefs.getBoolean("screenoff", false);
             if (screenOffPause) {
-                if (ProfileManager.getLastConnectedVpn() != null && !ProfileManager.getLastConnectedVpn().mPersistTun) VpnStatus.logError(R.string.screen_nopersistenttun);
+                if (ProfileManager.getLastConnectedVpn() != null && !ProfileManager.getLastConnectedVpn().mPersistTun)
+                    VpnStatus.logError(R.string.screen_nopersistenttun);
                 screen = connectState.PENDINGDISCONNECT;
                 fillTrafficData();
-                if (network == connectState.DISCONNECTED || userpause == connectState.DISCONNECTED) screen = connectState.DISCONNECTED;
+                if (network == connectState.DISCONNECTED || userpause == connectState.DISCONNECTED)
+                    screen = connectState.DISCONNECTED;
             }
         } else if (Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
             // Network was disabled because screen off
@@ -178,7 +180,8 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
                 mDisconnectHandler.postDelayed(mDelayDisconnectRunnable, DISCONNECT_WAIT * 1000);
             }
         }
-        if (!netstatestring.equals(lastStateMsg)) VpnStatus.logInfo(R.string.netstatus, netstatestring);
+        if (!netstatestring.equals(lastStateMsg))
+            VpnStatus.logInfo(R.string.netstatus, netstatestring);
         VpnStatus.logDebug(String.format("Debug state info: %s, pause: %s, shouldbeconnected: %s, network: %s ", netstatestring, getPauseReason(), shouldBeConnected(), network));
         lastStateMsg = netstatestring;
     }

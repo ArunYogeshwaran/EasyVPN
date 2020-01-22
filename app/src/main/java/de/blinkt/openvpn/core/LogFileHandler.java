@@ -35,9 +35,11 @@ class LogFileHandler extends Handler {
     static final int LOG_INIT = 102;
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
     protected OutputStream mLogFile;
+
     public LogFileHandler(Looper looper) {
         super(looper);
     }
+
     public static String bytesToHex(byte[] bytes, int len) {
         len = Math.min(bytes.length, len);
         char[] hexChars = new char[len * 2];
@@ -48,6 +50,7 @@ class LogFileHandler extends Handler {
         }
         return new String(hexChars);
     }
+
     @Override
     public void handleMessage(Message msg) {
         try {
@@ -74,9 +77,11 @@ class LogFileHandler extends Handler {
             VpnStatus.logException(e);
         }
     }
+
     private void flushToDisk() throws IOException {
         mLogFile.flush();
     }
+
     private void trimLogFile() {
         try {
             mLogFile.flush();
@@ -85,18 +90,20 @@ class LogFileHandler extends Handler {
             e.printStackTrace();
         }
     }
+
     private void writeLogItemToDisk(LogItem li) throws IOException {
         // We do not really care if the log cache breaks between Android upgrades,
         // write binary format to disc
         byte[] liBytes = li.getMarschaledBytes();
         writeEscapedBytes(liBytes);
     }
+
     public void writeEscapedBytes(byte[] bytes) throws IOException {
         int magic = 0;
         for (byte b : bytes)
             if (b == MAGIC_BYTE || b == MAGIC_BYTE + 1)
                 magic++;
-        byte eBytes[] = new byte[bytes.length + magic];
+        byte[] eBytes = new byte[bytes.length + magic];
         int i = 0;
         for (byte b : bytes) {
             if (b == MAGIC_BYTE || b == MAGIC_BYTE + 1) {
@@ -113,10 +120,12 @@ class LogFileHandler extends Handler {
             mLogFile.write(eBytes);
         }
     }
+
     private void openLogFile(File cacheDir) throws FileNotFoundException {
         File logfile = new File(cacheDir, LOGFILE_NAME);
         mLogFile = new FileOutputStream(logfile);
     }
+
     private void readLogCache(File cacheDir) {
         try {
             File logfile = new File(cacheDir, LOGFILE_NAME);
@@ -135,6 +144,7 @@ class LogFileHandler extends Handler {
             }
         }
     }
+
     protected void readCacheContents(InputStream in) throws IOException {
         BufferedInputStream logFile = new BufferedInputStream(in);
         byte[] buf = new byte[16384];
@@ -155,7 +165,7 @@ class LogFileHandler extends Handler {
             int len = ByteBuffer.wrap(buf, skipped + 1, 4).asIntBuffer().get();
             // Marshalled LogItem
             int pos = 0;
-            byte buf2[] = new byte[buf.length];
+            byte[] buf2 = new byte[buf.length];
             while (pos < len) {
                 byte b = (byte) logFile.read();
                 if (b == MAGIC_BYTE) {
@@ -187,6 +197,7 @@ class LogFileHandler extends Handler {
         }
         VpnStatus.logDebug(R.string.reread_log, itemsRead);
     }
+
     protected void restoreLogItem(byte[] buf, int len) throws UnsupportedEncodingException {
         LogItem li = new LogItem(buf, len);
         if (li.verify()) {

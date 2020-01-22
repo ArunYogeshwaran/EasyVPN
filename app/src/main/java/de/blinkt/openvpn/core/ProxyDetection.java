@@ -36,6 +36,7 @@ public class ProxyDetection {
         }
         return null;
     }
+
     static Proxy getFirstProxy(URL url) throws URISyntaxException {
         System.setProperty("java.net.useSystemProxies", "true");
         List<Proxy> proxylist = ProxySelector.getDefault().select(url.toURI());

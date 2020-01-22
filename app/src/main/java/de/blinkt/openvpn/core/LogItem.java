@@ -18,6 +18,7 @@ import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
@@ -71,10 +72,11 @@ public class LogItem implements Parcelable {
         if (len == 0) {
             mMessage = null;
         } else {
-            if (len > bb.remaining()) throw new IndexOutOfBoundsException("String length " + len + " is bigger than remaining bytes " + bb.remaining());
+            if (len > bb.remaining())
+                throw new IndexOutOfBoundsException("String length " + len + " is bigger than remaining bytes " + bb.remaining());
             byte[] utf8bytes = new byte[len];
             bb.get(utf8bytes);
-            mMessage = new String(utf8bytes, "UTF-8");
+            mMessage = new String(utf8bytes, StandardCharsets.UTF_8);
         }
         int numArgs = bb.getInt();
         if (numArgs > 30) {
@@ -110,7 +112,8 @@ public class LogItem implements Parcelable {
                 }
             }
         }
-        if (bb.hasRemaining()) throw new UnsupportedEncodingException(bb.remaining() + " bytes left after unmarshaling everything");
+        if (bb.hasRemaining())
+            throw new UnsupportedEncodingException(bb.remaining() + " bytes left after unmarshaling everything");
     }
 
     public LogItem(Parcel in) {
@@ -222,7 +225,7 @@ public class LogItem implements Parcelable {
     }
 
     private void marschalString(String str, ByteBuffer bb) throws UnsupportedEncodingException {
-        byte[] utf8bytes = str.getBytes("UTF-8");
+        byte[] utf8bytes = str.getBytes(StandardCharsets.UTF_8);
         bb.putInt(utf8bytes.length);
         bb.put(utf8bytes);
     }
@@ -231,7 +234,7 @@ public class LogItem implements Parcelable {
         int len = bb.getInt();
         byte[] utf8bytes = new byte[len];
         bb.get(utf8bytes);
-        return new String(utf8bytes, "UTF-8");
+        return new String(utf8bytes, StandardCharsets.UTF_8);
     }
 
     public String getString(Context c) {
@@ -250,10 +253,12 @@ public class LogItem implements Parcelable {
                 }
             }
         } catch (UnknownFormatConversionException e) {
-            if (c != null) throw new UnknownFormatConversionException(e.getLocalizedMessage() + getString(null));
+            if (c != null)
+                throw new UnknownFormatConversionException(e.getLocalizedMessage() + getString(null));
             else throw e;
         } catch (java.util.FormatFlagsConversionMismatchException e) {
-            if (c != null) throw new FormatFlagsConversionMismatchException(e.getLocalizedMessage() + getString(null), e.getConversion());
+            if (c != null)
+                throw new FormatFlagsConversionMismatchException(e.getLocalizedMessage() + getString(null), e.getConversion());
             else throw e;
         }
     }
@@ -281,10 +286,13 @@ public class LogItem implements Parcelable {
             byte[] der = cert.getEncoded();
             md.update(der);
             byte[] digest = md.digest();
-            if (Arrays.equals(digest, VpnStatus.officalkey)) apksign = c.getString(R.string.official_build);
-            else if (Arrays.equals(digest, VpnStatus.officaldebugkey)) apksign = c.getString(R.string.debug_build);
+            if (Arrays.equals(digest, VpnStatus.officalkey))
+                apksign = c.getString(R.string.official_build);
+            else if (Arrays.equals(digest, VpnStatus.officaldebugkey))
+                apksign = c.getString(R.string.debug_build);
             else if (Arrays.equals(digest, VpnStatus.amazonkey)) apksign = "amazon version";
-            else if (Arrays.equals(digest, VpnStatus.fdroidkey)) apksign = "F-Droid built and signed version";
+            else if (Arrays.equals(digest, VpnStatus.fdroidkey))
+                apksign = "F-Droid built and signed version";
             else apksign = c.getString(R.string.built_by, cert.getSubjectX500Principal().getName());
             PackageInfo packageinfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
             version = packageinfo.versionName;

@@ -92,7 +92,8 @@ public class VpnStatus {
                    6 (i) optional TUN/TAP local IPv6 address.
 */
                 // Return only the assigned IP addresses in the UI
-                if (parts.length >= 7) message = String.format(Locale.US, "%s %s", parts[1], parts[6]);
+                if (parts.length >= 7)
+                    message = String.format(Locale.US, "%s %s", parts[1], parts[6]);
                 break;
         }
         while (message.endsWith(",")) message = message.substring(0, message.length() - 1);
@@ -174,7 +175,8 @@ public class VpnStatus {
     public synchronized static void addStateListener(StateListener sl) {
         if (!stateListener.contains(sl)) {
             stateListener.add(sl);
-            if (mLaststate != null) sl.updateState(mLaststate, mLaststatemsg, mLastStateresid, mLastLevel);
+            if (mLaststate != null)
+                sl.updateState(mLaststate, mLaststatemsg, mLastStateresid, mLastLevel);
         }
     }
 
@@ -304,7 +306,8 @@ public class VpnStatus {
         }
         if (logbuffer.size() > MAXLOGENTRIES + MAXLOGENTRIES / 2) {
             while (logbuffer.size() > MAXLOGENTRIES) logbuffer.removeFirst();
-            if (mLogFileHandler != null) mLogFileHandler.sendMessage(mLogFileHandler.obtainMessage(LogFileHandler.TRIM_LOG_FILE));
+            if (mLogFileHandler != null)
+                mLogFileHandler.sendMessage(mLogFileHandler.obtainMessage(LogFileHandler.TRIM_LOG_FILE));
         }
         //if (BuildConfig.DEBUG && !cachedLine && !BuildConfig.FLAVOR.equals("test"))
         //    Log.d("OpenVPN", logItem.getString(null));
@@ -339,7 +342,7 @@ public class VpnStatus {
 
     public static synchronized void updateByteCount(long in, long out) {
         TrafficHistory.LastDiff diff = trafficHistory.add(in, out);
-        Log.e("Some", String.valueOf(in) + " " +  out);
+        Log.e("Some", in + " " + out);
         for (ByteCountListener bcl : byteCountListener) {
             bcl.updateByteCount(in, out, diff.getDiffIn(), diff.getDiffOut());
         }
@@ -476,7 +479,7 @@ public class VpnStatus {
             case LEVEL_CONNECTED:
                 String[] parts = mLaststatemsg.split(",");
                 message = parts[2]; */
-                //Log.e("Parts", parts[0] + parts[1] + parts[2]);
+//Log.e("Parts", parts[0] + parts[1] + parts[2]);
                 /*
                    (a) the integer unix date/time,
                    (b) the state name,
@@ -489,7 +492,7 @@ public class VpnStatus {
                    5 (h) optional local port, and
                    6 (i) optional TUN/TAP local IPv6 address.
 */
-                // Return only the assigned IP addresses in the UI
+// Return only the assigned IP addresses in the UI
 
 /*                if (parts.length >= 7) message = String.format(Locale.US, "%s %s", parts[1], parts[6]);
                 break;

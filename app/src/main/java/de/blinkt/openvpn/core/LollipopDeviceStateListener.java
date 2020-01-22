@@ -3,6 +3,7 @@
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
+
 import android.annotation.TargetApi;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
@@ -18,6 +19,7 @@ public class LollipopDeviceStateListener extends ConnectivityManager.NetworkCall
     private String mLastConnectedStatus;
     private String mLastLinkProperties;
     private String mLastNetworkCapabilities;
+
     @Override
     public void onAvailable(Network network) {
         super.onAvailable(network);
@@ -26,6 +28,7 @@ public class LollipopDeviceStateListener extends ConnectivityManager.NetworkCall
             VpnStatus.logDebug("Connected to " + mLastConnectedStatus);
         }
     }
+
     @Override
     public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
         super.onLinkPropertiesChanged(network, linkProperties);
@@ -34,6 +37,7 @@ public class LollipopDeviceStateListener extends ConnectivityManager.NetworkCall
             VpnStatus.logDebug(String.format("Linkproperties of %s: %s", network, linkProperties));
         }
     }
+
     @Override
     public void onCapabilitiesChanged(Network network, NetworkCapabilities networkCapabilities) {
         super.onCapabilitiesChanged(network, networkCapabilities);

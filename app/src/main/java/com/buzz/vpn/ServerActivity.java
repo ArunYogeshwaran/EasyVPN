@@ -2,13 +2,9 @@ package com.buzz.vpn;
 
 import android.app.Activity;
 import android.content.Context;
-
 import android.content.SharedPreferences;
-
 import android.graphics.Typeface;
 import android.os.Bundle;
-
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -80,7 +74,7 @@ public class ServerActivity extends Activity {
         SharedPreferences AppValues = getSharedPreferences("app_values", 0);
         String AppDetails = En.decrypt(AppValues.getString("app_details", NULL));
 
-        if(AppDetails.isEmpty()){
+        if (AppDetails.isEmpty()) {
             getConnectionString getConnectionString = new getConnectionString();
             getConnectionString.GetAppDetails();
         } else {
@@ -88,11 +82,11 @@ public class ServerActivity extends Activity {
             Servers.Load();
         }
 
-        Typeface RobotoMedium = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Medium.ttf");
+        Typeface RobotoMedium = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Medium.ttf");
         TextView tv_servers_title = findViewById(R.id.tv_servers_title);
         tv_servers_title.setTypeface(RobotoMedium);
 
-        LinearLayout ll_server_back = findViewById (R.id.ll_server_back);
+        LinearLayout ll_server_back = findViewById(R.id.ll_server_back);
         ll_server_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +96,7 @@ public class ServerActivity extends Activity {
         });
 
 
-        LinearLayout ll_server_retry = findViewById (R.id.ll_server_refresh);
+        LinearLayout ll_server_retry = findViewById(R.id.ll_server_refresh);
         ll_server_retry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,7 +123,7 @@ public class ServerActivity extends Activity {
     }
 
     private class getConnectionString {
-        private void GetAppDetails (){
+        private void GetAppDetails() {
             iv_server_refresh.setBackground(getDrawable(R.drawable.ic_servers_process));
             RequestQueue queue = Volley.newRequestQueue(ServerActivity.this);
             queue.getCache().clear();
@@ -166,7 +160,7 @@ public class ServerActivity extends Activity {
             });
         }
 
-        private void GetFileDetails (){
+        private void GetFileDetails() {
             iv_server_refresh.setBackground(getDrawable(R.drawable.ic_servers_process));
             RequestQueue queue = Volley.newRequestQueue(ServerActivity.this);
             queue.getCache().clear();
@@ -196,7 +190,7 @@ public class ServerActivity extends Activity {
                         Editor.putString("app_details", En.encrypt(AppDetails));
                         Editor.putString("file_details", En.encrypt(FileDetails));
                         Editor.commit();
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         Bundle params = new Bundle();
                         params.putString("device_id", App.device_id);
                         params.putString("exception", "SA3" + e.toString());
@@ -213,10 +207,12 @@ public class ServerActivity extends Activity {
 
     class ServersList {
         private CategoryArray adapter;
-        ServersList (){
+
+        ServersList() {
 
         }
-        void Load(){
+
+        void Load() {
             EncryptData En = new EncryptData();
             SharedPreferences ConnectionDetails = getSharedPreferences("app_values", 0);
             AppDetails = En.decrypt(ConnectionDetails.getString("app_details", NULL));
@@ -265,7 +261,7 @@ public class ServerActivity extends Activity {
             listView_light = findViewById(R.id.ls_servers_list_light);
             listView_dark = findViewById(R.id.ls_servers_list_dark);
 
-            for (int x = 0; x < NumServers; x++){
+            for (int x = 0; x < NumServers; x++) {
                 Server Server = new Server();
                 Server.SetID(ServerArray[x][0]);
                 Server.SetFileID(ServerArray[x][1]);
@@ -300,7 +296,7 @@ public class ServerActivity extends Activity {
         TextView tv_country;
 
 
-        private  CategoryArray(List<Server> dataSet, Context mContext) {
+        private CategoryArray(List<Server> dataSet, Context mContext) {
             super(mContext, R.layout.server_list_item, dataSet);
             this.dataSet = dataSet;
         }
@@ -317,12 +313,12 @@ public class ServerActivity extends Activity {
             final Server Server = dataSet.get(position);
 
             if (Server != null) {
-                tv_country =  v.findViewById(R.id.tv_country);
-                ImageView iv_flag =  v.findViewById(R.id.iv_flag);
+                tv_country = v.findViewById(R.id.tv_country);
+                ImageView iv_flag = v.findViewById(R.id.iv_flag);
                 ImageView iv_signal_strength = v.findViewById(R.id.iv_signal_strength);
                 final LinearLayout ll_item = v.findViewById(R.id.ll_item);
 
-                Typeface RobotoRegular = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+                Typeface RobotoRegular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
 
                 tv_country.setText(Server.GetCity());
                 tv_country.setTypeface(RobotoRegular);
@@ -396,7 +392,6 @@ public class ServerActivity extends Activity {
                 }
 
 
-
                 ll_item.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -418,7 +413,7 @@ public class ServerActivity extends Activity {
                             Editor.commit();
                             App.hasFile = true;
                             App.abortConnection = true;
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             Bundle params = new Bundle();
                             params.putString("device_id", App.device_id);
                             params.putString("exception", "SA6" + e.toString());
@@ -448,7 +443,6 @@ public class ServerActivity extends Activity {
             }
 
 
-
             SharedPreferences ConnectionDetails = getSharedPreferences("connection_data", 0);
             int ID = Integer.valueOf(ConnectionDetails.getString("id", "1"));
 
@@ -469,9 +463,8 @@ public class ServerActivity extends Activity {
     }
 
 
-
     private class Server {
-// {"id":0, "file":0, "city":"Essen","country":"Germany","image":"germany","ip":"51.68.191.75","active":"true","signal":"a"},
+        // {"id":0, "file":0, "city":"Essen","country":"Germany","image":"germany","ip":"51.68.191.75","active":"true","signal":"a"},
         private String ID;
         private String FileID;
         private String City;
@@ -484,6 +477,7 @@ public class ServerActivity extends Activity {
         private String GetID() {
             return ID;
         }
+
         private void SetID(String ID) {
             this.ID = ID;
         }
@@ -491,6 +485,7 @@ public class ServerActivity extends Activity {
         private String GetFileID() {
             return FileID;
         }
+
         private void SetFileID(String FileID) {
             this.FileID = FileID;
         }
@@ -498,6 +493,7 @@ public class ServerActivity extends Activity {
         private String GetCity() {
             return City;
         }
+
         private void SetCity(String City) {
             this.City = City;
         }
@@ -505,6 +501,7 @@ public class ServerActivity extends Activity {
         private String GetCountry() {
             return Country;
         }
+
         private void SetCountry(String Country) {
             this.Country = Country;
         }
@@ -512,6 +509,7 @@ public class ServerActivity extends Activity {
         private String GetImage() {
             return Image;
         }
+
         private void SetImage(String Image) {
             this.Image = Image;
         }
@@ -519,6 +517,7 @@ public class ServerActivity extends Activity {
         private String GetIP() {
             return IP;
         }
+
         private void SetIP(String IP) {
             this.IP = IP;
         }
@@ -526,6 +525,7 @@ public class ServerActivity extends Activity {
         private String GetActive() {
             return Active;
         }
+
         private void SetActive(String Active) {
             this.Active = Active;
         }
@@ -533,11 +533,11 @@ public class ServerActivity extends Activity {
         private String GetSignal() {
             return Signal;
         }
+
         private void SetSignal(String Signal) {
             this.Signal = Signal;
         }
     }
-
 
 
 }

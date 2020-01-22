@@ -19,6 +19,7 @@ public class Connection implements Serializable, Cloneable {
     public boolean mUseCustomConfig = false;
     public boolean mEnabled = true;
     public int mConnectTimeout = 0;
+
     public String getConnectionBlock() {
         String cfg = "";
         // Server Address
@@ -38,13 +39,16 @@ public class Connection implements Serializable, Cloneable {
         }
         return cfg;
     }
+
     @Override
     public Connection clone() throws CloneNotSupportedException {
         return (Connection) super.clone();
     }
+
     public boolean isOnlyRemote() {
         return TextUtils.isEmpty(mCustomConfiguration) || !mUseCustomConfig;
     }
+
     public int getTimeout() {
         if (mConnectTimeout <= 0)
             return CONNECTION_DEFAULT_TIMEOUT;

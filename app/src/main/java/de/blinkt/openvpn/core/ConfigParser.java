@@ -4,8 +4,9 @@
  */
 package de.blinkt.openvpn.core;
 
-import androidx.core.util.Pair;
 import android.text.TextUtils;
+
+import androidx.core.util.Pair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -117,6 +118,7 @@ public class ConfigParser {
     private HashMap<String, Vector<Vector<String>>> options = new HashMap<String, Vector<Vector<String>>>();
     private HashMap<String, Vector<String>> meta = new HashMap<String, Vector<String>>();
     private String auth_user_pass_file;
+
     static public void useEmbbedUserAuth(VpnProfile np, String inlinedata) {
         String data = VpnProfile.getEmbeddedContent(inlinedata);
         String[] parts = data.split("\n");
@@ -125,6 +127,7 @@ public class ConfigParser {
             np.mPassword = parts[1];
         }
     }
+
     public void parseConfig(Reader reader) throws IOException, ConfigParseError {
         HashMap<String, String> optionAliases = new HashMap<>();
         optionAliases.put("server-poll-timeout", "timeout-connect");
@@ -169,6 +172,7 @@ public class ConfigParser {
             throw new ConfigParseError("File too large to parse: " + memoryError.getLocalizedMessage());
         }
     }
+
     private Vector<String> parsemeta(String line) {
         String meta = line.split("#\\sOVPN_ACCESS_SERVER_", 2)[1];
         String[] parts = meta.split("=", 2);
@@ -176,6 +180,7 @@ public class ConfigParser {
         Collections.addAll(rval, parts);
         return rval;
     }
+
     private void checkinlinefile(Vector<String> args, BufferedReader br) throws IOException, ConfigParseError {
         String arg0 = args.get(0).trim();
         // CHeck for <foo>
@@ -202,14 +207,17 @@ public class ConfigParser {
             args.add(inlinefile);
         }
     }
+
     public String getAuthUserPassFile() {
         return auth_user_pass_file;
     }
+
     private boolean space(char c) {
         // I really hope nobody is using zero bytes inside his/her config file
         // to sperate parameter but here we go:
         return Character.isWhitespace(c) || c == '\0';
     }
+
     // adapted openvpn's parse function to java
     private Vector<String> parseline(String line) throws ConfigParseError {
         Vector<String> parameters = new Vector<String>();
@@ -273,13 +281,14 @@ public class ConfigParser {
                 }
                 backslash = false;
             }
-			/* store parameter character */
+            /* store parameter character */
             if (out != 0) {
                 currentarg += out;
             }
         } while (pos++ < line.length());
         return parameters;
     }
+
     // This method is far too long
     @SuppressWarnings("ConstantConditions")
     public VpnProfile convertProfile() throws ConfigParseError, IOException {
@@ -603,6 +612,7 @@ public class ConfigParser {
         fixup(np);
         return np;
     }
+
     private Pair<Connection, Connection[]> parseConnection(String connection, Connection defaultValues) throws IOException, ConfigParseError {
         // Parse a connection Block as a new configuration file
         ConfigParser connectionParser = new ConfigParser();
@@ -611,6 +621,7 @@ public class ConfigParser {
         Pair<Connection, Connection[]> conn = connectionParser.parseConnectionOptions(defaultValues);
         return conn;
     }
+
     private Pair<Connection, Connection[]> parseConnectionOptions(Connection connDefault) throws ConfigParseError {
         Connection conn;
         if (connDefault != null)
@@ -676,6 +687,7 @@ public class ConfigParser {
         }
         return Pair.create(conn, connections);
     }
+
     private void checkRedirectParameters(VpnProfile np, Vector<Vector<String>> defgw, boolean defaultRoute) {
         boolean noIpv4 = false;
         if (defaultRoute)
@@ -693,6 +705,7 @@ public class ConfigParser {
         if (defaultRoute && !noIpv4)
             np.mUseDefaultRoute = true;
     }
+
     private boolean isUdpProto(String proto) throws ConfigParseError {
         boolean isudp;
         if (proto.equals("udp") || proto.equals("udp4") || proto.equals("udp6"))
@@ -708,6 +721,7 @@ public class ConfigParser {
             throw new ConfigParseError("Unsupported option to --proto " + proto);
         return isudp;
     }
+
     private void checkIgnoreAndInvalidOptions(VpnProfile np) throws ConfigParseError {
         for (String option : unsupportedOptions)
             if (options.containsKey(option))
@@ -724,6 +738,7 @@ public class ConfigParser {
             np.mUseCustomConfig = true;
         }
     }
+
     boolean ignoreThisOption(Vector<String> option) {
         for (String[] ignoreOption : ignoreOptionsWithArg) {
             if (option.size() < ignoreOption.length)
@@ -738,6 +753,7 @@ public class ConfigParser {
         }
         return false;
     }
+
     //! Generate options for custom options
     private String getOptionStrings(Vector<Vector<String>> option) {
         String custom = "";
@@ -756,11 +772,13 @@ public class ConfigParser {
         }
         return custom;
     }
+
     private void fixup(VpnProfile np) {
         if (np.mRemoteCN.equals(np.mServerName)) {
             np.mRemoteCN = "";
         }
     }
+
     private Vector<String> getOption(String option, int minarg, int maxarg) throws ConfigParseError {
         Vector<Vector<String>> alloptions = getAllOption(option, minarg, maxarg);
         if (alloptions == null)
@@ -768,6 +786,7 @@ public class ConfigParser {
         else
             return alloptions.lastElement();
     }
+
     private Vector<Vector<String>> getAllOption(String option, int minarg, int maxarg) throws ConfigParseError {
         Vector<Vector<String>> args = options.get(option);
         if (args == null)
@@ -781,12 +800,15 @@ public class ConfigParser {
         options.remove(option);
         return args;
     }
+
     enum linestate {
         initial,
         readin_single_quote, reading_quoted, reading_unquoted, done
     }
+
     public static class ConfigParseError extends Exception {
         private static final long serialVersionUID = -60L;
+
         public ConfigParseError(String msg) {
             super(msg);
         }

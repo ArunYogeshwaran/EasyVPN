@@ -24,6 +24,7 @@ public class VPNLaunchHelper {
     private static final String MININONPIEVPN = "nopie_openvpn";
     private static final String MINIPIEVPN = "pie_openvpn";
     private static final String OVPNCONFIGFILE = "android.conf";
+
     private static String writeMiniVPN(Context context) {
         String[] abis;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
@@ -44,20 +45,24 @@ public class VPNLaunchHelper {
         }
         return null;
     }
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private static String[] getSupportedABIsLollipop() {
         return Build.SUPPORTED_ABIS;
     }
+
     private static String getMiniVPNExecutableName() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
             return MINIPIEVPN;
         else
             return MININONPIEVPN;
     }
+
     public static String[] replacePieWithNoPie(String[] mArgv) {
         mArgv[0] = mArgv[0].replace(MINIPIEVPN, MININONPIEVPN);
         return mArgv;
     }
+
     static String[] buildOpenvpnArgv(Context c) {
         Vector<String> args = new Vector<>();
         String binaryName = writeMiniVPN(c);
@@ -72,6 +77,7 @@ public class VPNLaunchHelper {
         args.add(getConfigFilePath(c));
         return args.toArray(new String[args.size()]);
     }
+
     private static boolean writeMiniVPNBinary(Context context, String abi, File mvpnout) {
         try {
             InputStream mvpn;
@@ -82,7 +88,7 @@ public class VPNLaunchHelper {
                 return false;
             }
             FileOutputStream fout = new FileOutputStream(mvpnout);
-            byte buf[] = new byte[4096];
+            byte[] buf = new byte[4096];
             int lenread = mvpn.read(buf);
             while (lenread > 0) {
                 fout.write(buf, 0, lenread);
@@ -99,6 +105,7 @@ public class VPNLaunchHelper {
             return false;
         }
     }
+
     public static void startOpenVpn(VpnProfile startprofile, Context context) {
         Intent startVPN = startprofile.prepareStartService(context);
         if (startVPN != null) {
@@ -112,6 +119,7 @@ public class VPNLaunchHelper {
                 */
         }
     }
+
     public static String getConfigFilePath(Context context) {
         return context.getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGFILE;
     }

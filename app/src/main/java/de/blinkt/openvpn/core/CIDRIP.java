@@ -3,11 +3,13 @@
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
+
 import java.util.Locale;
 
 class CIDRIP {
     String mIp;
     int len;
+
     public CIDRIP(String ip, String mask) {
         mIp = ip;
         long netmask = getInt(mask);
@@ -26,10 +28,12 @@ class CIDRIP {
             len = 32 - lenZeros;
         }
     }
+
     public CIDRIP(String address, int prefix_length) {
         len = prefix_length;
         mIp = address;
     }
+
     static long getInt(String ipaddr) {
         String[] ipt = ipaddr.split("\\.");
         long ip = 0;
@@ -39,10 +43,12 @@ class CIDRIP {
         ip += Integer.parseInt(ipt[3]);
         return ip;
     }
+
     @Override
     public String toString() {
         return String.format(Locale.ENGLISH, "%s/%d", mIp, len);
     }
+
     public boolean normalise() {
         long ip = getInt(mIp);
         long newip = ip & (0xffffffffL << (32 - len));
@@ -53,6 +59,7 @@ class CIDRIP {
             return false;
         }
     }
+
     public long getInt() {
         return getInt(mIp);
     }
