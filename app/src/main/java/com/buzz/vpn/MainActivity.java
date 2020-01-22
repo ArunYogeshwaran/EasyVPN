@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
 
     boolean EnableConnectButton = false;
 
-    int  progress = 0;
+    int progress = 0;
 
     String TODAY;
 
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
     // new
     boolean hasFile = false;
     String FileID = "NULL", File = "NULL", City = "NULL", Image = "NULL";
-    String DarkMode  = "false";
+    String DarkMode = "false";
 
     ConstraintLayout constLayoutMain;
 
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
         SharedPreferences SettingsDetails = getSharedPreferences("settings_data", 0);
         DarkMode = SettingsDetails.getString("dark_mode", "false");
         constLayoutMain = findViewById(R.id.constraintLayoutMain);
-        if(DarkMode.equals("true")){
+        if (DarkMode.equals("true")) {
             constLayoutMain.setBackgroundColor(getResources().getColor(R.color.colorDarkBackground));
             iv_home.setImageResource(R.drawable.ic_home_white);
             iv_servers.setImageResource(R.drawable.ic_go_forward_white);
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
             iv_servers.setImageResource(R.drawable.ic_go_forward);
         }
 
-        if(!isAppDetails && !isConnectionDetails) {
+        if (!isAppDetails && !isConnectionDetails) {
             try {
                 Intent Welcome = new Intent(MainActivity.this, WelcomeActivity.class);
                 startActivity(Welcome);
@@ -161,7 +161,6 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
         }
 
 
-
         EncryptData En = new EncryptData();
         SharedPreferences ConnectionDetails = getSharedPreferences("connection_data", 0);
         FileID = ConnectionDetails.getString("file_id", "NA");
@@ -169,14 +168,13 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
         City = ConnectionDetails.getString("city", "NA");
         Image = ConnectionDetails.getString("image", "NA");
 
-        if(!FileID.isEmpty()){
+        if (!FileID.isEmpty()) {
             hasFile = true;
         } else {
             hasFile = false;
         }
 
         //Log.e("connection_file", Data.FileString);
-
 
 
         try {
@@ -186,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
             intent.setAction(OpenVPNService.START_SERVICE);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
             //bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-        } catch (Exception e){
+        } catch (Exception e) {
             Bundle params = new Bundle();
             params.putString("device_id", App.device_id);
             params.putString("exception", "MA2" + e.toString());
@@ -208,7 +206,6 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -220,9 +217,9 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         TODAY = df.format(Today);
 
-        Typeface RobotoMedium = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Medium.ttf");
-        Typeface RobotoRegular = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
-        Typeface RobotoBold = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
+        Typeface RobotoMedium = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Medium.ttf");
+        Typeface RobotoRegular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        Typeface RobotoBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
 
         iv_home = findViewById(R.id.iv_home);
         iv_servers = findViewById(R.id.iv_servers);
@@ -259,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
         tv_data_today_text.setTypeface(RobotoRegular);
         tv_data_today_name.setTypeface(RobotoMedium);
 
-        LinearLayout linearLayoutMainHome = findViewById (R.id.linearLayoutMainHome);
+        LinearLayout linearLayoutMainHome = findViewById(R.id.linearLayoutMainHome);
         linearLayoutMainHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -271,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
             }
         });
 
-        LinearLayout linearLayoutMainServers = findViewById (R.id.linearLayoutMainServers);
+        LinearLayout linearLayoutMainServers = findViewById(R.id.linearLayoutMainServers);
         linearLayoutMainServers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -304,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                 startActivity(Servers);
                                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                             } else {
-                                if(hasInternetConnection()) {
+                                if (hasInternetConnection()) {
                                     try {
                                         start_vpn(File);
                                         final Handler handlerToday = new Handler();
@@ -342,16 +339,16 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                                     App.CountDown = App.CountDown - 1;
 
                                                     iv_progress_bar.getLayoutParams().width = progress;
-                                                    progress = progress +  (int) getResources().getDimension(R.dimen.lo_10dpGrid);
+                                                    progress = progress + (int) getResources().getDimension(R.dimen.lo_10dpGrid);
                                                     tv_main_count_down.setText(String.valueOf(App.CountDown));
 
-                                                    if(App.connection_status == 2){
+                                                    if (App.connection_status == 2) {
                                                         ConnectionTimer.cancel();
                                                         SharedPreferences SharedAppDetails = getSharedPreferences("settings_data", 0);
                                                         SharedPreferences.Editor Editor = SharedAppDetails.edit();
                                                         Editor.putString("connection_time", String.valueOf(App.CountDown));
                                                         Editor.commit();
-                                                        if(App.CountDown >= 20) {
+                                                        if (App.CountDown >= 20) {
                                                             SharedPreferences settings = getSharedPreferences("settings_data", 0);
                                                             String Rate = settings.getString("rate", "false");
                                                             if (Rate.equals("false")) {
@@ -372,11 +369,11 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                                         startAnimation(MainActivity.this, R.id.la_animation, R.anim.fade_out_1000, false);
                                                     }
 
-                                                    if (App.CountDown <= 20){
+                                                    if (App.CountDown <= 20) {
                                                         EnableConnectButton = true;
                                                     }
 
-                                                    if(App.CountDown <= 1){
+                                                    if (App.CountDown <= 1) {
                                                         ConnectionTimer.cancel();
                                                         startAnimation(MainActivity.this, R.id.tv_main_count_down, R.anim.fade_out_500, false);
                                                         startAnimation(MainActivity.this, R.id.iv_progress_bar, R.anim.fade_out_500, false);
@@ -444,7 +441,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                 }
                             }
                         } else {
-                            if(EnableConnectButton) {
+                            if (EnableConnectButton) {
                                 try {
                                     stop_vpn();
                                     try {
@@ -485,7 +482,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
 
                                     SharedPreferences settings = getSharedPreferences("settings_data", 0);
                                     String ConnectionTime = settings.getString("connection_time", "0");
-                                    if(Long.valueOf(ConnectionTime) >= 20) {
+                                    if (Long.valueOf(ConnectionTime) >= 20) {
                                         SharedPreferences.Editor Editor = settings.edit();
                                         Editor.putString("connection_time", "0");
                                         Editor.commit();
@@ -523,7 +520,6 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
         });
 
 
-
         // ui refresh
         thread = new Thread() {
             boolean ShowData = true;
@@ -538,14 +534,14 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                             @Override
                             public void run() {
                                 // set country flag
-                                if (App.abortConnection){
+                                if (App.abortConnection) {
                                     App.abortConnection = false;
 
-                                    if(App.connection_status != 2) {
+                                    if (App.connection_status != 2) {
                                         App.CountDown = 1;
                                     }
 
-                                    if(App.connection_status == 2){
+                                    if (App.connection_status == 2) {
                                         try {
                                             stop_vpn();
                                             try {
@@ -658,25 +654,25 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
 
                                 // set connection button
                                 if (hasFile) {
-                                    if(App.connection_status == 0){
+                                    if (App.connection_status == 0) {
                                         // disconnected
                                         btn_connection.setText("Connect");
                                         btn_connection.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.button_connect));
 
-                                    } else if(App.connection_status == 1){
+                                    } else if (App.connection_status == 1) {
                                         // connecting
-                                        if(EnableConnectButton){
+                                        if (EnableConnectButton) {
                                             btn_connection.setText("Cancel");
                                             btn_connection.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.button_retry));
                                         } else {
                                             btn_connection.setText("Connecting");
                                             btn_connection.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.button_retry));
                                         }
-                                    } else if(App.connection_status == 2){
+                                    } else if (App.connection_status == 2) {
                                         // connected
                                         btn_connection.setText("Disconnect");
                                         btn_connection.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.button_disconnect));
-                                    }  else if(App.connection_status == 3){
+                                    } else if (App.connection_status == 3) {
                                         // connected
                                         btn_connection.setText("Remove VPN Apps");
                                         btn_connection.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.button_retry));
@@ -687,24 +683,24 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
 
                                 // set message text
                                 if (hasFile) {
-                                    if(hasInternetConnection()){
-                                        if(App.connection_status == 0){
+                                    if (hasInternetConnection()) {
+                                        if (App.connection_status == 0) {
                                             // disconnected
                                             tv_message_top_text.setText("The connection is ready");
                                             tv_message_bottom_text.setText("Tap CONNECT to start :)");
 
-                                        } else if(App.connection_status == 1){
+                                        } else if (App.connection_status == 1) {
                                             // connecting
                                             tv_message_top_text.setText("Connecting " + City);
                                             tv_message_bottom_text.setText(VpnStatus.getLastCleanLogMessage(MainActivity.this));
 
-                                        } else if(App.connection_status == 2){
+                                        } else if (App.connection_status == 2) {
                                             // connected
                                             tv_message_top_text.setText("Connected " + City);
                                             tv_message_bottom_text.setText(Data.StringCountDown);
 
 
-                                        } else if(App.connection_status == 3){
+                                        } else if (App.connection_status == 3) {
                                             // connected
                                             tv_message_top_text.setText("Dangerous VPN apps found");
                                             tv_message_bottom_text.setText("Your device at a risk, remove other VPN apps! potential dangerous VPN apps keep blocking internet connection");
@@ -717,9 +713,9 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                 }
 
                                 // show data limit
-                                if(ShowData){
+                                if (ShowData) {
                                     ShowData = false;
-                                    if(App.connection_status == 0) {
+                                    if (App.connection_status == 0) {
                                         final Handler handlerData = new Handler();
                                         handlerData.postDelayed(new Runnable() {
                                             @Override
@@ -727,7 +723,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                                 startAnimation(MainActivity.this, R.id.ll_main_today, R.anim.slide_up_800, true);
                                             }
                                         }, 1000);
-                                    }  else if(App.connection_status == 1) {
+                                    } else if (App.connection_status == 1) {
                                         final Handler handlerData = new Handler();
                                         handlerData.postDelayed(new Runnable() {
                                             @Override
@@ -735,7 +731,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                                 startAnimation(MainActivity.this, R.id.ll_main_today, R.anim.slide_up_800, true);
                                             }
                                         }, 1000);
-                                    }  else if(App.connection_status == 2) {
+                                    } else if (App.connection_status == 2) {
                                         final Handler handlerData = new Handler();
                                         handlerData.postDelayed(new Runnable() {
                                             @Override
@@ -743,7 +739,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                                 startAnimation(MainActivity.this, R.id.ll_main_data, R.anim.slide_up_800, true);
                                             }
                                         }, 1000);
-                                    } else if(App.connection_status == 3){
+                                    } else if (App.connection_status == 3) {
                                         // connected
                                         final Handler handlerData = new Handler();
                                         handlerData.postDelayed(new Runnable() {
@@ -757,20 +753,20 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
 
                                 // get daily usage
                                 if (hasFile) {
-                                    if(App.connection_status == 0){
+                                    if (App.connection_status == 0) {
                                         // disconnected
-                                        if(App.ShowDailyUsage) {
+                                        if (App.ShowDailyUsage) {
                                             App.ShowDailyUsage = false;
                                             String PREF_USAGE = "daily_usage";
                                             SharedPreferences settings = getSharedPreferences(PREF_USAGE, 0);
                                             long long_usage_today = settings.getLong(TODAY, 0);
 
-                                            if(long_usage_today < 1000){
+                                            if (long_usage_today < 1000) {
                                                 tv_data_today_text.setText("1KB");
-                                            }  else if ((long_usage_today >= 1000) && (long_usage_today <= 1000_000)) {
-                                                tv_data_today_text.setText((long_usage_today/1000) + "KB");
-                                            } else  {
-                                                tv_data_today_text.setText((long_usage_today/1000_000) + "MB");
+                                            } else if ((long_usage_today >= 1000) && (long_usage_today <= 1000_000)) {
+                                                tv_data_today_text.setText((long_usage_today / 1000) + "KB");
+                                            } else {
+                                                tv_data_today_text.setText((long_usage_today / 1000_000) + "MB");
                                             }
                                         }
                                     }
@@ -778,7 +774,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
 
                                 // show animation
                                 if (hasFile) {
-                                    if(ShowAnimation) {
+                                    if (ShowAnimation) {
                                         ShowAnimation = false;
                                         if (App.connection_status == 0) {
                                             // disconnected
@@ -794,7 +790,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                             la_animation.setAnimation(R.raw.conneting);
                                             la_animation.playAnimation();
 
-                                        } else if(App.connection_status == 3){
+                                        } else if (App.connection_status == 3) {
                                             // connected
                                             startAnimation(MainActivity.this, R.id.la_animation, R.anim.fade_in_1000, true);
                                             la_animation.cancelAnimation();
@@ -832,7 +828,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                     if (ni.isConnected())
                         haveConnectedMobile = true;
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             Bundle params = new Bundle();
             params.putString("device_id", App.device_id);
             params.putString("exception", "MA10" + e.toString());
@@ -842,7 +838,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
         return haveConnectedWifi || haveConnectedMobile;
     }
 
-    private void start_vpn(String VPNFile){
+    private void start_vpn(String VPNFile) {
         SharedPreferences sp_settings;
         sp_settings = getSharedPreferences("daily_usage", 0);
         long connection_today = sp_settings.getLong(TODAY + "_connections", 0);
@@ -950,7 +946,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
         }
     }
 
-    public void stop_vpn(){
+    public void stop_vpn() {
         App.connection_status = 0;
         OpenVPNService.abortConnectionVPN = true;
         ProfileManager.setConntectedVpnProfileDisconnected(this);
@@ -1035,14 +1031,14 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
             public void run() {
 
                 // size
-                if(Total < 1000){
+                if (Total < 1000) {
                     tv_data_text.setText("1KB");
                     tv_data_name.setText("USED");
-                }  else if ((Total >= 1000) && (Total <= 1000_000)) {
-                    tv_data_text.setText((Total/1000) + "KB");
+                } else if ((Total >= 1000) && (Total <= 1000_000)) {
+                    tv_data_text.setText((Total / 1000) + "KB");
                     tv_data_name.setText("USED");
-                } else  {
-                    tv_data_text.setText((Total/1000_000) + "MB");
+                } else {
+                    tv_data_text.setText((Total / 1000_000) + "MB");
                     tv_data_name.setText("USED");
                 }
             }
@@ -1051,7 +1047,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
 
     public void startAnimation(Context ctx, int view, int animation, boolean show) {
         final View Element = findViewById(view);
-        if(show) {
+        if (show) {
             Element.setVisibility(View.VISIBLE);
         } else {
             Element.setVisibility(View.INVISIBLE);
