@@ -80,12 +80,20 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private static final int PRIORITY_MIN = -2;
     private static final int PRIORITY_DEFAULT = 0;
     private static final int PRIORITY_MAX = 2;
+    public static boolean abortConnectionVPN = false;
     private static boolean mNotificationAlwaysVisible = false;
     private static Class mNotificationActivityClass;
     private final Vector<String> mDnslist = new Vector<>();
     private final NetworkSpace mRoutes = new NetworkSpace();
     private final NetworkSpace mRoutesv6 = new NetworkSpace();
     private final Object mProcessLock = new Object();
+    CountDownTimer ConnectionTimer;
+    long long_usage_today, long_usage_week, long_usage_month, long_usage_now, long_usage_time_today, long_usage_time_total;
+    long long_milli_seconds = 0;
+    String PREF_USAGE = "daily_usage", TODAY, WEEK, MONTH, YEAR;
+    SharedPreferences sp_settings;
+    int Random;
+    String City, Image;
     private String lastChannel;
     private Thread mProcessThread = null;
     private VpnProfile mProfile;
@@ -99,18 +107,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private long mConnecttime;
     private boolean mOvpn3 = false;
     private OpenVPNManagement mManagement;
-
-
-    public static boolean abortConnectionVPN = false;
-    CountDownTimer ConnectionTimer;
-    long long_usage_today, long_usage_week, long_usage_month, long_usage_now, long_usage_time_today, long_usage_time_total;
-    long long_milli_seconds = 0;
-    String PREF_USAGE = "daily_usage", TODAY, WEEK, MONTH, YEAR;
-    SharedPreferences sp_settings;
-    int Random;
-    String City, Image;
-
-    private FirebaseAnalytics mFirebaseAnalytics;
     private final IBinder mBinder = new IOpenVPNServiceInternal.Stub() {
         @Override
         public boolean protect(int fd) throws RemoteException {
@@ -127,6 +123,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             return OpenVPNService.this.stopVPN(replaceConnection);
         }
     };
+    private FirebaseAnalytics mFirebaseAnalytics;
     private String mLastTunCfg;
     private String mRemoteGW;
     private Handler guiHandler;

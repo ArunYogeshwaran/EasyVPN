@@ -292,8 +292,8 @@ public class ServerActivity extends Activity {
 
     public class CategoryArray extends ArrayAdapter<Server> {
 
-        private List<Server> dataSet;
         TextView tv_country;
+        private List<Server> dataSet;
 
 
         private CategoryArray(List<Server> dataSet, Context mContext) {
