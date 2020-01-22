@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2014 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package org.spongycastle.util.encoders;
 
@@ -8,7 +9,16 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class Base64Encoder implements Encoder {
-    protected final byte[] encodingTable = {(byte) 'A', (byte) 'B', (byte) 'C', (byte) 'D', (byte) 'E', (byte) 'F', (byte) 'G', (byte) 'H', (byte) 'I', (byte) 'J', (byte) 'K', (byte) 'L', (byte) 'M', (byte) 'N', (byte) 'O', (byte) 'P', (byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T', (byte) 'U', (byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z', (byte) 'a', (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e', (byte) 'f', (byte) 'g', (byte) 'h', (byte) 'i', (byte) 'j', (byte) 'k', (byte) 'l', (byte) 'm', (byte) 'n', (byte) 'o', (byte) 'p', (byte) 'q', (byte) 'r', (byte) 's', (byte) 't', (byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x', (byte) 'y', (byte) 'z', (byte) '0', (byte) '1', (byte) '2', (byte) '3', (byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8', (byte) '9', (byte) '+', (byte) '/'};
+    protected final byte[] encodingTable = {(byte) 'A', (byte) 'B', (byte) 'C', (byte) 'D',
+            (byte) 'E', (byte) 'F', (byte) 'G', (byte) 'H', (byte) 'I', (byte) 'J', (byte) 'K',
+            (byte) 'L', (byte) 'M', (byte) 'N', (byte) 'O', (byte) 'P', (byte) 'Q', (byte) 'R',
+            (byte) 'S', (byte) 'T', (byte) 'U', (byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y',
+            (byte) 'Z', (byte) 'a', (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e', (byte) 'f',
+            (byte) 'g', (byte) 'h', (byte) 'i', (byte) 'j', (byte) 'k', (byte) 'l', (byte) 'm',
+            (byte) 'n', (byte) 'o', (byte) 'p', (byte) 'q', (byte) 'r', (byte) 's', (byte) 't',
+            (byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x', (byte) 'y', (byte) 'z', (byte) '0',
+            (byte) '1', (byte) '2', (byte) '3', (byte) '4', (byte) '5', (byte) '6', (byte) '7',
+            (byte) '8', (byte) '9', (byte) '+', (byte) '/'};
     /*
      * set up the decoding table.
      */
@@ -112,7 +122,8 @@ public class Base64Encoder implements Encoder {
             outLen += 3;
             i = nextI(data, i, finish);
         }
-        outLen += decodeLastBlock(out, (char) data[end - 4], (char) data[end - 3], (char) data[end - 2], (char) data[end - 1]);
+        outLen += decodeLastBlock(out, (char) data[end - 4], (char) data[end - 3],
+                (char) data[end - 2], (char) data[end - 1]);
         return outLen;
     }
 
@@ -156,7 +167,8 @@ public class Base64Encoder implements Encoder {
             length += 3;
             i = nextI(data, i, finish);
         }
-        length += decodeLastBlock(out, data.charAt(end - 4), data.charAt(end - 3), data.charAt(end - 2), data.charAt(end - 1));
+        length += decodeLastBlock(out, data.charAt(end - 4), data.charAt(end - 3),
+                data.charAt(end - 2), data.charAt(end - 1));
         return length;
     }
 

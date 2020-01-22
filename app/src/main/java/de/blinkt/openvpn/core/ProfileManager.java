@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
 
@@ -87,13 +88,15 @@ public class ProfileManager {
         return mLastConnectedVpn != null && mLastConnectedVpn == tmpprofile;
     }
 
-    private static void saveProfile(Context context, VpnProfile profile, boolean updateVersion, boolean isTemporary) {
+    private static void saveProfile(Context context, VpnProfile profile, boolean updateVersion,
+                                    boolean isTemporary) {
         if (updateVersion) profile.mVersion += 1;
         ObjectOutputStream vpnFile;
         String filename = profile.getUUID().toString() + ".vp";
         if (isTemporary) filename = TEMPORARY_PROFILE_FILENAME + ".vp";
         try {
-            vpnFile = new ObjectOutputStream(context.openFileOutput(filename, Activity.MODE_PRIVATE));
+            vpnFile = new ObjectOutputStream(context.openFileOutput(filename,
+                    Activity.MODE_PRIVATE));
             vpnFile.writeObject(profile);
             vpnFile.flush();
             vpnFile.close();
@@ -122,7 +125,8 @@ public class ProfileManager {
         }
         if (tried > 5) {
             int ver = profile == null ? -1 : profile.mVersion;
-            VpnStatus.logError(String.format(Locale.US, "Used x %d tries to get current version (%d/%d) of the profile", tried, ver, version));
+            VpnStatus.logError(String.format(Locale.US, "Used x %d tries to get current version " +
+                    "(%d/%d) of the profile", tried, ver, version));
         }
         return profile;
     }
@@ -188,7 +192,8 @@ public class ProfileManager {
         vlist.add(TEMPORARY_PROFILE_FILENAME);
         for (String vpnentry : vlist) {
             try {
-                ObjectInputStream vpnfile = new ObjectInputStream(context.openFileInput(vpnentry + ".vp"));
+                ObjectInputStream vpnfile =
+                        new ObjectInputStream(context.openFileInput(vpnentry + ".vp"));
                 VpnProfile vp = ((VpnProfile) vpnfile.readObject());
                 // Sanity check
                 if (vp == null || vp.mName == null || vp.getUUID() == null) continue;

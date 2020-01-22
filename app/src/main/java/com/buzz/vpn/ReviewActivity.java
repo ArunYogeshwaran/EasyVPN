@@ -59,7 +59,8 @@ public class ReviewActivity extends Activity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startAnimation(ReviewActivity.this, R.id.btn_review_submit, R.anim.slide_up_800, true);
+                startAnimation(ReviewActivity.this, R.id.btn_review_submit, R.anim.slide_up_800,
+                        true);
             }
         }, 500);
 
@@ -111,7 +112,8 @@ public class ReviewActivity extends Activity {
                     params.putString("exception", "RA1" + activityNotFound.toString());
                     mFirebaseAnalytics.logEvent("app_param_error", params);
 
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.buzz.vpn")));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google" +
+                            ".com/store/apps/details?id=com.buzz.vpn")));
                 } catch (Exception e) {
                     params = new Bundle();
                     params.putString("device_id", App.device_id);
@@ -147,7 +149,8 @@ public class ReviewActivity extends Activity {
                     params.putString("device_id", App.device_id);
                     params.putString("exception", "RA2" + activityNotFound.toString());
                     mFirebaseAnalytics.logEvent("app_param_error", params);
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.buzz.vpn")));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google" +
+                            ".com/store/apps/details?id=com.buzz.vpn")));
                 } catch (Exception e) {
                     params = new Bundle();
                     params.putString("device_id", App.device_id);

@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
 
@@ -21,7 +22,8 @@ import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
 
 import static de.blinkt.openvpn.core.OpenVPNManagement.pauseReason;
 
-public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountListener, OpenVPNManagement.PausedStateCallback {
+public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountListener,
+        OpenVPNManagement.PausedStateCallback {
     private final Handler mDisconnectHandler;
     // Data traffic limit in bytes
     private final long TRAFFIC_LIMIT = 64 * 1024;
@@ -145,7 +147,8 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 				extrainfo+=wifiinfo.getBSSID();
 				subtype += wifiinfo.getNetworkId();
 			}*/
-            netstatestring = String.format("%2$s %4$s to %1$s %3$s", networkInfo.getTypeName(), networkInfo.getDetailedState(), extrainfo, subtype);
+            netstatestring = String.format("%2$s %4$s to %1$s %3$s", networkInfo.getTypeName(),
+                    networkInfo.getDetailedState(), extrainfo, subtype);
         }
         int lastNetwork = -1;
         if (networkInfo != null && networkInfo.getState() == State.CONNECTED) {
@@ -153,7 +156,8 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
             boolean pendingDisconnect = (network == connectState.PENDINGDISCONNECT);
             network = connectState.SHOULDBECONNECTED;
             boolean sameNetwork;
-            sameNetwork = !(lastConnectedNetwork == null || lastConnectedNetwork.getType() != networkInfo.getType() || !equalsObj(lastConnectedNetwork.getExtraInfo(), networkInfo.getExtraInfo()));
+            sameNetwork =
+                    !(lastConnectedNetwork == null || lastConnectedNetwork.getType() != networkInfo.getType() || !equalsObj(lastConnectedNetwork.getExtraInfo(), networkInfo.getExtraInfo()));
             /* Same network, connection still 'established' */
             if (pendingDisconnect && sameNetwork) {
                 mDisconnectHandler.removeCallbacks(mDelayDisconnectRunnable);
@@ -182,7 +186,8 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
         }
         if (!netstatestring.equals(lastStateMsg))
             VpnStatus.logInfo(R.string.netstatus, netstatestring);
-        VpnStatus.logDebug(String.format("Debug state info: %s, pause: %s, shouldbeconnected: %s, network: %s ", netstatestring, getPauseReason(), shouldBeConnected(), network));
+        VpnStatus.logDebug(String.format("Debug state info: %s, pause: %s, shouldbeconnected: %s," +
+                " network: %s ", netstatestring, getPauseReason(), shouldBeConnected(), network));
         lastStateMsg = netstatestring;
     }
 
@@ -202,7 +207,8 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
     }
 
     private NetworkInfo getCurrentNetworkInfo(Context context) {
-        ConnectivityManager conn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager conn =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return conn.getActiveNetworkInfo();
     }
 

@@ -54,8 +54,12 @@ public class WelcomeActivity extends AppCompatActivity {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        StringGetAppURL = "https://gist.githubusercontent.com/ArunYogeshwaran/b6943a26c434971622c3386386a57c0b/raw/bfaead71b7567b53ac30f80061b4c1b20dc6f81b/appdetails.json";
-        StringGetConnectionURL = "https://gist.githubusercontent.com/ArunYogeshwaran/00be81449754056c60e339374a35006b/raw/b1039c39ad04be2a28a48f16735513a49c332305/filedetails.json";
+        StringGetAppURL = "https://gist.githubusercontent" +
+                ".com/ArunYogeshwaran/b6943a26c434971622c3386386a57c0b/raw" +
+                "/bfaead71b7567b53ac30f80061b4c1b20dc6f81b/appdetails.json";
+        StringGetConnectionURL = "https://gist.githubusercontent" +
+                ".com/ArunYogeshwaran/00be81449754056c60e339374a35006b/raw" +
+                "/b1039c39ad04be2a28a48f16735513a49c332305/filedetails.json";
         //StringGetConnectionURL = "https://gayankuruppu.github.io/buzz/connection.html";
 
         Typeface RobotoMedium = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Medium.ttf");
@@ -80,7 +84,8 @@ public class WelcomeActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startAnimation(WelcomeActivity.this, R.id.ll_welcome_details, R.anim.slide_up_800, true);
+                startAnimation(WelcomeActivity.this, R.id.ll_welcome_details, R.anim.slide_up_800
+                        , true);
             }
         }, 1000);
 
@@ -98,7 +103,8 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/gayanvoice/android-vpn-client-ics-openvpn")));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github" +
+                            ".com/gayanvoice/android-vpn-client-ics-openvpn")));
                     /*
                     The following lines of code load the PlayStore
 
@@ -112,8 +118,10 @@ public class WelcomeActivity extends AppCompatActivity {
                     startActivity(intent);
                     */
                 } catch (ActivityNotFoundException activityNotFound) {
-                    // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.buzz.vpn")));
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/gayanvoice/android-vpn-client-ics-openvpn")));
+                    // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play
+                    // .google.com/store/apps/details?id=com.buzz.vpn")));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github" +
+                            ".com/gayanvoice/android-vpn-client-ics-openvpn")));
 
                 } catch (Exception e) {
                     Bundle params = new Bundle();
@@ -216,8 +224,10 @@ public class WelcomeActivity extends AppCompatActivity {
                 final int max = 4;
                 Random = new Random().nextInt((max - min) + 1) + min;
 
-                String Ads = "NULL", cuVersion = "NULL", upVersion = "NULL", upTitle = "NULL", upDescription = "NULL", upSize = "NULL";
-                String ID = "NULL", FileID = "NULL", File = "NULL", City = "NULL", Country = "NULL", Image = "NULL",
+                String Ads = "NULL", cuVersion = "NULL", upVersion = "NULL", upTitle = "NULL",
+                        upDescription = "NULL", upSize = "NULL";
+                String ID = "NULL", FileID = "NULL", File = "NULL", City = "NULL", Country =
+                        "NULL", Image = "NULL",
                         IP = "NULL", Active = "NULL", Signal = "NULL";
                 String BlockedApps = "NULL";
 
@@ -345,14 +355,17 @@ public class WelcomeActivity extends AppCompatActivity {
                 if (Data.isConnectionDetails) {
                     if (cuVersion.equals(upVersion)) {
                         finish();
-                        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                        overridePendingTransition(R.anim.anim_slide_in_right,
+                                R.anim.anim_slide_out_left);
                     } else {
-                        startAnimation(WelcomeActivity.this, R.id.ll_welcome_loading, R.anim.fade_out_500, false);
+                        startAnimation(WelcomeActivity.this, R.id.ll_welcome_loading,
+                                R.anim.fade_out_500, false);
                         Handler handlerData = new Handler();
                         handlerData.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                startAnimation(WelcomeActivity.this, R.id.ll_update_details, R.anim.slide_up_800, true);
+                                startAnimation(WelcomeActivity.this, R.id.ll_update_details,
+                                        R.anim.slide_up_800, true);
                             }
                         }, 1000);
                     }

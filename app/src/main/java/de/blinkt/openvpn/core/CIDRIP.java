@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
 
@@ -53,7 +54,8 @@ class CIDRIP {
         long ip = getInt(mIp);
         long newip = ip & (0xffffffffL << (32 - len));
         if (newip != ip) {
-            mIp = String.format(Locale.US, "%d.%d.%d.%d", (newip & 0xff000000) >> 24, (newip & 0xff0000) >> 16, (newip & 0xff00) >> 8, newip & 0xff);
+            mIp = String.format(Locale.US, "%d.%d.%d.%d", (newip & 0xff000000) >> 24,
+                    (newip & 0xff0000) >> 16, (newip & 0xff00) >> 8, newip & 0xff);
             return true;
         } else {
             return false;

@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
 
@@ -73,7 +74,8 @@ public class LogItem implements Parcelable {
             mMessage = null;
         } else {
             if (len > bb.remaining())
-                throw new IndexOutOfBoundsException("String length " + len + " is bigger than remaining bytes " + bb.remaining());
+                throw new IndexOutOfBoundsException("String length " + len + " is bigger than " +
+                        "remaining bytes " + bb.remaining());
             byte[] utf8bytes = new byte[len];
             bb.get(utf8bytes);
             mMessage = new String(utf8bytes, StandardCharsets.UTF_8);
@@ -113,7 +115,8 @@ public class LogItem implements Parcelable {
             }
         }
         if (bb.hasRemaining())
-            throw new UnsupportedEncodingException(bb.remaining() + " bytes left after unmarshaling everything");
+            throw new UnsupportedEncodingException(bb.remaining() + " bytes left after " +
+                    "unmarshaling everything");
     }
 
     public LogItem(Parcel in) {
@@ -178,7 +181,8 @@ public class LogItem implements Parcelable {
         return Arrays.equals(mArgs, other.mArgs) && ((other.mMessage == null && mMessage == other.mMessage) || mMessage.equals(other.mMessage)) && mRessourceId == other.mRessourceId && ((mLevel == null && other.mLevel == mLevel) || other.mLevel.equals(mLevel)) && mVerbosityLevel == other.mVerbosityLevel && logtime == other.logtime;
     }
 
-    public byte[] getMarschaledBytes() throws UnsupportedEncodingException, BufferOverflowException {
+    public byte[] getMarschaledBytes() throws UnsupportedEncodingException,
+            BufferOverflowException {
         ByteBuffer bb = ByteBuffer.allocate(16384);
         bb.put((byte) 0x0);               //version
         bb.putLong(logtime);              //8
@@ -247,7 +251,8 @@ public class LogItem implements Parcelable {
                     if (mArgs == null) return c.getString(mRessourceId);
                     else return c.getString(mRessourceId, mArgs);
                 } else {
-                    String str = String.format(Locale.ENGLISH, "Log (no context) resid %d", mRessourceId);
+                    String str = String.format(Locale.ENGLISH, "Log (no context) resid %d",
+                            mRessourceId);
                     if (mArgs != null) str += join("|", mArgs);
                     return str;
                 }
@@ -279,9 +284,12 @@ public class LogItem implements Parcelable {
         String apksign = "error getting package signature";
         String version = "error getting version";
         try {
-            @SuppressLint("PackageManagerGetSignatures") Signature raw = c.getPackageManager().getPackageInfo(c.getPackageName(), PackageManager.GET_SIGNATURES).signatures[0];
+            @SuppressLint("PackageManagerGetSignatures") Signature raw =
+                    c.getPackageManager().getPackageInfo(c.getPackageName(),
+                            PackageManager.GET_SIGNATURES).signatures[0];
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
-            X509Certificate cert = (X509Certificate) cf.generateCertificate(new ByteArrayInputStream(raw.toByteArray()));
+            X509Certificate cert =
+                    (X509Certificate) cf.generateCertificate(new ByteArrayInputStream(raw.toByteArray()));
             MessageDigest md = MessageDigest.getInstance("SHA-1");
             byte[] der = cert.getEncoded();
             md.update(der);

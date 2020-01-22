@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn;
 
@@ -85,9 +86,11 @@ public class LaunchVPN extends Activity {
             IServiceStatus service = IServiceStatus.Stub.asInterface(binder);
             try {
                 if (mTransientAuthPW != null)
-                    service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.AUTHPASSWORD, mTransientAuthPW);
+                    service.setCachedPassword(mSelectedProfile.getUUIDString(),
+                            PasswordCache.AUTHPASSWORD, mTransientAuthPW);
                 if (mTransientCertOrPCKS12PW != null)
-                    service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.PCKS12ORCERTPASSWORD, mTransientCertOrPCKS12PW);
+                    service.setCachedPassword(mSelectedProfile.getUUIDString(),
+                            PasswordCache.PCKS12ORCERTPASSWORD, mTransientCertOrPCKS12PW);
                 onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -144,7 +147,8 @@ public class LaunchVPN extends Activity {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle(getString(R.string.pw_request_dialog_title, getString(type)));
         dialog.setMessage(getString(R.string.pw_request_dialog_prompt, mSelectedProfile.mName));
-        @SuppressLint("InflateParams") final View userpwlayout = getLayoutInflater().inflate(R.layout.userpass, null, false);
+        @SuppressLint("InflateParams") final View userpwlayout =
+                getLayoutInflater().inflate(R.layout.userpass, null, false);
         if (type == R.string.password) {
             ((EditText) userpwlayout.findViewById(R.id.username)).setText(mSelectedProfile.mUsername);
             ((EditText) userpwlayout.findViewById(R.id.password)).setText(mSelectedProfile.mPassword);
@@ -162,12 +166,15 @@ public class LaunchVPN extends Activity {
         } else {
             dialog.setView(entry);
         }
-        AlertDialog.Builder builder = dialog.setPositiveButton(android.R.string.ok, new OnClickListener() {
+        AlertDialog.Builder builder = dialog.setPositiveButton(android.R.string.ok,
+                new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (type == R.string.password) {
-                    mSelectedProfile.mUsername = ((EditText) userpwlayout.findViewById(R.id.username)).getText().toString();
-                    String pw = ((EditText) userpwlayout.findViewById(R.id.password)).getText().toString();
+                    mSelectedProfile.mUsername =
+                            ((EditText) userpwlayout.findViewById(R.id.username)).getText().toString();
+                    String pw =
+                            ((EditText) userpwlayout.findViewById(R.id.password)).getText().toString();
                     if (((CheckBox) userpwlayout.findViewById(R.id.save_password)).isChecked()) {
                         mSelectedProfile.mPassword = pw;
                     } else {
@@ -184,7 +191,9 @@ public class LaunchVPN extends Activity {
         dialog.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                VpnStatus.updateStateString("USER_VPN_PASSWORD_CANCELLED", "", R.string.state_user_vpn_password_cancelled, ConnectionStatus.LEVEL_NOTCONNECTED);
+                VpnStatus.updateStateString("USER_VPN_PASSWORD_CANCELLED", "",
+                        R.string.state_user_vpn_password_cancelled,
+                        ConnectionStatus.LEVEL_NOTCONNECTED);
 
                 finish();
             }
@@ -197,9 +206,12 @@ public class LaunchVPN extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == START_VPN_PROFILE) {
             if (resultCode == Activity.RESULT_OK) {
-                int needpw = mSelectedProfile.needUserPWInput(mTransientCertOrPCKS12PW, mTransientAuthPW);
+                int needpw = mSelectedProfile.needUserPWInput(mTransientCertOrPCKS12PW,
+                        mTransientAuthPW);
                 if (needpw != 0) {
-                    VpnStatus.updateStateString("USER_VPN_PASSWORD", "", R.string.state_user_vpn_password, ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
+                    VpnStatus.updateStateString("USER_VPN_PASSWORD", "",
+                            R.string.state_user_vpn_password,
+                            ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
                     askForPW(needpw);
                 } else {
                     SharedPreferences prefs = Preferences.getDefaultSharedPreferences(this);
@@ -211,7 +223,9 @@ public class LaunchVPN extends Activity {
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 // User does not want us to start, so we just vanish
-                VpnStatus.updateStateString("USER_VPN_PERMISSION_CANCELLED", "", R.string.state_user_vpn_permission_cancelled, ConnectionStatus.LEVEL_NOTCONNECTED);
+                VpnStatus.updateStateString("USER_VPN_PERMISSION_CANCELLED", "",
+                        R.string.state_user_vpn_permission_cancelled,
+                        ConnectionStatus.LEVEL_NOTCONNECTED);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                     VpnStatus.logError(R.string.nought_alwayson_warning);
                 App.abortConnection = true;
@@ -270,7 +284,9 @@ public class LaunchVPN extends Activity {
             execeuteSUcmd("chown system /dev/tun");
         }
         if (intent != null) {
-            VpnStatus.updateStateString("USER_VPN_PERMISSION", "", R.string.state_user_vpn_permission, ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
+            VpnStatus.updateStateString("USER_VPN_PERMISSION", "",
+                    R.string.state_user_vpn_permission,
+                    ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
             // Start the query
             try {
                 startActivityForResult(intent, START_VPN_PROFILE);

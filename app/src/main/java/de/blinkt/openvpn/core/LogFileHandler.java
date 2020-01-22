@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2015 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
 
@@ -156,12 +157,14 @@ class LogFileHandler extends Handler {
             while (buf[skipped] != MAGIC_BYTE) {
                 skipped++;
                 if (!(logFile.read(buf, skipped + 4, 1) == 1) || skipped + 10 > buf.length) {
-                    VpnStatus.logDebug(String.format(Locale.US, "Skipped %d bytes and no a magic byte found", skipped));
+                    VpnStatus.logDebug(String.format(Locale.US, "Skipped %d bytes and no a magic " +
+                            "byte found", skipped));
                     break readloop;
                 }
             }
             if (skipped > 0)
-                VpnStatus.logDebug(String.format(Locale.US, "Skipped %d bytes before finding a magic byte", skipped));
+                VpnStatus.logDebug(String.format(Locale.US, "Skipped %d bytes before finding a " +
+                        "magic byte", skipped));
             int len = ByteBuffer.wrap(buf, skipped + 1, 4).asIntBuffer().get();
             // Marshalled LogItem
             int pos = 0;
@@ -169,7 +172,8 @@ class LogFileHandler extends Handler {
             while (pos < len) {
                 byte b = (byte) logFile.read();
                 if (b == MAGIC_BYTE) {
-                    VpnStatus.logDebug(String.format(Locale.US, "Unexpected magic byte found at pos %d, abort current log item", pos));
+                    VpnStatus.logDebug(String.format(Locale.US, "Unexpected magic byte found at " +
+                            "pos %d, abort current log item", pos));
                     read = logFile.read(buf, 1, 4) + 1;
                     continue readloop;
                 } else if (b == MAGIC_BYTE + 1) {
@@ -179,7 +183,8 @@ class LogFileHandler extends Handler {
                     else if (b == 1)
                         b = MAGIC_BYTE + 1;
                     else {
-                        VpnStatus.logDebug(String.format(Locale.US, "Escaped byte not 0 or 1: %d", b));
+                        VpnStatus.logDebug(String.format(Locale.US, "Escaped byte not 0 or 1: %d"
+                                , b));
                         read = logFile.read(buf, 1, 4) + 1;
                         continue readloop;
                     }

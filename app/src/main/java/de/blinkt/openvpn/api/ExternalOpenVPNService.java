@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.api;
 
@@ -68,7 +69,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent != null && Intent.ACTION_UNINSTALL_PACKAGE.equals(intent.getAction())) {
-                // Check if the running config is temporary and installed by the app being uninstalled
+                // Check if the running config is temporary and installed by the app being
+                // uninstalled
                 VpnProfile vp = ProfileManager.getLastConnectedVpn();
                 if (ProfileManager.isTempProfile()) {
                     if (intent.getPackage().equals(vp.mProfileCreator)) {
@@ -108,7 +110,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
             List<APIVpnProfile> profiles = new LinkedList<>();
             for (VpnProfile vp : pm.getProfiles()) {
                 if (!vp.profileDeleted)
-                    profiles.add(new APIVpnProfile(vp.getUUIDString(), vp.mName, vp.mUserEditable, vp.mProfileCreator));
+                    profiles.add(new APIVpnProfile(vp.getUUIDString(), vp.mName, vp.mUserEditable
+                            , vp.mProfileCreator));
             }
             return profiles;
         }
@@ -151,7 +154,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
                 vp.mProfileCreator = callingApp;
                 /*int needpw = vp.needUserPWInput(false);
                 if(needpw !=0)
-                    throw new RemoteException("The inline file would require user input: " + getString(needpw));
+                    throw new RemoteException("The inline file would require user input: " +
+                    getString(needpw));
                     */
                 ProfileManager.setTemporaryProfile(ExternalOpenVPNService.this, vp);
                 startProfile(vp);
@@ -179,7 +183,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
                 pm.addProfile(vp);
                 pm.saveProfile(ExternalOpenVPNService.this, vp);
                 pm.saveProfileList(ExternalOpenVPNService.this);
-                return new APIVpnProfile(vp.getUUIDString(), vp.mName, vp.mUserEditable, vp.mProfileCreator);
+                return new APIVpnProfile(vp.getUUIDString(), vp.mName, vp.mUserEditable,
+                        vp.mProfileCreator);
             } catch (IOException e) {
                 VpnStatus.logException(e);
                 return null;
@@ -229,7 +234,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
         public void registerStatusCallback(IOpenVPNStatusCallback cb) throws RemoteException {
             checkOpenVPNPermission();
             if (cb != null) {
-                cb.newStatus(mMostRecentState.vpnUUID, mMostRecentState.state, mMostRecentState.logmessage, mMostRecentState.level.name());
+                cb.newStatus(mMostRecentState.vpnUUID, mMostRecentState.state,
+                        mMostRecentState.logmessage, mMostRecentState.level.name());
                 mCallbacks.register(cb);
             }
         }

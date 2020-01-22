@@ -34,7 +34,8 @@ public class UsageActivity extends Activity {
 
     TextView tv_usage_title;
     ImageView iv_go_forward;
-    TextView tv_usage_data_title, tv_usage_connection_details, tv_usage_socialmedia_title, tv_usage_appstore_title;
+    TextView tv_usage_data_title, tv_usage_connection_details, tv_usage_socialmedia_title,
+            tv_usage_appstore_title;
     TextView tv_usage_cu_title, tv_usage_cu_version;
     TextView tv_usage_share_title, tv_usage_share_description;
     TextView tv_usage_app_name, tv_usage_app_copyright;
@@ -247,18 +248,27 @@ public class UsageActivity extends Activity {
         long time_total = sp_settings.getLong("total_time", 0);
 
 
-        String TodayTime = String.format(getString(R.string.string_of_two_number), (time_today / (1000 * 60 * 60)) % 24) + ":" +
-                String.format(getString(R.string.string_of_two_number), TimeUnit.MILLISECONDS.toMinutes(time_today) % 60) + ":" +
-                String.format(getString(R.string.string_of_two_number), (TimeUnit.MILLISECONDS.toSeconds(time_today) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time_today))));
+        String TodayTime = String.format(getString(R.string.string_of_two_number),
+                (time_today / (1000 * 60 * 60)) % 24) + ":" +
+                String.format(getString(R.string.string_of_two_number),
+                        TimeUnit.MILLISECONDS.toMinutes(time_today) % 60) + ":" +
+                String.format(getString(R.string.string_of_two_number),
+                        (TimeUnit.MILLISECONDS.toSeconds(time_today) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time_today))));
 
-        String YesterdayTime = String.format(getString(R.string.string_of_two_number), (time_yesterday / (1000 * 60 * 60)) % 24) + ":" +
-                String.format(getString(R.string.string_of_two_number), TimeUnit.MILLISECONDS.toMinutes(time_yesterday) % 60) + ":" +
-                String.format(getString(R.string.string_of_two_number), (TimeUnit.MILLISECONDS.toSeconds(time_yesterday) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time_yesterday))));
+        String YesterdayTime = String.format(getString(R.string.string_of_two_number),
+                (time_yesterday / (1000 * 60 * 60)) % 24) + ":" +
+                String.format(getString(R.string.string_of_two_number),
+                        TimeUnit.MILLISECONDS.toMinutes(time_yesterday) % 60) + ":" +
+                String.format(getString(R.string.string_of_two_number),
+                        (TimeUnit.MILLISECONDS.toSeconds(time_yesterday) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time_yesterday))));
 
 
-        String TotalTime = String.format(getString(R.string.string_of_two_number), (time_total / (1000 * 60 * 60)) % 24) + ":" +
-                String.format(getString(R.string.string_of_two_number), TimeUnit.MILLISECONDS.toMinutes(time_total) % 60) + ":" +
-                String.format(getString(R.string.string_of_two_number), (TimeUnit.MILLISECONDS.toSeconds(time_total) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time_total))));
+        String TotalTime = String.format(getString(R.string.string_of_two_number),
+                (time_total / (1000 * 60 * 60)) % 24) + ":" +
+                String.format(getString(R.string.string_of_two_number),
+                        TimeUnit.MILLISECONDS.toMinutes(time_total) % 60) + ":" +
+                String.format(getString(R.string.string_of_two_number),
+                        (TimeUnit.MILLISECONDS.toSeconds(time_total) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time_total))));
 
         TextView tv_usage_time_today_title = findViewById(R.id.tv_usage_time_today_title);
         TextView tv_usage_time_today_time = findViewById(R.id.tv_usage_time_today_time);
@@ -295,7 +305,8 @@ public class UsageActivity extends Activity {
         long connections_yesterday = sp_settings.getLong(YESTERDAY + "_connections", 0);
         long connections_total = sp_settings.getLong("total_connections", 0);
 
-        TextView tv_usage_connection_today_title = findViewById(R.id.tv_usage_connection_today_title);
+        TextView tv_usage_connection_today_title =
+                findViewById(R.id.tv_usage_connection_today_title);
         TextView tv_usage_connection_today_size = findViewById(R.id.tv_usage_connection_today_size);
         TextView tv_usage_connection_today_used = findViewById(R.id.tv_usage_connection_today_used);
         tv_usage_connection_today_title.setTypeface(RobotoRegular);
@@ -303,16 +314,20 @@ public class UsageActivity extends Activity {
         tv_usage_connection_today_used.setTypeface(RobotoMedium);
         tv_usage_connection_today_size.setText(String.valueOf(connections_today));
 
-        TextView tv_usage_connection_yesterday_title = findViewById(R.id.tv_usage_connection_yesterday_title);
-        TextView tv_usage_connection_yesterday_size = findViewById(R.id.tv_usage_connection_yesterday_size);
-        TextView tv_usage_connection_yesterday_used = findViewById(R.id.tv_usage_connection_yesterday_used);
+        TextView tv_usage_connection_yesterday_title =
+                findViewById(R.id.tv_usage_connection_yesterday_title);
+        TextView tv_usage_connection_yesterday_size =
+                findViewById(R.id.tv_usage_connection_yesterday_size);
+        TextView tv_usage_connection_yesterday_used =
+                findViewById(R.id.tv_usage_connection_yesterday_used);
         tv_usage_connection_yesterday_title.setTypeface(RobotoRegular);
         tv_usage_connection_yesterday_size.setTypeface(RobotoLight);
         tv_usage_connection_yesterday_used.setTypeface(RobotoMedium);
         tv_usage_connection_yesterday_size.setText(String.valueOf(connections_yesterday));
 
 
-        TextView tv_usage_connection_total_title = findViewById(R.id.tv_usage_connection_total_title);
+        TextView tv_usage_connection_total_title =
+                findViewById(R.id.tv_usage_connection_total_title);
         TextView tv_usage_connection_total_size = findViewById(R.id.tv_usage_connection_total_size);
         TextView tv_usage_connection_total_used = findViewById(R.id.tv_usage_connection_total_used);
         tv_usage_connection_total_title.setTypeface(RobotoRegular);
@@ -327,7 +342,8 @@ public class UsageActivity extends Activity {
             public void onClick(View v) {
                 try {
                     finish();
-                    overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                    overridePendingTransition(R.anim.anim_slide_in_right,
+                            R.anim.anim_slide_out_left);
                 } catch (Exception e) {
                     Bundle params = new Bundle();
                     params.putString("device_id", App.device_id);
@@ -392,7 +408,8 @@ public class UsageActivity extends Activity {
                     mFirebaseAnalytics.logEvent("app_param_click", params);
 
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("https://www.youtube.com/channel/UCnCrXRM8U75iKvSpO6yXFKQ"));
+                    intent.setData(Uri.parse("https://www.youtube" +
+                            ".com/channel/UCnCrXRM8U75iKvSpO6yXFKQ"));
                     startActivity(intent);
                 } catch (Exception e) {
                     Bundle params = new Bundle();
@@ -462,7 +479,8 @@ public class UsageActivity extends Activity {
                     intent.setData(Uri.parse("market://details?id=com.buzz.vpn"));
                     startActivity(intent);
                 } catch (ActivityNotFoundException activityNotFound) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.buzz.vpn")));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google" +
+                            ".com/store/apps/details?id=com.buzz.vpn")));
                 } catch (Exception e) {
                     Bundle params = new Bundle();
                     params.putString("device_id", App.device_id);
@@ -483,7 +501,8 @@ public class UsageActivity extends Activity {
                     mFirebaseAnalytics.logEvent("app_param_click", params);
 
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("https://www.amazon.com/Buzz-VPN-Best-Free-Unlimited/dp/B07T3X677T/ref=BuzzApp"));
+                    intent.setData(Uri.parse("https://www.amazon.com/Buzz-VPN-Best-Free-Unlimited" +
+                            "/dp/B07T3X677T/ref=BuzzApp"));
                     startActivity(intent);
                 } catch (Exception e) {
                     Bundle params = new Bundle();
@@ -507,7 +526,8 @@ public class UsageActivity extends Activity {
                     mFirebaseAnalytics.logEvent("app_param_click", params);
 
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("https://buzz-vpn-fast-free-unlimited-secure-vpn-proxy.en.uptodown.com/android"));
+                    intent.setData(Uri.parse("https://buzz-vpn-fast-free-unlimited-secure-vpn" +
+                            "-proxy.en.uptodown.com/android"));
                     startActivity(intent);
                 } catch (Exception e) {
                     Bundle params = new Bundle();
@@ -581,7 +601,8 @@ public class UsageActivity extends Activity {
 
                     Intent Servers = new Intent(UsageActivity.this, FAQActivity.class);
                     startActivity(Servers);
-                    overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                    overridePendingTransition(R.anim.anim_slide_in_right,
+                            R.anim.anim_slide_out_left);
                 } catch (Exception e) {
                     Bundle params = new Bundle();
                     params.putString("device_id", App.device_id);
@@ -616,13 +637,17 @@ public class UsageActivity extends Activity {
                 try {
                     if ("huawei".equalsIgnoreCase(android.os.Build.MANUFACTURER)) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(UsageActivity.this);
-                        builder.setTitle("Let app always run in background?").setMessage("Allowing Buzz VPN to always run in the background app may can reduce memory usage")
+                        builder.setTitle("Let app always run in background?").setMessage(
+                                "Allowing Buzz VPN to always run in the background app may can " +
+                                        "reduce memory usage")
                                 .setPositiveButton("Allow", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         try {
                                             Intent intent = new Intent();
-                                            intent.setComponent(new ComponentName("com.huawei.systemmanager", "com.huawei.systemmanager.optimize.process.ProtectActivity"));
+                                            intent.setComponent(new ComponentName("com.huawei" +
+                                                    ".systemmanager", "com.huawei.systemmanager" +
+                                                    ".optimize.process.ProtectActivity"));
                                             startActivity(intent);
                                         } catch (Exception e) {
                                             Bundle params = new Bundle();
@@ -661,7 +686,8 @@ public class UsageActivity extends Activity {
                     mFirebaseAnalytics.logEvent("app_param_click", params);
 
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("https://gayanvoice.github.io/oml/buzz/privacypolicy.html"));
+                    intent.setData(Uri.parse("https://gayanvoice.github.io/oml/buzz/privacypolicy" +
+                            ".html"));
                     startActivity(intent);
                 } catch (Exception e) {
                     Bundle params = new Bundle();
@@ -692,7 +718,8 @@ public class UsageActivity extends Activity {
 
                     Intent Servers = new Intent(UsageActivity.this, ContactActivity.class);
                     startActivity(Servers);
-                    overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                    overridePendingTransition(R.anim.anim_slide_in_right,
+                            R.anim.anim_slide_out_left);
                 } catch (Exception e) {
                     Bundle params = new Bundle();
                     params.putString("device_id", App.device_id);
@@ -717,7 +744,10 @@ public class UsageActivity extends Activity {
                 try {
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Wow! Change to dark mode, check VPN data usage, +10 countries, and it's only 5MB! Download the App NOW! From Google Play http://bit.ly/gotogoogleplay | Get the APK from UpToDown http://bit.ly/gotouptodown Aptoid http://bit.ly/gotoaptoide");
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Wow! Change to dark mode, check VPN " +
+                            "data usage, +10 countries, and it's only 5MB! Download the App NOW! " +
+                            "From Google Play http://bit.ly/gotogoogleplay | Get the APK from " +
+                            "UpToDown http://bit.ly/gotouptodown Aptoid http://bit.ly/gotoaptoide");
                     sendIntent.setType("text/plain");
                     startActivity(sendIntent);
                 } catch (Exception e) {

@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.api;
 
@@ -30,7 +31,8 @@ public class APIVpnProfile implements Parcelable {
         //mProfileCreator = in.readString();
     }
 
-    public APIVpnProfile(String uuidString, String name, boolean userEditable, String profileCreator) {
+    public APIVpnProfile(String uuidString, String name, boolean userEditable,
+                         String profileCreator) {
         mUUID = uuidString;
         mName = name;
         mUserEditable = userEditable;

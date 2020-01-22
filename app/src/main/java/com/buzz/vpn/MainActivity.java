@@ -57,7 +57,8 @@ import static com.buzz.vpn.Data.isAppDetails;
 import static com.buzz.vpn.Data.isConnectionDetails;
 
 
-public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCountListener, VpnStatus.StateListener {
+public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCountListener,
+        VpnStatus.StateListener {
 
 
     IOpenVPNServiceInternal mService;
@@ -252,7 +253,8 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                 if (Data.isAppDetails) {
                     Intent About = new Intent(MainActivity.this, UsageActivity.class);
                     startActivity(About);
-                    overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                    overridePendingTransition(R.anim.anim_slide_in_left,
+                            R.anim.anim_slide_out_right);
                 }
             }
         });
@@ -264,7 +266,8 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                 if (Data.isConnectionDetails) {
                     Intent Servers = new Intent(MainActivity.this, ServerActivity.class);
                     startActivity(Servers);
-                    overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                    overridePendingTransition(R.anim.anim_slide_in_right,
+                            R.anim.anim_slide_out_left);
                 }
             }
         });
@@ -273,8 +276,10 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
         handlerToday.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startAnimation(MainActivity.this, R.id.linearLayoutMainHome, R.anim.anim_slide_down, true);
-                startAnimation(MainActivity.this, R.id.linearLayoutMainServers, R.anim.anim_slide_down, true);
+                startAnimation(MainActivity.this, R.id.linearLayoutMainHome,
+                        R.anim.anim_slide_down, true);
+                startAnimation(MainActivity.this, R.id.linearLayoutMainServers,
+                        R.anim.anim_slide_down, true);
             }
         }, 1000);
 
@@ -286,9 +291,11 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                     public void run() {
                         if (!App.isStart) {
                             if (!hasFile) {
-                                Intent Servers = new Intent(MainActivity.this, ServerActivity.class);
+                                Intent Servers = new Intent(MainActivity.this,
+                                        ServerActivity.class);
                                 startActivity(Servers);
-                                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                                overridePendingTransition(R.anim.anim_slide_in_right,
+                                        R.anim.anim_slide_out_left);
                             } else {
                                 if (hasInternetConnection()) {
                                     try {
@@ -297,7 +304,9 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                         handlerToday.postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
-                                                startAnimation(MainActivity.this, R.id.ll_main_today, R.anim.slide_down_800, false);
+                                                startAnimation(MainActivity.this,
+                                                        R.id.ll_main_today, R.anim.slide_down_800
+                                                        , false);
                                             }
                                         }, 500);
 
@@ -305,11 +314,14 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                         handlerData.postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
-                                                startAnimation(MainActivity.this, R.id.ll_main_data, R.anim.slide_up_800, true);
+                                                startAnimation(MainActivity.this,
+                                                        R.id.ll_main_data, R.anim.slide_up_800,
+                                                        true);
                                             }
                                         }, 1000);
 
-                                        startAnimation(MainActivity.this, R.id.la_animation, R.anim.fade_in_1000, true);
+                                        startAnimation(MainActivity.this, R.id.la_animation,
+                                                R.anim.fade_in_1000, true);
                                         la_animation.cancelAnimation();
                                         la_animation.setAnimation(R.raw.conneting);
                                         la_animation.playAnimation();
@@ -318,7 +330,8 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                         iv_progress_bar = findViewById(R.id.iv_progress_bar);
                                         iv_progress_bar.getLayoutParams().width = 10;
                                         progress = 10;
-                                        startAnimation(MainActivity.this, R.id.iv_progress_bar, R.anim.fade_in_1000, true);
+                                        startAnimation(MainActivity.this, R.id.iv_progress_bar,
+                                                R.anim.fade_in_1000, true);
 
                                         tv_main_count_down.setVisibility(View.VISIBLE);
                                         App.CountDown = 30;
@@ -327,25 +340,35 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                                 public void onTick(long millisUntilFinished) {
                                                     App.CountDown = App.CountDown - 1;
 
-                                                    iv_progress_bar.getLayoutParams().width = progress;
-                                                    progress = progress + (int) getResources().getDimension(R.dimen.lo_10dpGrid);
+                                                    iv_progress_bar.getLayoutParams().width =
+                                                            progress;
+                                                    progress =
+                                                            progress + (int) getResources().getDimension(R.dimen.lo_10dpGrid);
                                                     tv_main_count_down.setText(String.valueOf(App.CountDown));
 
                                                     if (App.connection_status == 2) {
                                                         ConnectionTimer.cancel();
-                                                        SharedPreferences SharedAppDetails = getSharedPreferences("settings_data", 0);
-                                                        SharedPreferences.Editor Editor = SharedAppDetails.edit();
-                                                        Editor.putString("connection_time", String.valueOf(App.CountDown));
+                                                        SharedPreferences SharedAppDetails =
+                                                                getSharedPreferences(
+                                                                        "settings_data", 0);
+                                                        SharedPreferences.Editor Editor =
+                                                                SharedAppDetails.edit();
+                                                        Editor.putString("connection_time",
+                                                                String.valueOf(App.CountDown));
                                                         Editor.commit();
                                                         if (App.CountDown >= 20) {
-                                                            SharedPreferences settings = getSharedPreferences("settings_data", 0);
-                                                            String Rate = settings.getString("rate", "false");
+                                                            SharedPreferences settings =
+                                                                    getSharedPreferences(
+                                                                            "settings_data", 0);
+                                                            String Rate = settings.getString(
+                                                                    "rate", "false");
                                                             if (Rate.equals("false")) {
                                                                 Handler handler = new Handler();
                                                                 handler.postDelayed(new Runnable() {
                                                                     @Override
                                                                     public void run() {
-                                                                        Intent Servers = new Intent(MainActivity.this, ReviewActivity.class);
+                                                                        Intent Servers =
+                                                                                new Intent(MainActivity.this, ReviewActivity.class);
                                                                         startActivity(Servers);
                                                                         overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                                                                     }
@@ -353,9 +376,15 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                                             }
                                                         }
 
-                                                        startAnimation(MainActivity.this, R.id.tv_main_count_down, R.anim.fade_out_1000, false);
-                                                        startAnimation(MainActivity.this, R.id.iv_progress_bar, R.anim.fade_out_1000, false);
-                                                        startAnimation(MainActivity.this, R.id.la_animation, R.anim.fade_out_1000, false);
+                                                        startAnimation(MainActivity.this,
+                                                                R.id.tv_main_count_down,
+                                                                R.anim.fade_out_1000, false);
+                                                        startAnimation(MainActivity.this,
+                                                                R.id.iv_progress_bar,
+                                                                R.anim.fade_out_1000, false);
+                                                        startAnimation(MainActivity.this,
+                                                                R.id.la_animation,
+                                                                R.anim.fade_out_1000, false);
                                                     }
 
                                                     if (App.CountDown <= 20) {
@@ -364,14 +393,21 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
 
                                                     if (App.CountDown <= 1) {
                                                         ConnectionTimer.cancel();
-                                                        startAnimation(MainActivity.this, R.id.tv_main_count_down, R.anim.fade_out_500, false);
-                                                        startAnimation(MainActivity.this, R.id.iv_progress_bar, R.anim.fade_out_500, false);
-                                                        startAnimation(MainActivity.this, R.id.la_animation, R.anim.fade_out_500, false);
+                                                        startAnimation(MainActivity.this,
+                                                                R.id.tv_main_count_down,
+                                                                R.anim.fade_out_500, false);
+                                                        startAnimation(MainActivity.this,
+                                                                R.id.iv_progress_bar,
+                                                                R.anim.fade_out_500, false);
+                                                        startAnimation(MainActivity.this,
+                                                                R.id.la_animation,
+                                                                R.anim.fade_out_500, false);
 
                                                         try {
                                                             stop_vpn();
 
-                                                            final Handler handlerToday = new Handler();
+                                                            final Handler handlerToday =
+                                                                    new Handler();
                                                             handlerToday.postDelayed(new Runnable() {
                                                                 @Override
                                                                 public void run() {
@@ -379,7 +415,8 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                                                 }
                                                             }, 500);
 
-                                                            final Handler handlerData = new Handler();
+                                                            final Handler handlerData =
+                                                                    new Handler();
                                                             handlerData.postDelayed(new Runnable() {
                                                                 @Override
                                                                 public void run() {
@@ -387,7 +424,9 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                                                 }
                                                             }, 1000);
 
-                                                            startAnimation(MainActivity.this, R.id.la_animation, R.anim.fade_in_1000, true);
+                                                            startAnimation(MainActivity.this,
+                                                                    R.id.la_animation,
+                                                                    R.anim.fade_in_1000, true);
                                                             la_animation.cancelAnimation();
                                                             la_animation.setAnimation(R.raw.ninjainsecure);
                                                             la_animation.playAnimation();
@@ -395,9 +434,12 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                                             App.ShowDailyUsage = true;
                                                         } catch (Exception e) {
                                                             Bundle params = new Bundle();
-                                                            params.putString("device_id", App.device_id);
-                                                            params.putString("exception", "MA3" + e.toString());
-                                                            mFirebaseAnalytics.logEvent("app_param_error", params);
+                                                            params.putString("device_id",
+                                                                    App.device_id);
+                                                            params.putString("exception",
+                                                                    "MA3" + e.toString());
+                                                            mFirebaseAnalytics.logEvent(
+                                                                    "app_param_error", params);
                                                         }
                                                         App.isStart = false;
                                                     }
@@ -436,21 +478,24 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                     try {
                                         ConnectionTimer.cancel();
                                     } catch (Exception ignored) {
-                                        //new SyncFunctions(MainActivity.this, "MA6 " +  e.toString()).set_error_log();
+                                        //new SyncFunctions(MainActivity.this, "MA6 " +  e
+                                        // .toString()).set_error_log();
                                     }
 
                                     try {
                                         iv_progress_bar.setVisibility(View.INVISIBLE);
                                         tv_main_count_down.setVisibility(View.INVISIBLE);
                                     } catch (Exception ignored) {
-                                        //new SyncFunctions(MainActivity.this, "MA7 " +  e.toString()).set_error_log();
+                                        //new SyncFunctions(MainActivity.this, "MA7 " +  e
+                                        // .toString()).set_error_log();
                                     }
 
                                     final Handler handlerToday = new Handler();
                                     handlerToday.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-                                            startAnimation(MainActivity.this, R.id.ll_main_data, R.anim.slide_down_800, false);
+                                            startAnimation(MainActivity.this, R.id.ll_main_data,
+                                                    R.anim.slide_down_800, false);
                                             ll_main_data.setVisibility(View.INVISIBLE);
                                         }
                                     }, 500);
@@ -460,17 +505,21 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                     handlerData.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-                                            startAnimation(MainActivity.this, R.id.ll_main_today, R.anim.slide_up_800, true);
+                                            startAnimation(MainActivity.this, R.id.ll_main_today,
+                                                    R.anim.slide_up_800, true);
                                         }
                                     }, 1000);
 
-                                    startAnimation(MainActivity.this, R.id.la_animation, R.anim.fade_in_1000, true);
+                                    startAnimation(MainActivity.this, R.id.la_animation,
+                                            R.anim.fade_in_1000, true);
                                     la_animation.cancelAnimation();
                                     la_animation.setAnimation(R.raw.ninjainsecure);
                                     la_animation.playAnimation();
 
-                                    SharedPreferences settings = getSharedPreferences("settings_data", 0);
-                                    String ConnectionTime = settings.getString("connection_time", "0");
+                                    SharedPreferences settings = getSharedPreferences(
+                                            "settings_data", 0);
+                                    String ConnectionTime = settings.getString("connection_time",
+                                            "0");
                                     if (Long.valueOf(ConnectionTime) >= 20) {
                                         SharedPreferences.Editor Editor = settings.edit();
                                         Editor.putString("connection_time", "0");
@@ -481,7 +530,8 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                             handler.postDelayed(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    Intent Servers = new Intent(MainActivity.this, ReviewActivity.class);
+                                                    Intent Servers = new Intent(MainActivity.this
+                                                            , ReviewActivity.class);
                                                     startActivity(Servers);
                                                     overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
 
@@ -539,7 +589,8 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                                 Bundle params = new Bundle();
                                                 params.putString("device_id", App.device_id);
                                                 params.putString("exception", "MA7" + e.toString());
-                                                mFirebaseAnalytics.logEvent("app_param_error", params);
+                                                mFirebaseAnalytics.logEvent("app_param_error",
+                                                        params);
                                             }
 
                                             iv_progress_bar.setVisibility(View.INVISIBLE);
@@ -549,7 +600,9 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                             handlerToday.postDelayed(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    startAnimation(MainActivity.this, R.id.ll_main_data, R.anim.slide_down_800, false);
+                                                    startAnimation(MainActivity.this,
+                                                            R.id.ll_main_data,
+                                                            R.anim.slide_down_800, false);
                                                     ll_main_data.setVisibility(View.INVISIBLE);
                                                 }
                                             }, 500);
@@ -559,11 +612,14 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                             handlerData.postDelayed(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    startAnimation(MainActivity.this, R.id.ll_main_today, R.anim.slide_up_800, true);
+                                                    startAnimation(MainActivity.this,
+                                                            R.id.ll_main_today,
+                                                            R.anim.slide_up_800, true);
                                                 }
                                             }, 1000);
 
-                                            startAnimation(MainActivity.this, R.id.la_animation, R.anim.fade_in_1000, true);
+                                            startAnimation(MainActivity.this, R.id.la_animation,
+                                                    R.anim.fade_in_1000, true);
                                             la_animation.cancelAnimation();
                                             la_animation.setAnimation(R.raw.ninjainsecure);
                                             la_animation.playAnimation();
@@ -676,7 +732,8 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                         if (App.connection_status == 0) {
                                             // disconnected
                                             tv_message_top_text.setText("The connection is ready");
-                                            tv_message_bottom_text.setText("Tap CONNECT to start :)");
+                                            tv_message_bottom_text.setText("Tap CONNECT to start " +
+                                                    ":)");
 
                                         } else if (App.connection_status == 1) {
                                             // connecting
@@ -692,11 +749,15 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                         } else if (App.connection_status == 3) {
                                             // connected
                                             tv_message_top_text.setText("Dangerous VPN apps found");
-                                            tv_message_bottom_text.setText("Your device at a risk, remove other VPN apps! potential dangerous VPN apps keep blocking internet connection");
+                                            tv_message_bottom_text.setText("Your device at a " +
+                                                    "risk, remove other VPN apps! potential " +
+                                                    "dangerous VPN apps keep blocking internet " +
+                                                    "connection");
                                         }
                                     } else {
                                         tv_message_top_text.setText("Connection is not available");
-                                        tv_message_bottom_text.setText("Check your internet connection to continue");
+                                        tv_message_bottom_text.setText("Check your internet " +
+                                                "connection to continue");
                                     }
 
                                 }
@@ -709,7 +770,9 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                         handlerData.postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
-                                                startAnimation(MainActivity.this, R.id.ll_main_today, R.anim.slide_up_800, true);
+                                                startAnimation(MainActivity.this,
+                                                        R.id.ll_main_today, R.anim.slide_up_800,
+                                                        true);
                                             }
                                         }, 1000);
                                     } else if (App.connection_status == 1) {
@@ -717,7 +780,9 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                         handlerData.postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
-                                                startAnimation(MainActivity.this, R.id.ll_main_today, R.anim.slide_up_800, true);
+                                                startAnimation(MainActivity.this,
+                                                        R.id.ll_main_today, R.anim.slide_up_800,
+                                                        true);
                                             }
                                         }, 1000);
                                     } else if (App.connection_status == 2) {
@@ -725,7 +790,9 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                         handlerData.postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
-                                                startAnimation(MainActivity.this, R.id.ll_main_data, R.anim.slide_up_800, true);
+                                                startAnimation(MainActivity.this,
+                                                        R.id.ll_main_data, R.anim.slide_up_800,
+                                                        true);
                                             }
                                         }, 1000);
                                     } else if (App.connection_status == 3) {
@@ -734,7 +801,9 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                         handlerData.postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
-                                                startAnimation(MainActivity.this, R.id.ll_main_today, R.anim.slide_up_800, true);
+                                                startAnimation(MainActivity.this,
+                                                        R.id.ll_main_today, R.anim.slide_up_800,
+                                                        true);
                                             }
                                         }, 1000);
                                     }
@@ -747,7 +816,8 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                         if (App.ShowDailyUsage) {
                                             App.ShowDailyUsage = false;
                                             String PREF_USAGE = "daily_usage";
-                                            SharedPreferences settings = getSharedPreferences(PREF_USAGE, 0);
+                                            SharedPreferences settings =
+                                                    getSharedPreferences(PREF_USAGE, 0);
                                             long long_usage_today = settings.getLong(TODAY, 0);
 
                                             if (long_usage_today < 1000) {
@@ -767,21 +837,24 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                         ShowAnimation = false;
                                         if (App.connection_status == 0) {
                                             // disconnected
-                                            startAnimation(MainActivity.this, R.id.la_animation, R.anim.fade_in_1000, true);
+                                            startAnimation(MainActivity.this, R.id.la_animation,
+                                                    R.anim.fade_in_1000, true);
                                             la_animation.cancelAnimation();
                                             la_animation.setAnimation(R.raw.ninjainsecure);
                                             la_animation.playAnimation();
 
                                         } else if (App.connection_status == 1) {
                                             // connecting
-                                            startAnimation(MainActivity.this, R.id.la_animation, R.anim.fade_in_1000, true);
+                                            startAnimation(MainActivity.this, R.id.la_animation,
+                                                    R.anim.fade_in_1000, true);
                                             la_animation.cancelAnimation();
                                             la_animation.setAnimation(R.raw.conneting);
                                             la_animation.playAnimation();
 
                                         } else if (App.connection_status == 3) {
                                             // connected
-                                            startAnimation(MainActivity.this, R.id.la_animation, R.anim.fade_in_1000, true);
+                                            startAnimation(MainActivity.this, R.id.la_animation,
+                                                    R.anim.fade_in_1000, true);
                                             la_animation.cancelAnimation();
                                             la_animation.setAnimation(R.raw.ninjainsecure);
                                             la_animation.playAnimation();
@@ -807,7 +880,8 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
         try {
-            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager cm =
+                    (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo[] netInfo = cm.getAllNetworkInfo();
             for (NetworkInfo ni : netInfo) {
                 if (ni.getTypeName().equalsIgnoreCase("WIFI"))
@@ -858,7 +932,8 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
 
             try { // M8
                 assert inputStream != null;
-                bufferedReader = new BufferedReader(new InputStreamReader(inputStream/*, Charset.forName("UTF-8")*/));
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream/*, Charset
+                .forName("UTF-8")*/));
             } catch (Exception e) {
                 params = new Bundle();
                 params.putString("device_id", App.device_id);
@@ -980,7 +1055,8 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
 
 
     @Override
-    public void updateState(final String state, String logmessage, int localizedResId, ConnectionStatus level) {
+    public void updateState(final String state, String logmessage, int localizedResId,
+                            ConnectionStatus level) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -992,7 +1068,8 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                     handlerData.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            startAnimation(MainActivity.this, R.id.la_animation, R.anim.fade_in_1000, true);
+                            startAnimation(MainActivity.this, R.id.la_animation,
+                                    R.anim.fade_in_1000, true);
                             la_animation.cancelAnimation();
                             la_animation.setAnimation(R.raw.ninjasecure);
                             la_animation.playAnimation();

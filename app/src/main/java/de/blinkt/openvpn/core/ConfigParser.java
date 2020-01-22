@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
 
@@ -115,7 +116,8 @@ public class ConfigParser {
             "socks-proxy-retry",
             "explicit-exit-notify",
     };
-    private HashMap<String, Vector<Vector<String>>> options = new HashMap<String, Vector<Vector<String>>>();
+    private HashMap<String, Vector<Vector<String>>> options = new HashMap<String,
+            Vector<Vector<String>>>();
     private HashMap<String, Vector<String>> meta = new HashMap<String, Vector<String>>();
     private String auth_user_pass_file;
 
@@ -142,7 +144,8 @@ public class ConfigParser {
                 if (lineno == 1) {
                     if ((line.startsWith("PK\003\004")
                             || (line.startsWith("PK\007\008")))) {
-                        throw new ConfigParseError("Input looks like a ZIP Archive. Import is only possible for OpenVPN config files (.ovpn/.conf)");
+                        throw new ConfigParseError("Input looks like a ZIP Archive. Import is " +
+                                "only possible for OpenVPN config files (.ovpn/.conf)");
                     }
                     if (line.startsWith("\uFEFF")) {
                         line = line.substring(1);
@@ -181,7 +184,8 @@ public class ConfigParser {
         return rval;
     }
 
-    private void checkinlinefile(Vector<String> args, BufferedReader br) throws IOException, ConfigParseError {
+    private void checkinlinefile(Vector<String> args, BufferedReader br) throws IOException,
+            ConfigParseError {
         String arg0 = args.get(0).trim();
         // CHeck for <foo>
         if (arg0.startsWith("<") && arg0.endsWith(">")) {
@@ -191,7 +195,8 @@ public class ConfigParser {
             do {
                 String line = br.readLine();
                 if (line == null) {
-                    throw new ConfigParseError(String.format("No endtag </%s> for starttag <%s> found", argname, argname));
+                    throw new ConfigParseError(String.format("No endtag </%s> for starttag <%s> " +
+                            "found", argname, argname));
                 }
                 if (line.trim().equals(endtag))
                     break;
@@ -386,7 +391,8 @@ public class ConfigParser {
                 (devtype == null && dev == null)) {
             //everything okay
         } else {
-            throw new ConfigParseError("Sorry. Only tun mode is supported. See the FAQ for more detail");
+            throw new ConfigParseError("Sorry. Only tun mode is supported. See the FAQ for more " +
+                    "detail");
         }
         Vector<String> mssfix = getOption("mssfix", 0, 1);
         if (mssfix != null) {
@@ -596,7 +602,8 @@ public class ConfigParser {
             else if (protoToDisable.equals("tcp"))
                 disableUDP = false;
             else
-                throw new ConfigParseError(String.format("Unknown protocol %s in proto-force", protoToDisable));
+                throw new ConfigParseError(String.format("Unknown protocol %s in proto-force",
+                        protoToDisable));
             for (Connection conn : np.mConnections)
                 if (conn.mUseUdp == disableUDP)
                     conn.mEnabled = false;
@@ -613,12 +620,15 @@ public class ConfigParser {
         return np;
     }
 
-    private Pair<Connection, Connection[]> parseConnection(String connection, Connection defaultValues) throws IOException, ConfigParseError {
+    private Pair<Connection, Connection[]> parseConnection(String connection,
+                                                           Connection defaultValues) throws IOException, ConfigParseError {
         // Parse a connection Block as a new configuration file
         ConfigParser connectionParser = new ConfigParser();
-        StringReader reader = new StringReader(connection.substring(VpnProfile.INLINE_TAG.length()));
+        StringReader reader =
+                new StringReader(connection.substring(VpnProfile.INLINE_TAG.length()));
         connectionParser.parseConfig(reader);
-        Pair<Connection, Connection[]> conn = connectionParser.parseConnectionOptions(defaultValues);
+        Pair<Connection, Connection[]> conn =
+                connectionParser.parseConnectionOptions(defaultValues);
         return conn;
     }
 
@@ -650,7 +660,8 @@ public class ConfigParser {
             try {
                 conn.mConnectTimeout = Integer.parseInt(connectTimeout.get(1));
             } catch (NumberFormatException nfe) {
-                throw new ConfigParseError(String.format("Argument to connect-timeout (%s) must to be an integer: %s",
+                throw new ConfigParseError(String.format("Argument to connect-timeout (%s) must " +
+                                "to be an integer: %s",
                         connectTimeout.get(1), nfe.getLocalizedMessage()));
             }
         }
@@ -688,7 +699,8 @@ public class ConfigParser {
         return Pair.create(conn, connections);
     }
 
-    private void checkRedirectParameters(VpnProfile np, Vector<Vector<String>> defgw, boolean defaultRoute) {
+    private void checkRedirectParameters(VpnProfile np, Vector<Vector<String>> defgw,
+                                         boolean defaultRoute) {
         boolean noIpv4 = false;
         if (defaultRoute)
             for (Vector<String> redirect : defgw)
@@ -725,12 +737,14 @@ public class ConfigParser {
     private void checkIgnoreAndInvalidOptions(VpnProfile np) throws ConfigParseError {
         for (String option : unsupportedOptions)
             if (options.containsKey(option))
-                throw new ConfigParseError(String.format("Unsupported Option %s encountered in config file. Aborting", option));
+                throw new ConfigParseError(String.format("Unsupported Option %s encountered in " +
+                        "config file. Aborting", option));
         for (String option : ignoreOptions)
             // removing an item which is not in the map is no error
             options.remove(option);
         if (options.size() > 0) {
-            np.mCustomConfigOptions = "# These options found in the config file do not map to config settings:\n"
+            np.mCustomConfigOptions = "# These options found in the config file do not map to " +
+                    "config settings:\n"
                     + np.mCustomConfigOptions;
             for (Vector<Vector<String>> option : options.values()) {
                 np.mCustomConfigOptions += getOptionStrings(option);
@@ -793,7 +807,8 @@ public class ConfigParser {
             return null;
         for (Vector<String> optionline : args)
             if (optionline.size() < (minarg + 1) || optionline.size() > maxarg + 1) {
-                String err = String.format(Locale.getDefault(), "Option %s has %d parameters, expected between %d and %d",
+                String err = String.format(Locale.getDefault(), "Option %s has %d parameters, " +
+                                "expected between %d and %d",
                         option, optionline.size() - 1, minarg, maxarg);
                 throw new ConfigParseError(err);
             }

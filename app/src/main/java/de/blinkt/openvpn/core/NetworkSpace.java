@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
 
@@ -73,7 +74,8 @@ public class NetworkSpace {
                         // Simply forget our current network
                         currentNet = nextNet;
                     } else {
-                        // our currentNet is included in next and types differ. Need to split the next network
+                        // our currentNet is included in next and types differ. Need to split the
+                        // next network
                         ipAddress[] newNets = nextNet.split();
                         // TODO: The contains method of the Priority is stupid linear search
                         // First add the second half to keep the order in networks
@@ -92,8 +94,10 @@ public class NetworkSpace {
                 } else {
                     if (BuildConfig.DEBUG) {
                         //Assert.assertTrue(currentNet.networkMask < nextNet.networkMask);
-                        //Assert.assertTrue(nextNet.getFirstAddress().compareTo(currentNet.getFirstAddress()) == 1);
-                        //Assert.assertTrue(currentNet.getLastAddress().compareTo(nextNet.getLastAddress()) != -1);
+                        //Assert.assertTrue(nextNet.getFirstAddress().compareTo(currentNet
+                        // .getFirstAddress()) == 1);
+                        //Assert.assertTrue(currentNet.getLastAddress().compareTo(nextNet
+                        // .getLastAddress()) != -1);
                     }
                     // This network is bigger than the next and last ip of current >= next
                     //noinspection StatementWithEmptyBody
@@ -105,8 +109,10 @@ public class NetworkSpace {
                         ipAddress[] newNets = currentNet.split();
                         if (newNets[1].networkMask == nextNet.networkMask) {
                             if (BuildConfig.DEBUG) {
-                                //Assert.assertTrue(newNets[1].getFirstAddress().equals(nextNet.getFirstAddress()));
-                                //Assert.assertTrue(newNets[1].getLastAddress().equals(currentNet.getLastAddress()));
+                                //Assert.assertTrue(newNets[1].getFirstAddress().equals(nextNet
+                                // .getFirstAddress()));
+                                //Assert.assertTrue(newNets[1].getLastAddress().equals(currentNet
+                                // .getLastAddress()));
                                 // split second equal the next network, do not add it
                             }
                             networks.add(nextNet);
@@ -131,7 +137,8 @@ public class NetworkSpace {
                 ips.add(ia);
         }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            // Include postive routes from the original set under < 4.4 since these might overrule the local
+            // Include postive routes from the original set under < 4.4 since these might
+            // overrule the local
             // network but only if no smaller negative route exists
             for (ipAddress origIp : mIpAddresses) {
                 if (!origIp.included)
@@ -140,7 +147,8 @@ public class NetworkSpace {
                 if (ipsSorted.contains(origIp))
                     continue;
                 boolean skipIp = false;
-                // If there is any smaller net that is excluded we may not add the positive route back
+                // If there is any smaller net that is excluded we may not add the positive route
+                // back
                 for (ipAddress calculatedIp : ipsSorted) {
                     if (!calculatedIp.included && origIp.containsNet(calculatedIp)) {
                         skipIp = true;
@@ -260,7 +268,8 @@ public class NetworkSpace {
 
         public ipAddress[] split() {
             ipAddress firstHalf = new ipAddress(getFirstAddress(), networkMask + 1, included, isV4);
-            ipAddress secondHalf = new ipAddress(firstHalf.getLastAddress().add(BigInteger.ONE), networkMask + 1, included, isV4);
+            ipAddress secondHalf = new ipAddress(firstHalf.getLastAddress().add(BigInteger.ONE),
+                    networkMask + 1, included, isV4);
             //if (BuildConfig.DEBUG)
             //Assert.assertTrue(secondHalf.getLastAddress().equals(getLastAddress()));
             return new ipAddress[]{firstHalf, secondHalf};
@@ -273,7 +282,8 @@ public class NetworkSpace {
                 //Assert.assertTrue(netAddress.longValue() >= 0);
             }
             long ip = netAddress.longValue();
-            return String.format(Locale.US, "%d.%d.%d.%d", (ip >> 24) % 256, (ip >> 16) % 256, (ip >> 8) % 256, ip % 256);
+            return String.format(Locale.US, "%d.%d.%d.%d", (ip >> 24) % 256, (ip >> 16) % 256,
+                    (ip >> 8) % 256, ip % 256);
         }
 
         String getIPv6Address() {

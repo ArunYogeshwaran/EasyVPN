@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
 
@@ -85,7 +86,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         LocalSocket mServerSocketLocal = new LocalSocket();
         while (tries > 0 && !mServerSocketLocal.isBound()) {
             try {
-                mServerSocketLocal.bind(new LocalSocketAddress(socketName, LocalSocketAddress.Namespace.FILESYSTEM));
+                mServerSocketLocal.bind(new LocalSocketAddress(socketName,
+                        LocalSocketAddress.Namespace.FILESYSTEM));
             } catch (IOException e) {
                 // wait 300 ms before retrying
                 try {
@@ -158,7 +160,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 pendingInput = processInput(pendingInput);
             }
         } catch (IOException e) {
-            if (!e.getMessage().equals("socket closed") && !e.getMessage().equals("Connection reset by peer"))
+            if (!e.getMessage().equals("socket closed") && !e.getMessage().equals("Connection " +
+                    "reset by peer"))
                 VpnStatus.logException(e);
         }
         synchronized (active) {
@@ -295,7 +298,9 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         int waittime = Integer.parseInt(argument.split(":")[1]);
         if (shouldBeRunning()) {
             if (waittime > 1)
-                VpnStatus.updateStateString("CONNECTRETRY", String.valueOf(waittime), R.string.state_waitconnectretry, ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
+                VpnStatus.updateStateString("CONNECTRETRY", String.valueOf(waittime),
+                        R.string.state_waitconnectretry,
+                        ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
             mResumeHandler.postDelayed(mResumeHoldRunnable, waittime * 1000);
             if (waittime > 5)
                 VpnStatus.logInfo(R.string.state_waitconnectretry, String.valueOf(waittime));
@@ -337,7 +342,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         if (proxyaddr instanceof InetSocketAddress) {
             InetSocketAddress isa = (InetSocketAddress) proxyaddr;
             VpnStatus.logInfo(R.string.using_proxy, isa.getHostName(), isa.getPort());
-            String proxycmd = String.format(Locale.ENGLISH, "proxy HTTP %s %d\n", isa.getHostName(), isa.getPort());
+            String proxycmd = String.format(Locale.ENGLISH, "proxy HTTP %s %d\n",
+                    isa.getHostName(), isa.getPort());
             managmentCommand(proxycmd);
         } else {
             managmentCommand("proxy NONE\n");
@@ -386,11 +392,13 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             */
                 if (routeparts.length == 5) {
                     //if (BuildConfig.DEBUG) Assert.assertEquals("dev", routeparts[3]);
-                    mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], routeparts[4]);
+                    mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2],
+                            routeparts[4]);
                 } else if (routeparts.length >= 3) {
                     mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], null);
                 } else {
-                    VpnStatus.logError("Unrecognized ROUTE cmd:" + Arrays.toString(routeparts) + " | " + argument);
+                    VpnStatus.logError("Unrecognized ROUTE cmd:" + Arrays.toString(routeparts) +
+                            " | " + argument);
                 }
                 break;
             }
@@ -402,7 +410,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             case "IFCONFIG":
                 String[] ifconfigparts = extra.split(" ");
                 int mtu = Integer.parseInt(ifconfigparts[2]);
-                mOpenVPNService.setLocalIP(ifconfigparts[0], ifconfigparts[1], mtu, ifconfigparts[3]);
+                mOpenVPNService.setLocalIP(ifconfigparts[0], ifconfigparts[1], mtu,
+                        ifconfigparts[3]);
                 break;
             case "IFCONFIG6":
                 mOpenVPNService.setLocalIPv6(extra);
@@ -414,7 +423,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             case "OPENTUN":
                 if (sendTunFD(needed, extra)) return;
                 else status = "cancel";
-                // This not nice or anything but setFileDescriptors accepts only FilDescriptor class :(
+                // This not nice or anything but setFileDescriptors accepts only FilDescriptor
+                // class :(
                 break;
             default:
                 //Log.e(TAG, "Unknown needok command " + argument);
@@ -427,7 +437,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     private boolean sendTunFD(String needed, String extra) {
         if (!extra.equals("tun")) {
             // We only support tun
-            VpnStatus.logError(String.format("Device type %s requested, but only tun is possible with the Android API, sorry!", extra));
+            VpnStatus.logError(String.format("Device type %s requested, but only tun is possible " +
+                    "with the Android API, sorry!", extra));
             return false;
         }
         ParcelFileDescriptor pfd = mOpenVPNService.openTun();
@@ -476,7 +487,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             pw = mProfile.getPasswordPrivateKey();
         } else if (needed.equals("Auth")) {
             pw = mProfile.getPasswordAuth();
-            String usercmd = String.format("username '%s' %s\n", needed, VpnProfile.openVpnEscape(mProfile.mUsername));
+            String usercmd = String.format("username '%s' %s\n", needed,
+                    VpnProfile.openVpnEscape(mProfile.mUsername));
             managmentCommand(usercmd);
         }
         if (pw != null) {
@@ -484,12 +496,14 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             managmentCommand(cmd);
         } else {
             mOpenVPNService.requestInputFromUser(R.string.password, needed);
-            VpnStatus.logError(String.format("Openvpn requires Authentication type '%s' but no password/key information available", needed));
+            VpnStatus.logError(String.format("Openvpn requires Authentication type '%s' but no " +
+                    "password/key information available", needed));
         }
     }
 
     private void proccessPWFailed(String needed, String args) {
-        VpnStatus.updateStateString("AUTH_FAILED", needed + args, R.string.state_auth_failed, ConnectionStatus.LEVEL_AUTH_FAILED);
+        VpnStatus.updateStateString("AUTH_FAILED", needed + args, R.string.state_auth_failed,
+                ConnectionStatus.LEVEL_AUTH_FAILED);
     }
 
     @Override

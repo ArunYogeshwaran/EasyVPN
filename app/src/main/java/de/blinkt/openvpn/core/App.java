@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
 
@@ -83,7 +84,8 @@ public class App extends /*com.orm.SugarApp*/ Application {
         int minute = now.get(Calendar.MINUTE);
         int second = now.get(Calendar.SECOND);
         int millis = now.get(Calendar.MILLISECOND);
-        String Time = getResources().getString(R.string.get_time, year, month, day, hour, minute, second, millis);
+        String Time = getResources().getString(R.string.get_time, year, month, day, hour, minute,
+                second, millis);
 
         String str_api = String.valueOf(android.os.Build.VERSION.SDK_INT); // API
         String str_model = String.valueOf(Build.MODEL); // Model

@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn;
 
@@ -194,7 +195,8 @@ public class VpnProfile implements Serializable, Cloneable {
             return String.format("%s %s\n", cfgentry, "file missing in config profile");
         } else if (isEmbedded(filedata)) {
             String dataWithOutHeader = getEmbeddedContent(filedata);
-            return String.format(Locale.ENGLISH, "<%s>\n%s\n</%s>\n", cfgentry, dataWithOutHeader, cfgentry);
+            return String.format(Locale.ENGLISH, "<%s>\n%s\n</%s>\n", cfgentry, dataWithOutHeader
+                    , cfgentry);
         } else {
             return String.format(Locale.ENGLISH, "%s %s\n", cfgentry, openVpnEscape(filedata));
         }
@@ -292,8 +294,10 @@ public class VpnProfile implements Serializable, Cloneable {
         cfg += "management-hold\n\n";
         try {
             if (!configForOvpn3) {
-                cfg += String.format("setenv IV_GUI_VER %s \n", openVpnEscape(getVersionEnvString(context)));
-                String versionString = String.format(Locale.US, "%d %s %s %s %s %s", Build.VERSION.SDK_INT, Build.VERSION.RELEASE,
+                cfg += String.format("setenv IV_GUI_VER %s \n",
+                        openVpnEscape(getVersionEnvString(context)));
+                String versionString = String.format(Locale.US, "%d %s %s %s %s %s",
+                        Build.VERSION.SDK_INT, Build.VERSION.RELEASE,
                         NativeUtils.getNativeAPI(), Build.BRAND, Build.BOARD, Build.MODEL);
                 cfg += String.format("setenv IV_PLAT_VER %s\n", openVpnEscape(versionString));
             }
@@ -443,7 +447,8 @@ public class VpnProfile implements Serializable, Cloneable {
         if (mAuthenticationType != TYPE_STATICKEYS) {
             if (mCheckRemoteCN) {
                 if (mRemoteCN == null || mRemoteCN.equals(""))
-                    cfg += "verify-x509-name " + openVpnEscape(mConnections[0].mServerName) + " name\n";
+                    cfg += "verify-x509-name " + openVpnEscape(mConnections[0].mServerName) + " " +
+                            "name\n";
                 else switch (mX509AuthType) {
                     // 2.2 style x509 checks
                     case X509_VERIFY_TLSREMOTE_COMPAT_NOREMAPPING:
@@ -494,7 +499,8 @@ public class VpnProfile implements Serializable, Cloneable {
             cfg += "\n";
         }
         if (!canUsePlainRemotes) {
-            cfg += "# Connection Options are at the end to allow global options (and global custom options) to influence connection blocks\n";
+            cfg += "# Connection Options are at the end to allow global options (and global " +
+                    "custom options) to influence connection blocks\n";
             for (Connection conn : mConnections) {
                 if (conn.mEnabled) {
                     cfg += "<connection>\n";
@@ -562,14 +568,16 @@ public class VpnProfile implements Serializable, Cloneable {
         if (len < 0 || len > 32) return null;
         long nm = 0xffffffffL;
         nm = (nm << (32 - len)) & 0xffffffffL;
-        String netmask = String.format(Locale.ENGLISH, "%d.%d.%d.%d", (nm & 0xff000000) >> 24, (nm & 0xff0000) >> 16, (nm & 0xff00) >> 8, nm & 0xff);
+        String netmask = String.format(Locale.ENGLISH, "%d.%d.%d.%d", (nm & 0xff000000) >> 24,
+                (nm & 0xff0000) >> 16, (nm & 0xff00) >> 8, nm & 0xff);
         return parts[0] + "  " + netmask;
     }
 
     public Intent prepareStartService(Context context) {
         Intent intent = getStartServiceIntent(context);
         // TODO: Handle this?!
-//        if (mAuthenticationType == VpnProfile.TYPE_KEYSTORE || mAuthenticationType == VpnProfile.TYPE_USERPASS_KEYSTORE) {
+//        if (mAuthenticationType == VpnProfile.TYPE_KEYSTORE || mAuthenticationType ==
+//        VpnProfile.TYPE_USERPASS_KEYSTORE) {
 //            if (getKeyStoreCertificates(context) == null)
 //                return null;
 //        }
@@ -646,7 +654,8 @@ public class VpnProfile implements Serializable, Cloneable {
             if (caChain == null)
                 throw new NoCertReturnedException("No certificate returned from Keystore");
             if (caChain.length <= 1 && TextUtils.isEmpty(mCaFilename)) {
-                VpnStatus.logMessage(VpnStatus.LogLevel.ERROR, "", context.getString(R.string.keychain_nocacert));
+                VpnStatus.logMessage(VpnStatus.LogLevel.ERROR, "",
+                        context.getString(R.string.keychain_nocacert));
             } else {
                 StringWriter ksStringWriter = new StringWriter();
                 PemWriter pw = new PemWriter(ksStringWriter);
@@ -700,7 +709,8 @@ public class VpnProfile implements Serializable, Cloneable {
             return null;
         } catch (AssertionError e) {
             if (tries == 0) return null;
-            VpnStatus.logError(String.format("Failure getting Keystore Keys (%s), retrying", e.getLocalizedMessage()));
+            VpnStatus.logError(String.format("Failure getting Keystore Keys (%s), retrying",
+                    e.getLocalizedMessage()));
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e1) {
@@ -851,12 +861,14 @@ public class VpnProfile implements Serializable, Cloneable {
             /* ECB is perfectly fine in this special case, since we are using it for
                the public/private part in the TLS exchange
              */
-            @SuppressLint("GetInstance") Cipher rsaSigner = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
+            @SuppressLint("GetInstance") Cipher rsaSigner = Cipher.getInstance("RSA/ECB" +
+                    "/PKCS1PADDING");
             rsaSigner.init(Cipher.ENCRYPT_MODE, privkey);
             byte[] signed_bytes = rsaSigner.doFinal(data);
             return Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
         } catch (NoSuchAlgorithmException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchPaddingException e) {
-            VpnStatus.logError(R.string.error_rsa_sign, e.getClass().toString(), e.getLocalizedMessage());
+            VpnStatus.logError(R.string.error_rsa_sign, e.getClass().toString(),
+                    e.getLocalizedMessage());
             return null;
         }
     }
@@ -877,7 +889,8 @@ public class VpnProfile implements Serializable, Cloneable {
             byte[] signed_bytes = NativeUtils.rsasign(data, pkey);
             return Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
         } catch (NoSuchMethodException | InvalidKeyException | InvocationTargetException | IllegalAccessException | IllegalArgumentException e) {
-            VpnStatus.logError(R.string.error_rsa_sign, e.getClass().toString(), e.getLocalizedMessage());
+            VpnStatus.logError(R.string.error_rsa_sign, e.getClass().toString(),
+                    e.getLocalizedMessage());
             return null;
         }
     }

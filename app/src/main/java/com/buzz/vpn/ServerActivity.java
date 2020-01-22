@@ -127,7 +127,9 @@ public class ServerActivity extends Activity {
             iv_server_refresh.setBackground(getDrawable(R.drawable.ic_servers_process));
             RequestQueue queue = Volley.newRequestQueue(ServerActivity.this);
             queue.getCache().clear();
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://raw.githubusercontent.com/gayanvoice/gayankuruppu.github.io/source-json/appdetails.json",
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://raw" +
+                    ".githubusercontent.com/gayanvoice/gayankuruppu.github" +
+                    ".io/source-json/appdetails.json",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String Response) {
@@ -164,7 +166,9 @@ public class ServerActivity extends Activity {
             iv_server_refresh.setBackground(getDrawable(R.drawable.ic_servers_process));
             RequestQueue queue = Volley.newRequestQueue(ServerActivity.this);
             queue.getCache().clear();
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://raw.githubusercontent.com/gayanvoice/gayankuruppu.github.io/source-json/filedetails.json",
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://raw" +
+                    ".githubusercontent.com/gayanvoice/gayankuruppu.github" +
+                    ".io/source-json/filedetails.json",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String Response) {
@@ -306,7 +310,8 @@ public class ServerActivity extends Activity {
         public View getView(int position, View convertView, ViewGroup parent) {
             View v = convertView;
             if (v == null) {
-                LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater inflater =
+                        (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = inflater.inflate(R.layout.server_list_item, null);
             }
 
@@ -318,7 +323,8 @@ public class ServerActivity extends Activity {
                 ImageView iv_signal_strength = v.findViewById(R.id.iv_signal_strength);
                 final LinearLayout ll_item = v.findViewById(R.id.ll_item);
 
-                Typeface RobotoRegular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+                Typeface RobotoRegular = Typeface.createFromAsset(getAssets(), "fonts/Roboto" +
+                        "-Regular.ttf");
 
                 tv_country.setText(Server.GetCity());
                 tv_country.setTypeface(RobotoRegular);
@@ -399,11 +405,13 @@ public class ServerActivity extends Activity {
                         tv_country.setTextColor(getResources().getColor(R.color.colorDarkText));
                         EncryptData En = new EncryptData();
                         try {
-                            SharedPreferences SharedAppDetails = getSharedPreferences("connection_data", 0);
+                            SharedPreferences SharedAppDetails = getSharedPreferences(
+                                    "connection_data", 0);
                             SharedPreferences.Editor Editor = SharedAppDetails.edit();
                             Editor.putString("id", Server.GetID());
                             Editor.putString("file_id", Server.GetFileID());
-                            Editor.putString("file", En.encrypt(FileArray[Integer.valueOf(Server.GetFileID())][1]));
+                            Editor.putString("file",
+                                    En.encrypt(FileArray[Integer.valueOf(Server.GetFileID())][1]));
                             Editor.putString("city", Server.GetCity());
                             Editor.putString("country", Server.GetCountry());
                             Editor.putString("image", Server.GetImage());
@@ -420,7 +428,8 @@ public class ServerActivity extends Activity {
                             mFirebaseAnalytics.logEvent("app_param_error", params);
                         }
                         finish();
-                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                        overridePendingTransition(R.anim.anim_slide_in_left,
+                                R.anim.anim_slide_out_right);
                     }
                 });
 
@@ -464,7 +473,8 @@ public class ServerActivity extends Activity {
 
 
     private class Server {
-        // {"id":0, "file":0, "city":"Essen","country":"Germany","image":"germany","ip":"51.68.191.75","active":"true","signal":"a"},
+        // {"id":0, "file":0, "city":"Essen","country":"Germany","image":"germany","ip":"51.68
+        // .191.75","active":"true","signal":"a"},
         private String ID;
         private String FileID;
         private String City;

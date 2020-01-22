@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
 
@@ -17,6 +18,7 @@ public class Preferences {
     }
 
     public static SharedPreferences getDefaultSharedPreferences(Context c) {
-        return c.getSharedPreferences(c.getPackageName() + "_preferences", Context.MODE_MULTI_PROCESS | Context.MODE_PRIVATE);
+        return c.getSharedPreferences(c.getPackageName() + "_preferences",
+                Context.MODE_MULTI_PROCESS | Context.MODE_PRIVATE);
     }
 }

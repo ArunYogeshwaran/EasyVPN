@@ -35,8 +35,11 @@ import de.blinkt.openvpn.core.App;
 
 public class ContactActivity extends Activity {
     Button btn_about_contact_submit;
-    TextView tv_contact_title, tv_about_about_contact_problem, tv_about_contact_other_problems, tv_about_contact_email;
-    CheckBox checkbox_about_contact_advertising, checkbox_about_contact_speed, checkbox_about_contact_connecting, checkbox_about_contact_servers, checkbox_about_contact_crashed;
+    TextView tv_contact_title, tv_about_about_contact_problem, tv_about_contact_other_problems,
+            tv_about_contact_email;
+    CheckBox checkbox_about_contact_advertising, checkbox_about_contact_speed,
+            checkbox_about_contact_connecting, checkbox_about_contact_servers,
+            checkbox_about_contact_crashed;
     EditText et_about_contact_other_problems, et_about_contact_email;
 
     String advertise, speed, connecting, working, crashed, other, email;
@@ -94,7 +97,9 @@ public class ContactActivity extends Activity {
         btn_about_contact_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //http://sposcdn.com/buzzvpn/contact_log.php?ip=0000:0000:0000:0000&advertise=adv&speed=speed&connecting=connect&working=working&crashed=crashed&other=otherdata&email=someemail
+                //http://sposcdn.com/buzzvpn/contact_log
+                // .php?ip=0000:0000:0000:0000&advertise=adv&speed=speed&connecting=connect
+                // &working=working&crashed=crashed&other=otherdata&email=someemail
                 // advertising
                 if (hasInternetConnection()) {
                     if (checkbox_about_contact_advertising.isChecked()) {
@@ -206,7 +211,8 @@ public class ContactActivity extends Activity {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
         try {
-            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager cm =
+                    (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo[] netInfo = cm.getAllNetworkInfo();
             for (NetworkInfo ni : netInfo) {
                 if (ni.getTypeName().equalsIgnoreCase("WIFI"))
@@ -236,7 +242,8 @@ public class ContactActivity extends Activity {
 
             EncryptData en = new EncryptData();
             String str_ipv4;
-            SharedPreferences sharedPref = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = getSharedPreferences(MyPREFERENCES,
+                    Context.MODE_PRIVATE);
             if (!sharedPref.contains(MyKEY)) {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString(MyKEY, en.encrypt(getUniqueKey()));
@@ -247,7 +254,8 @@ public class ContactActivity extends Activity {
             }
 
             try {
-                str_post = URLEncoder.encode("ip", "UTF-8") + "=" + URLEncoder.encode(str_ipv4, "UTF-8")
+                str_post = URLEncoder.encode("ip", "UTF-8") + "=" + URLEncoder.encode(str_ipv4,
+                        "UTF-8")
                         + "&" + URLEncoder.encode("advertise", "UTF-8") + "=" + URLEncoder.encode(advertise, "UTF-8")
                         + "&" + URLEncoder.encode("speed", "UTF-8") + "=" + URLEncoder.encode(speed, "UTF-8")
                         + "&" + URLEncoder.encode("connecting", "UTF-8") + "=" + URLEncoder.encode(connecting, "UTF-8")
@@ -286,7 +294,8 @@ public class ContactActivity extends Activity {
                 @Override
                 public void onRequestFinished(Request<String> request) {
                     finish();
-                    overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                    overridePendingTransition(R.anim.anim_slide_in_left,
+                            R.anim.anim_slide_out_right);
                 }
             });
         }

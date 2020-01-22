@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;/*
  * This software is provided 'as-is', without any express or implied
@@ -40,7 +41,8 @@ import java.security.Security;
 public final class PRNGFixes {
     private static final int VERSION_CODE_JELLY_BEAN = 16;
     private static final int VERSION_CODE_JELLY_BEAN_MR2 = 18;
-    private static final byte[] BUILD_FINGERPRINT_AND_DEVICE_SERIAL = getBuildFingerprintAndDeviceSerial();
+    private static final byte[] BUILD_FINGERPRINT_AND_DEVICE_SERIAL =
+            getBuildFingerprintAndDeviceSerial();
 
     /**
      * Hidden constructor to prevent instantiation.
@@ -71,9 +73,11 @@ public final class PRNGFixes {
         }
         try {
             // Mix in the device- and invocation-specific seed.
-            Class.forName("org.apache.harmony.xnet.provider.jsse.NativeCrypto").getMethod("RAND_seed", byte[].class).invoke(null, generateSeed());
+            Class.forName("org.apache.harmony.xnet.provider.jsse.NativeCrypto").getMethod(
+                    "RAND_seed", byte[].class).invoke(null, generateSeed());
             // Mix output of Linux PRNG into OpenSSL's PRNG
-            int bytesRead = (Integer) Class.forName("org.apache.harmony.xnet.provider.jsse.NativeCrypto").getMethod("RAND_load_file", String.class, long.class).invoke(null, "/dev/urandom", 1024);
+            int bytesRead = (Integer) Class.forName("org.apache.harmony.xnet.provider.jsse" +
+                    ".NativeCrypto").getMethod("RAND_load_file", String.class, long.class).invoke(null, "/dev/urandom", 1024);
             if (bytesRead != 1024) {
                 throw new IOException("Unexpected number of bytes read from Linux PRNG: " + bytesRead);
             }
@@ -172,7 +176,8 @@ public final class PRNGFixes {
      */
     private static class LinuxPRNGSecureRandomProvider extends Provider {
         public LinuxPRNGSecureRandomProvider() {
-            super("LinuxPRNG", 1.0, "A Linux-specific random number provider that uses" + " /dev/urandom");
+            super("LinuxPRNG", 1.0, "A Linux-specific random number provider that uses" + " /dev" +
+                    "/urandom");
             // Although /dev/urandom is not a SHA-1 PRNG, some apps
             // explicitly request a SHA1PRNG SecureRandom and we thus need to
             // prevent them from getting the default implementation whose output
@@ -275,7 +280,8 @@ public final class PRNGFixes {
                     try {
                         sUrandomIn = new DataInputStream(new FileInputStream(URANDOM_FILE));
                     } catch (IOException e) {
-                        throw new SecurityException("Failed to open " + URANDOM_FILE + " for reading", e);
+                        throw new SecurityException("Failed to open " + URANDOM_FILE + " for " +
+                                "reading", e);
                     }
                 }
                 return sUrandomIn;

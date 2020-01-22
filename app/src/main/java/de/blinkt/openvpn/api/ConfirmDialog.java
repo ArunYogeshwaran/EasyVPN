@@ -30,7 +30,8 @@ import android.widget.TextView;
 
 import com.buzz.vpn.R;
 
-public class ConfirmDialog extends Activity implements CompoundButton.OnCheckedChangeListener, DialogInterface.OnClickListener {
+public class ConfirmDialog extends Activity implements CompoundButton.OnCheckedChangeListener,
+        DialogInterface.OnClickListener {
     private static final String TAG = "OpenVPNVpnConfirm";
     private String mPackage;
     private Button mButton;
@@ -49,7 +50,8 @@ public class ConfirmDialog extends Activity implements CompoundButton.OnCheckedC
             ApplicationInfo app = pm.getApplicationInfo(mPackage, 0);
             View view = View.inflate(this, R.layout.api_confirm, null);
             ((ImageView) view.findViewById(R.id.icon)).setImageDrawable(app.loadIcon(pm));
-            ((TextView) view.findViewById(R.id.prompt)).setText(getString(R.string.prompt, app.loadLabel(pm), getString(R.string.app_name)));
+            ((TextView) view.findViewById(R.id.prompt)).setText(getString(R.string.prompt,
+                    app.loadLabel(pm), getString(R.string.app_name)));
             ((CompoundButton) view.findViewById(R.id.check)).setOnCheckedChangeListener(this);
             Builder builder = new AlertDialog.Builder(this);
             builder.setView(view);

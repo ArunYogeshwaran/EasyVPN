@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
 
@@ -49,7 +50,8 @@ public class X509Utils {
                 // The java certifcate reader is ... kind of stupid
                 // It does NOT ignore chars before the --BEGIN ...
                 subIndex = Math.max(0, subIndex);
-                InputStream inStream = new ByteArrayInputStream(certfilename.substring(subIndex).getBytes());
+                InputStream inStream =
+                        new ByteArrayInputStream(certfilename.substring(subIndex).getBytes());
                 certificates.add(certFact.generateCertificate(inStream));
                 subIndex = certfilename.indexOf("-----BEGIN CERTIFICATE-----", subIndex + 1);
             } while (subIndex > 0);
@@ -124,9 +126,11 @@ public class X509Utils {
         /* Hack so we do not have to ship a whole Spongy/bouncycastle */
         Exception exp = null;
         try {
-            @SuppressLint("PrivateApi") Class X509NameClass = Class.forName("com.android.org.bouncycastle.asn1.x509.X509Name");
+            @SuppressLint("PrivateApi") Class X509NameClass = Class.forName("com.android.org" +
+                    ".bouncycastle.asn1.x509.X509Name");
             Method getInstance = X509NameClass.getMethod("getInstance", Object.class);
-            Hashtable defaultSymbols = (Hashtable) X509NameClass.getField("DefaultSymbols").get(X509NameClass);
+            Hashtable defaultSymbols =
+                    (Hashtable) X509NameClass.getField("DefaultSymbols").get(X509NameClass);
             if (!defaultSymbols.containsKey("1.2.840.113549.1.9.1"))
                 defaultSymbols.put("1.2.840.113549.1.9.1", "eMail");
             Object subjectName = getInstance.invoke(X509NameClass, encodedSubject);

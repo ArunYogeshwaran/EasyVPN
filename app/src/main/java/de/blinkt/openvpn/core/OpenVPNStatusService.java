@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
 
@@ -24,7 +25,8 @@ import java.lang.ref.WeakReference;
 /**
  * Created by arne on 08.11.16.
  */
-public class OpenVPNStatusService extends Service implements VpnStatus.LogListener, VpnStatus.ByteCountListener, VpnStatus.StateListener {
+public class OpenVPNStatusService extends Service implements VpnStatus.LogListener,
+        VpnStatus.ByteCountListener, VpnStatus.StateListener {
     static final RemoteCallbackList<IStatusCallbacks> mCallbacks =
             new RemoteCallbackList<>();
     private static final OpenVPNStatusHandler mHandler = new OpenVPNStatusHandler();
@@ -45,7 +47,8 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
                 new Thread("pushLogs") {
                     @Override
                     public void run() {
-                        DataOutputStream fd = new DataOutputStream(new ParcelFileDescriptor.AutoCloseOutputStream(pipe[1]));
+                        DataOutputStream fd =
+                                new DataOutputStream(new ParcelFileDescriptor.AutoCloseOutputStream(pipe[1]));
                         try {
                             synchronized (VpnStatus.readFileLock) {
                                 if (!VpnStatus.readFileLog) {
@@ -142,7 +145,8 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
     }
 
     @Override
-    public void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level) {
+    public void updateState(String state, String logmessage, int localizedResId,
+                            ConnectionStatus level) {
         mLastUpdateMessage = new UpdateMessage(state, logmessage, localizedResId, level);
         Message msg = mHandler.obtainMessage(SEND_NEW_STATE, mLastUpdateMessage);
         msg.sendToTarget();

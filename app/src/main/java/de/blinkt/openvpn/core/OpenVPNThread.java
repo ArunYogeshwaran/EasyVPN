@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
 
@@ -82,18 +83,21 @@ public class OpenVPNThread implements Runnable {
                     // We are already noPIE, nothing to gain
                     if (!noPieArgv.equals(mArgv)) {
                         mArgv = noPieArgv;
-                        VpnStatus.logInfo("PIE Version could not be executed. Trying no PIE version");
+                        VpnStatus.logInfo("PIE Version could not be executed. Trying no PIE " +
+                                "version");
                         run();
                     }
                 }
             }
             if (!mNoProcessExitStatus) {
-                VpnStatus.updateStateString("NOPROCESS", "no process tap on connect button", R.string.state_noprocess, ConnectionStatus.LEVEL_NOTCONNECTED);
+                VpnStatus.updateStateString("NOPROCESS", "no process tap on connect button",
+                        R.string.state_noprocess, ConnectionStatus.LEVEL_NOTCONNECTED);
             }
             if (mDumpPath != null) {
                 try {
                     BufferedWriter logout = new BufferedWriter(new FileWriter(mDumpPath + ".log"));
-                    SimpleDateFormat timeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN);
+                    SimpleDateFormat timeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                            Locale.GERMAN);
                     for (LogItem li : VpnStatus.getlogbuffer()) {
                         String time = timeformat.format(new Date(li.getLogtime()));
                         logout.write(time + " " + li.getString(mService) + "\n");
@@ -160,7 +164,8 @@ public class OpenVPNThread implements Runnable {
                     }
                     VpnStatus.logMessageOpenVPN(logStatus, logLevel, msg);
                     if (logerror == 1) {
-                        VpnStatus.logError("OpenSSL reproted a certificate with a weak hash, please the in app FAQ about weak hashes");
+                        VpnStatus.logError("OpenSSL reproted a certificate with a weak hash, " +
+                                "please the in app FAQ about weak hashes");
                     }
                 } else {
                     VpnStatus.logInfo("P:" + logline);

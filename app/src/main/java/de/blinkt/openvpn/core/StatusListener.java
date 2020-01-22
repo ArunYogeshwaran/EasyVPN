@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file
+ * doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
 
@@ -28,7 +29,8 @@ public class StatusListener {
         }
 
         @Override
-        public void updateStateString(String state, String msg, int resid, ConnectionStatus level) throws RemoteException {
+        public void updateStateString(String state, String msg, int resid,
+                                      ConnectionStatus level) throws RemoteException {
             VpnStatus.updateStateString(state, msg, resid, level);
         }
 
@@ -54,7 +56,8 @@ public class StatusListener {
                     VpnStatus.setConnectedVPNProfile(serviceStatus.getLastConnectedVPN());
                     VpnStatus.setTrafficHistory(serviceStatus.getTrafficHistory());
                     ParcelFileDescriptor pfd = serviceStatus.registerStatusCallback(mCallback);
-                    DataInputStream fd = new DataInputStream(new ParcelFileDescriptor.AutoCloseInputStream(pfd));
+                    DataInputStream fd =
+                            new DataInputStream(new ParcelFileDescriptor.AutoCloseInputStream(pfd));
                     short len = fd.readShort();
                     byte[] buf = new byte[65336];
                     while (len != 0x7fff) {
