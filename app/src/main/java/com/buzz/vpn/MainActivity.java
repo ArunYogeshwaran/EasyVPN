@@ -213,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
 
         iv_home = findViewById(R.id.iv_home);
         iv_servers = findViewById(R.id.iv_servers);
+        hideHomeAndServer();
         iv_data = findViewById(R.id.iv_data);
         ll_text_bubble = findViewById(R.id.ll_text_bubble);
         ll_main_data = findViewById(R.id.ll_main_data);
@@ -247,29 +248,13 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
         tv_data_today_name.setTypeface(RobotoMedium);
 
         LinearLayout linearLayoutMainHome = findViewById(R.id.linearLayoutMainHome);
-        linearLayoutMainHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Data.isAppDetails) {
-                    Intent About = new Intent(MainActivity.this, UsageActivity.class);
-                    startActivity(About);
-                    overridePendingTransition(R.anim.anim_slide_in_left,
-                            R.anim.anim_slide_out_right);
-                }
-            }
+        linearLayoutMainHome.setOnClickListener(v -> {
+            //homeClick();
         });
 
         LinearLayout linearLayoutMainServers = findViewById(R.id.linearLayoutMainServers);
-        linearLayoutMainServers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Data.isConnectionDetails) {
-                    Intent Servers = new Intent(MainActivity.this, ServerActivity.class);
-                    startActivity(Servers);
-                    overridePendingTransition(R.anim.anim_slide_in_right,
-                            R.anim.anim_slide_out_left);
-                }
-            }
+        linearLayoutMainServers.setOnClickListener(v -> {
+            //serverClick();
         });
 
         final Handler handlerToday = new Handler();
@@ -874,6 +859,29 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
         };
         thread.start();
 
+    }
+
+    private void serverClick() {
+        if (Data.isConnectionDetails) {
+            Intent Servers = new Intent(MainActivity.this, ServerActivity.class);
+            startActivity(Servers);
+            overridePendingTransition(R.anim.anim_slide_in_right,
+                    R.anim.anim_slide_out_left);
+        }
+    }
+
+    private void homeClick() {
+        if (Data.isAppDetails) {
+            Intent About = new Intent(MainActivity.this, UsageActivity.class);
+            startActivity(About);
+            overridePendingTransition(R.anim.anim_slide_in_left,
+                    R.anim.anim_slide_out_right);
+        }
+    }
+
+    private void hideHomeAndServer() {
+        iv_home.setVisibility(View.GONE);
+        iv_servers.setVisibility(View.GONE);
     }
 
     private boolean hasInternetConnection() {
