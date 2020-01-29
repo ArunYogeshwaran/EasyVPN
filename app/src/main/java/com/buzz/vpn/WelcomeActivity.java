@@ -136,8 +136,7 @@ public class WelcomeActivity extends AppCompatActivity {
         btn_welcome_later.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                closeThisActivity();
 
             }
 
@@ -329,9 +328,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
             if (Data.isConnectionDetails) {
                 if (cuVersion.equals(upVersion)) {
-                    finish();
-                    overridePendingTransition(R.anim.anim_slide_in_right,
-                            R.anim.anim_slide_out_left);
+                    closeThisActivity();
                 } else {
                     startAnimation(WelcomeActivity.this, R.id.ll_welcome_loading,
                             R.anim.fade_out_500, false);
@@ -348,6 +345,13 @@ public class WelcomeActivity extends AppCompatActivity {
                 tv_welcome_status.setText("CONNECTION INTERRUPTED");
             }
         });
+
+        closeThisActivity();
+    }
+
+    private void closeThisActivity() {
+        finish();
+        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
     }
 
     public void startAnimation(Context ctx, int view, int animation, boolean show) {
