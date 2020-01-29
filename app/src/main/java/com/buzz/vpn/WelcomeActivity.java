@@ -33,10 +33,13 @@ import java.util.Random;
 
 import de.blinkt.openvpn.core.App;
 
+import static com.buzz.vpn.Data.APP_DETAILS_URL;
+import static com.buzz.vpn.Data.FILE_DETAILS_URL;
+
 
 public class WelcomeActivity extends AppCompatActivity {
     TextView tv_welcome_status, tv_welcome_app;
-    String StringGetAppURL, StringGetConnectionURL, AppDetails, FileDetails;
+    String AppDetails, FileDetails;
     SharedPreferences SharedAppDetails;
     TextView tv_welcome_title, tv_welcome_description, tv_welcome_size, tv_welcome_version;
 
@@ -53,14 +56,6 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
-        StringGetAppURL = "https://gist.githubusercontent" +
-                ".com/ArunYogeshwaran/b6943a26c434971622c3386386a57c0b/raw" +
-                "/bfaead71b7567b53ac30f80061b4c1b20dc6f81b/appdetails.json";
-        StringGetConnectionURL = "https://gist.githubusercontent" +
-                ".com/ArunYogeshwaran/00be81449754056c60e339374a35006b/raw" +
-                "/b1039c39ad04be2a28a48f16735513a49c332305/filedetails.json";
-        //StringGetConnectionURL = "https://gayankuruppu.github.io/buzz/connection.html";
 
         Typeface RobotoMedium = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Medium.ttf");
         Typeface RobotoRegular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
@@ -149,7 +144,7 @@ public class WelcomeActivity extends AppCompatActivity {
         tv_welcome_status.setText("GETTING APP DETAILS");
         RequestQueue queue = Volley.newRequestQueue(WelcomeActivity.this);
         queue.getCache().clear();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, StringGetAppURL,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, APP_DETAILS_URL,
                 Response -> {
                     Log.e("Response", Response);
                     AppDetails = Response;
@@ -176,7 +171,7 @@ public class WelcomeActivity extends AppCompatActivity {
         tv_welcome_status.setText("GETTING CONNECTION DETAILS");
         RequestQueue queue = Volley.newRequestQueue(WelcomeActivity.this);
         queue.getCache().clear();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, StringGetConnectionURL,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, FILE_DETAILS_URL,
                 Response -> {
                     FileDetails = Response;
                     Data.isConnectionDetails = true;

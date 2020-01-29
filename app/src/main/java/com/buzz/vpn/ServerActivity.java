@@ -36,6 +36,8 @@ import java.util.List;
 import de.blinkt.openvpn.core.App;
 import de.blinkt.openvpn.core.ProfileManager;
 
+import static com.buzz.vpn.Data.APP_DETAILS_URL;
+import static com.buzz.vpn.Data.FILE_DETAILS_URL;
 import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
 
 public class ServerActivity extends Activity {
@@ -127,9 +129,7 @@ public class ServerActivity extends Activity {
             iv_server_refresh.setBackground(getDrawable(R.drawable.ic_servers_process));
             RequestQueue queue = Volley.newRequestQueue(ServerActivity.this);
             queue.getCache().clear();
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://raw" +
-                    ".githubusercontent.com/gayanvoice/gayankuruppu.github" +
-                    ".io/source-json/appdetails.json",
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, APP_DETAILS_URL,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String Response) {
@@ -166,9 +166,7 @@ public class ServerActivity extends Activity {
             iv_server_refresh.setBackground(getDrawable(R.drawable.ic_servers_process));
             RequestQueue queue = Volley.newRequestQueue(ServerActivity.this);
             queue.getCache().clear();
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://raw" +
-                    ".githubusercontent.com/gayanvoice/gayankuruppu.github" +
-                    ".io/source-json/filedetails.json",
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, FILE_DETAILS_URL,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String Response) {
