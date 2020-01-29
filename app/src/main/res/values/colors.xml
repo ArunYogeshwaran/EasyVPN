@@ -71,9 +71,9 @@
     <!-- <color name="colorLightBlue">#5FADEC</color> -->
     <color name="colorLightYellow">#FDD688</color>
 
-    <color name="colorBlue">#002AA8</color>
-    <color name="colorBlueLight">#292A3A</color>
-    <color name="colorBlueDark">#009AAF</color>
+    <color name="colorOrange">@android:color/holo_orange_dark</color>
+    <color name="colorOrangeLight">@android:color/holo_orange_light</color>
+    <color name="colorOrangeDark">@android:color/holo_orange_dark</color>
 
     <color name="colorWhite">#FFFFFF</color>
 

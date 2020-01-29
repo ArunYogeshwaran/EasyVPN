@@ -70,7 +70,7 @@
             android:gravity="center"
             android:textAllCaps="true"
             android:layout_gravity="center"
-            android:textColor="@color/colorBlue"
+            android:textColor="@color/colorOrange"
             android:layout_margin="@dimen/lo_8dpGrid"
             android:text="close" />
 
@@ -87,7 +87,7 @@
             android:textStyle="bold"
             android:gravity="center"
             android:textAllCaps="true"
-            android:textColor="@color/colorBlue"
+            android:textColor="@color/colorOrange"
             android:layout_margin="@dimen/lo_8dpGrid"
             android:text="update" />
 
