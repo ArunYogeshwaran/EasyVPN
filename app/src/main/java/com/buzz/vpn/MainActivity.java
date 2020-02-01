@@ -352,10 +352,12 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                                                 handler.postDelayed(new Runnable() {
                                                                     @Override
                                                                     public void run() {
+/*
                                                                         Intent Servers =
                                                                                 new Intent(MainActivity.this, ReviewActivity.class);
                                                                         startActivity(Servers);
                                                                         overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+*/
                                                                     }
                                                                 }, 1000);
                                                             }
