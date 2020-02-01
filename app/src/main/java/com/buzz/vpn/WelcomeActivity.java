@@ -46,6 +46,9 @@ public class WelcomeActivity extends AppCompatActivity {
     int Random;
     private FirebaseAnalytics mFirebaseAnalytics;
 
+    private String encryptedConnectionData;
+
+
     @Override
     public void onBackPressed() {
     }
@@ -244,12 +247,15 @@ public class WelcomeActivity extends AppCompatActivity {
                 mFirebaseAnalytics.logEvent("app_param_error", params);
             }
 
+            EncryptData En = new EncryptData();
             try {
                 JSONObject json_response = new JSONObject(FileDetails);
                 JSONArray jsonArray = json_response.getJSONArray("ovpn_file");
-                JSONObject json_object = jsonArray.getJSONObject(Integer.valueOf(FileID));
+                JSONObject json_object = jsonArray.getJSONObject(0);
                 FileID = json_object.getString("id");
                 File = json_object.getString("file");
+                this.encryptedConnectionData = En.encrypt(File);
+                Thread.sleep(3_000);
             } catch (Exception e) {
                 Bundle params = new Bundle();
                 params.putString("device_id", App.device_id);
@@ -259,7 +265,6 @@ public class WelcomeActivity extends AppCompatActivity {
 
 
             // save details
-            EncryptData En = new EncryptData();
             try {
                 PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
                 cuVersion = pInfo.versionName;
@@ -288,7 +293,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 SharedPreferences.Editor Editor = SharedAppDetails.edit();
                 Editor.putString("id", ID);
                 Editor.putString("file_id", FileID);
-                Editor.putString("file", En.encrypt(File));
+                Editor.putString("file", this.encryptedConnectionData);
                 Editor.putString("city", City);
                 Editor.putString("country", Country);
                 Editor.putString("image", Image);
