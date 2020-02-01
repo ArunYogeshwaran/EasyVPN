@@ -493,11 +493,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         String Title;
         if (App.connection_status == 0) {
-            Title = "Tap to connect " + City;
+            Title = "Tap to connect";
         } else if (App.connection_status == 1) {
-            Title = "Connecting " + City;
+            Title = "Connecting " + "Bangalore, India";
         } else if (App.connection_status == 2) {
-            Title = "Connected " + City;
+            Title = "Connected " + "Bangalore, India";
         } else {
             Title = "Tap to open Buzz VPN";
         }
