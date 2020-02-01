@@ -41,6 +41,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.buzz.vpn.BuildConfig;
+import com.buzz.vpn.ConnectionTimeOutSettings;
 import com.buzz.vpn.Data;
 import com.buzz.vpn.MainActivity;
 import com.buzz.vpn.R;
@@ -316,7 +317,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         long_milli_seconds = 0;
         abortConnectionVPN = false;
         try {
-            ConnectionTimer = new CountDownTimer(60_000, 1000) {
+            ConnectionTimer = new CountDownTimer(
+                    ConnectionTimeOutSettings.getTimeOutDuration(),
+                    1000) {
                 public void onTick(long millisUntilFinished) {
                     //Data.StringCountDown =  "remaining " + millisUntilFinished / 1000 + "
                     // seconds";
