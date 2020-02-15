@@ -1346,7 +1346,7 @@
                         android:layout_marginStart="@dimen/lo_8dpGrid"
                         android:layout_marginEnd="@dimen/lo_8dpGrid"
                         android:gravity="center"
-                        android:text="Buzz VPN"
+                        android:text="Easy VPN"
                         android:textColor="#777777"
                         android:textSize="16sp" />
 

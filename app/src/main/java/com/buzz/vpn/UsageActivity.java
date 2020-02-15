@@ -638,7 +638,7 @@ public class UsageActivity extends Activity {
                     if ("huawei".equalsIgnoreCase(android.os.Build.MANUFACTURER)) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(UsageActivity.this);
                         builder.setTitle("Let app always run in background?").setMessage(
-                                "Allowing Buzz VPN to always run in the background app may can " +
+                                "Allowing Easy VPN to always run in the background app may can " +
                                         "reduce memory usage")
                                 .setPositiveButton("Allow", new DialogInterface.OnClickListener() {
                                     @Override

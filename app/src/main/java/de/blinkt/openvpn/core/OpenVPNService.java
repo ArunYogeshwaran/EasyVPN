@@ -502,7 +502,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         } else if (App.connection_status == 2) {
             Title = "Connected " + "Bangalore, India";
         } else {
-            Title = "Tap to open Buzz VPN";
+            Title = "Tap to open Easy VPN";
         }
 
         return new NotificationCompat.Builder(this, App.CHANNEL_ID)

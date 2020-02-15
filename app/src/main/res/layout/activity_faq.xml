@@ -146,7 +146,7 @@
                     android:textSize="@dimen/ts_Body1"
                     android:textColor="@color/textSup"
                     android:textStyle="bold"
-                    android:text="How to use Buzz VPN?" />
+                    android:text="How to use Easy VPN?" />
 
 
                 <LinearLayout
@@ -200,7 +200,7 @@
                     android:textSize="@dimen/ts_Body1"
                     android:textColor="@color/textSup"
                     android:textStyle="bold"
-                    android:text="Why Buzz VPN failed to connect?" />
+                    android:text="Why Easy VPN failed to connect?" />
 
 
                 <LinearLayout
@@ -279,7 +279,7 @@
                     android:textSize="@dimen/ts_Body1"
                     android:textColor="@color/textSup"
                     android:textStyle="bold"
-                    android:text="How to run Buzz VPN in background?" />
+                    android:text="How to run Easy VPN in background?" />
 
 
                 <LinearLayout
@@ -322,7 +322,7 @@
                     android:textSize="@dimen/ts_Body2"
                     android:textColor="@color/textSub"
                     android:textStyle="italic"
-                    android:text="Open Settings > Advanced Settings > Battery > Protected Apps and Enable Buzz VPN" />
+                    android:text="Open Settings > Advanced Settings > Battery > Protected Apps and Enable Easy VPN" />
 
 
             </LinearLayout>
