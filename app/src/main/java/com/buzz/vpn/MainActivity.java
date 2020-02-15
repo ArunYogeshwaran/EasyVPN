@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
 
     // new
     boolean hasFile = false;
-    String FileID = "NULL", File = "NULL", City = "NULL", Image = "NULL";
+    String FileID = "NULL", File = "NULL", City = "Bangalore", Image = "NULL";
     String DarkMode = "false";
 
     ConstraintLayout constLayoutMain;
@@ -687,21 +687,25 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                 if (hasFile) {
                                     if (App.connection_status == 0) {
                                         // disconnected
-                                        btn_connection.setText("Connect");
+                                        btn_connection.setText(getBaseContext()
+                                                .getString(R.string.button_connect));
                                         btn_connection.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.button_connect));
 
                                     } else if (App.connection_status == 1) {
                                         // connecting
                                         if (EnableConnectButton) {
-                                            btn_connection.setText("Cancel");
+                                            btn_connection.setText(getBaseContext()
+                                                    .getString(R.string.button_cancel));
                                             btn_connection.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.button_retry));
                                         } else {
-                                            btn_connection.setText("Connecting");
+                                            btn_connection.setText(getBaseContext()
+                                                    .getString(R.string.state_connecting));
                                             btn_connection.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.button_retry));
                                         }
                                     } else if (App.connection_status == 2) {
                                         // connected
-                                        btn_connection.setText("Disconnect");
+                                        btn_connection.setText(getBaseContext()
+                                                .getString(R.string.button_disconnect));
                                         btn_connection.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.button_disconnect));
                                     } else if (App.connection_status == 3) {
                                         // connected
@@ -717,18 +721,21 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
                                     if (hasInternetConnection()) {
                                         if (App.connection_status == 0) {
                                             // disconnected
-                                            tv_message_top_text.setText("The connection is ready");
-                                            tv_message_bottom_text.setText("Tap CONNECT to start " +
-                                                    ":)");
+                                            tv_message_top_text.setText(getBaseContext()
+                                                    .getString(R.string.connection_ready));
+                                            tv_message_bottom_text.setText(getBaseContext()
+                                                    .getString(R.string.connect_to_start));
 
                                         } else if (App.connection_status == 1) {
                                             // connecting
-                                            tv_message_top_text.setText("Connecting " + City);
+                                            tv_message_top_text.setText(getBaseContext()
+                                                    .getString(R.string.state_connecting));
                                             tv_message_bottom_text.setText(VpnStatus.getLastCleanLogMessage(MainActivity.this));
 
                                         } else if (App.connection_status == 2) {
                                             // connected
-                                            tv_message_top_text.setText("Connected " + City);
+                                            tv_message_top_text.setText(getBaseContext()
+                                                    .getString(R.string.state_connected));
                                             tv_message_bottom_text.setText(Data.StringCountDown);
 
 

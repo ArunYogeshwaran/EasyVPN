@@ -21,7 +21,7 @@ import java.util.Random;
 
 
 public class App extends /*com.orm.SugarApp*/ Application {
-    public static final String CHANNEL_ID = "COM.BUZZ.VPN";
+    public static final String CHANNEL_ID = "COM.AYOGESHWARAN.EASYVPN";
     public static final int NOTIFICATION_ID = new Random().nextInt(601) + 200;
     public static boolean isStart;
     public static int connection_status = 0;
@@ -62,7 +62,7 @@ public class App extends /*com.orm.SugarApp*/ Application {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel serviceChannel = new NotificationChannel(
                         CHANNEL_ID,
-                        "COMBUZZVPN",
+                        "COMAYOGESHWARANEASYVPN",
                         NotificationManager.IMPORTANCE_LOW
                 );
 

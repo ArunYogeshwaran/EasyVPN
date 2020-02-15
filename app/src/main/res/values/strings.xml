@@ -91,7 +91,6 @@
     <string name="notifcation_title">%1$s - %2$s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
-    <string name="state_connecting">Connecting</string>
     <string name="state_wait">server is waiting</string>
     <string name="state_auth">getting the server</string>
 
@@ -103,9 +102,10 @@
 
     <string name="state_assign_ip">Assigning IP addresses</string>
     <string name="state_add_routes">Adding routes</string>
-    <string name="state_connected">Connected</string>
+    <string name="state_connected">Connected!!!! Enjoy browsing. Unhindered!!!</string>
+    <string name="state_connecting">Connecting…</string>
     <string name="state_disconnected">Disconnect</string>
-    <string name="state_reconnecting">Reconnecting</string>
+    <string name="state_reconnecting">Reconnecting…</string>
     <string name="state_exiting">Exiting</string>
     <string name="state_noprocess">Not running</string>
     <string name="state_resolve">Resolving host names</string>
@@ -171,4 +171,9 @@
 
 
     <string name="string_of_two_number">%02d</string>
+    <string name="connection_ready">The connection is ready</string>
+    <string name="connect_to_start">Tap CONNECT to start</string>
+    <string name="button_connect">Connect</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_disconnect">Disconnect</string>
 </resources>
