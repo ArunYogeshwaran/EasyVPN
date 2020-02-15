@@ -622,66 +622,7 @@ public class MainActivity extends AppCompatActivity implements VpnStatus.ByteCou
 
                                 }
 
-                                switch (Image) {
-                                    case "japan":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_japan);
-                                        break;
-                                    case "russia":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_russia);
-                                        break;
-                                    case "southkorea":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_south_korea);
-                                        break;
-                                    case "thailand":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_thailand);
-                                        break;
-                                    case "vietnam":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_vietnam);
-                                        break;
-                                    case "unitedstates":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_united_states);
-                                        break;
-                                    case "unitedkingdom":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_united_kingdom);
-                                        break;
-                                    case "singapore":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_singapore);
-                                        break;
-                                    case "france":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_france);
-                                        break;
-                                    case "germany":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_germany);
-                                        break;
-                                    case "canada":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_canada);
-                                        break;
-                                    case "luxemburg":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_luxemburg);
-                                        break;
-                                    case "netherlands":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_netherlands);
-                                        break;
-                                    case "spain":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_spain);
-                                        break;
-                                    case "finland":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_finland);
-                                        break;
-                                    case "poland":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_poland);
-                                        break;
-                                    case "australia":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_australia);
-                                        break;
-                                    case "italy":
-                                        iv_servers.setImageResource(R.drawable.ic_flag_italy);
-                                        break;
-                                    default:
-                                        iv_servers.setImageResource(R.drawable.ic_flag_unknown_mali);
-                                        break;
-
-                                }
+                                iv_servers.setImageResource(R.drawable.ic_vpn_lock_orange);
 
                                 // set connection button
                                 if (hasFile) {

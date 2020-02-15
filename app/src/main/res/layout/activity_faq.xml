@@ -217,7 +217,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/lo_16dpGrid"
                         android:layout_marginBottom="@dimen/lo_16dpGrid"
-                        android:background="@drawable/ic_flag_united_states" />
+                        android:background="@drawable/ic_vpn_lock_orange" />
 
 
                 </LinearLayout>

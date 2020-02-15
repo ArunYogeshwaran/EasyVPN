@@ -433,66 +433,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, notificationIntent, 0);
 
-        int int_temp;
-        switch (Image) {
-            case "japan":
-                int_temp = R.drawable.ic_flag_japan;
-                break;
-            case "russia":
-                int_temp = R.drawable.ic_flag_russia;
-                break;
-            case "southkorea":
-                int_temp = R.drawable.ic_flag_south_korea;
-                break;
-            case "thailand":
-                int_temp = R.drawable.ic_flag_thailand;
-                break;
-            case "vietnam":
-                int_temp = R.drawable.ic_flag_vietnam;
-                break;
-            case "unitedstates":
-                int_temp = R.drawable.ic_flag_united_states;
-                break;
-            case "unitedkingdom":
-                int_temp = R.drawable.ic_flag_united_kingdom;
-                break;
-            case "singapore":
-                int_temp = R.drawable.ic_flag_singapore;
-                break;
-            case "france":
-                int_temp = R.drawable.ic_flag_france;
-                break;
-            case "germany":
-                int_temp = R.drawable.ic_flag_germany;
-                break;
-            case "canada":
-                int_temp = R.drawable.ic_flag_canada;
-                break;
-            case "luxemburg":
-                int_temp = R.drawable.ic_flag_luxemburg;
-                break;
-            case "netherlands":
-                int_temp = R.drawable.ic_flag_netherlands;
-                break;
-            case "spain":
-                int_temp = R.drawable.ic_flag_spain;
-                break;
-            case "finland":
-                int_temp = R.drawable.ic_flag_finland;
-                break;
-            case "poland":
-                int_temp = R.drawable.ic_flag_poland;
-                break;
-            case "australia":
-                int_temp = R.drawable.ic_flag_australia;
-                break;
-            case "italy":
-                int_temp = R.drawable.ic_flag_italy;
-                break;
-            default:
-                int_temp = R.drawable.ic_flag_unknown_mali;
-                break;
-        }
+        int int_temp = R.drawable.ic_vpn_lock_orange;
 
         String Title;
         if (App.connection_status == 0) {
