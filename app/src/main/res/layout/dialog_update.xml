@@ -15,8 +15,8 @@
         android:layout_height="80dp"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/lo_16dpGrid"
-        android:background="@drawable/ic_app_google"
-        app:srcCompat="@drawable/ic_app_google" />
+        android:background="@drawable/ic_launcher"
+        app:srcCompat="@drawable/ic_launcher" />
 
     <TextView
         android:id="@+id/dialog_title"

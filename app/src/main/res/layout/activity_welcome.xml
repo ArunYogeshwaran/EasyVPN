@@ -159,7 +159,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_app_logo_white" />
+            app:srcCompat="@drawable/ic_launcher" />
 
         <TextView
             android:id="@+id/tv_welcome_app"
