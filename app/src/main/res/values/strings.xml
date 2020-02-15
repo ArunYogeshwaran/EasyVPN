@@ -102,7 +102,7 @@
 
     <string name="state_assign_ip">Assigning IP addresses</string>
     <string name="state_add_routes">Adding routes</string>
-    <string name="state_connected">Connected!!!! Enjoy browsing. Unhindered!!!</string>
+    <string name="state_connected">Connected! Enjoy browsing. Unhindered!!</string>
     <string name="state_connecting">Connecting…</string>
     <string name="state_disconnected">Disconnect</string>
     <string name="state_reconnecting">Reconnecting…</string>
