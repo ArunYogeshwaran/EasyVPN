@@ -1,2 +1,3 @@
-# Easy VPN Client using ics-openvpn
+# Easy VPN Client
+
 
